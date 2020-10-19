@@ -1,0 +1,29 @@
+{% extends 'substitute/base.html'%}
+{% block heart %}
+{% load static %}
+<style type="text/css">
+    #aliment-area
+    {
+        background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('{% static "substitute/jpg/photo_aliments.jpg" %}');
+        background-size: cover;
+        background-position: center;
+
+    }
+</style>
+<div class="container" id="aliment-area">
+    <div class="row">
+        <div id="found-substitute">
+            <h1>[Nom Aliment]</h1>
+            <h3>{{ data }}</h3>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div id="info-substitute">
+            <h3>Du gras, oui, mais de qualité !</h3>
+            <h3>{{ data }}</h3>
+        </div>
+    </div>
+</div>
+{% endblock %}

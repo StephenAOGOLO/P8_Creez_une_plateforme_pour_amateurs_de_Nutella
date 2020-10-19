@@ -1,0 +1,38 @@
+{% extends 'substitute/base.html'%}
+{% block heart %}
+{% load static %}
+<style type="text/css">
+    #search-area
+    {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static "substitute/jpg/remy-2.jpg" %}');
+        background-size: cover;
+        background-position: center;
+
+    }
+</style>
+<div class="container" id="search-area">
+    <div class="row">
+        <div class="col-12"><h1>Du gras, oui, mais de qualité !</h1></div>
+        <div class="col-12"><p class="h3">{{ data.goal }}</p></div>
+        <div class="col-12 h3">Champ de recherche</div>
+    </div>
+</div>
+<div class="container" id="story-area">
+    <div class="row">
+        <div class="col-12"><h1>Colette et Remy</h1></div>
+        <div class="col-12"><h3>Histoire<br/>{{ data.story }}</h3></div>
+        <div class="col-12 col-md-6"><img src="{% static 'substitute/png/colette-tatou-full.png' %}" alt="Photo de Colette"></div>
+        <div class="col-12 col-md-6"><img src="{% static 'substitute/png/remy.png' %}" alt="Photo de Remy"></div>
+        <!--<div class="col-12 col-md-6"><h3>Photo de Colette</h3></div>-->
+        <!--<div class="col-12 col-md-6"><h3>Photo de Remy</h3></div>-->
+    </div>
+</div>
+<div class="container" id="contactus-area">
+    <div class="row">
+        <div class="col-12"><h1>Contactez - nous !</h1></div>
+        <div class="col-12"><h3>Phrase<br/>{{ data.sentence }}</h3></div>
+        <div class="col-12 col-md-6 h2"><a href="#" class="btn btn-primary"></a> Telephone</div>
+        <div class="col-12 col-md-6 h2"><a href="#" class="btn btn-primary"></a> Mail</div>
+    </div>
+</div>
+{% endblock %}

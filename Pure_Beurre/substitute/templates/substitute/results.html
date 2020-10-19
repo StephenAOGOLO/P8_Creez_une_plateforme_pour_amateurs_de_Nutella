@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>PURE BEURRE</title>
+</head>
+<body>
+    <div id="searched-aliment-area">
+        <h1>Aliment cherché !!</h1>
+        <h3>{{ data }}</h3>
+    </div>
+    <div id="found-substitutes-area">
+        <h3>Vous pouvez remplacez cet aliment par :</h3>
+        <p>
+            <ul>
+                {% for info in data %}
+                    <li>
+                        {{ info }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </p>
+    </div>
+</body>
+</html>
