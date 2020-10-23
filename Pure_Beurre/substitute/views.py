@@ -1,8 +1,11 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+
+from django.contrib import messages
 
 # Create your views here.
-
+from .forms import CreateUserForm
 
 def handler404(request, exception=None):
     page = "acceuil"
@@ -12,9 +15,13 @@ def handler500(request, exception=None):
     page = "acceuil"
     return render(request, "errors/500.html", {"data": page}, status=500)
 
+#def index(request):
+#    template = 'Du gras, oui, mais de qualité !!!!!!!!!!!!!!!!!'
+#    return HttpResponse(template)
+
+
 def index(request):
-    template = 'Du gras, oui, mais de qualité !!!!!!!!!!!!!!!!!'
-    return HttpResponse(template)
+    return homepage(request)
 
 
 def homepage(request):
@@ -44,7 +51,7 @@ def homepage(request):
 
 
 def results(request):
-    list_info = ["info_1", "info_2", "info_3"]
+    list_info = ["info_1", "info_2", "info_3", "info_4", "info_5", "info_6"]
     return render(request, "substitute/results.html", {'data': list_info})
 
 
@@ -56,3 +63,24 @@ def aliment(request):
 def account(request):
     list_info = ["info_1", "info_2", "info_3"]
     return render(request, "substitute/account.html", {'data': list_info})
+
+
+def login(request):
+    context = {}
+    return render(request, "registration/login.html", context)
+
+
+def register(request):
+    #form = UserCreationForm()
+    form = CreateUserForm()
+    if request.method == "POST":
+        #form = UserCreationForm(request.POST)
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data.get("username")
+            text = "Bienvenue {} !!! Votre compte a bien été créé !!!".format(user)
+            messages.success(request, text)
+            return redirect("login")
+    context = {"form": form}
+    return render(request, "registration/register.html", context)

@@ -1,25 +1,26 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>PURE BEURRE</title>
-</head>
-<body>
-    <div id="searched-aliment-area">
-        <h1>Aliment cherché !!</h1>
-        <h3>{{ data }}</h3>
+{% extends 'substitute/base.html'%}
+{% block heart %}
+{% load static %}
+<style type="text/css">
+    #searched-aliment-area
+    {
+        background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('{% static "substitute/jpg/remy-5.jpg" %}');
+        background-size: cover;
+        background-position: center;
+
+    }
+</style>
+<div class="container-fuid" id="aliment-area">
+    <div class="row" id="searched-aliment-area">
+        <div class="col-12"><br/></div>
+        <div class="col-12 h1">Aliment cherché !!</div>
+        <div class="col-12"><br/></div>
     </div>
-    <div id="found-substitutes-area">
-        <h3>Vous pouvez remplacez cet aliment par :</h3>
-        <p>
-            <ul>
-                {% for info in data %}
-                    <li>
-                        {{ info }}
-                    </li>
-                {% endfor %}
-            </ul>
-        </p>
+    <div class="row">
+        <div class="col-12 h2" id="found-substitutes-area">Vous pouvez remplacez cet aliment par :</div>
+        {% for info in data %}
+            <div class="col-sm-4 col-12 h2">{{ info }}</div>
+        {% endfor %}
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

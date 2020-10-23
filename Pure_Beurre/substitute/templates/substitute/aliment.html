@@ -10,20 +10,22 @@
 
     }
 </style>
-<div class="container" id="aliment-area">
+<div class="container-fuid" id="aliment-area">
     <div class="row">
-        <div id="found-substitute">
-            <h1>[Nom Aliment]</h1>
-            <h3>{{ data }}</h3>
-        </div>
+        <div class="col-12"><br/></div>
+        <div class="col-12 h1">[Nom Aliment]</div>
+        <div class="col-12 h2">{{ data }}</div>
+        <div class="col-12"><br/></div>
     </div>
 </div>
-<div class="container">
+<div class="container-fuid">
     <div class="row">
-        <div id="info-substitute">
-            <h3>Du gras, oui, mais de qualité !</h3>
-            <h3>{{ data }}</h3>
-        </div>
+        <div class="col-12"> <br/></div>
+        <div class="col-6 d-flex justify-content-center h3">Nutriscore abCde</div>
+        <div class="col-6 d-flex justify-content-center h3">Repères nutritionnels pour 100g</div>
+        <div class="col-12"> <br/></div>
+        <div class="col-12 h3"> Voir les fiches d'OpenFoodFacts !</div>
+        <div class="col-12"> <br/></div>
     </div>
 </div>
 {% endblock %}

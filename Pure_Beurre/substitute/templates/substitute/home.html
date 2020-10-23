@@ -10,29 +10,42 @@
 
     }
 </style>
-<div class="container" id="search-area">
+<div class="container-fuid border" id="search-area">
     <div class="row">
-        <div class="col-12"><h1>Du gras, oui, mais de qualité !</h1></div>
-        <div class="col-12"><p class="h3">{{ data.goal }}</p></div>
-        <div class="col-12 h3">Champ de recherche</div>
+        <div class="col-12"> <br/></div>
+        <div class="col-12 h1">Du gras, oui, mais de qualité !</div>
+        <div class="col-12"> <br/></div>
+        <div class="col-12 h2 d-flex justify-content-center"><p>{{ data.goal }}</p></div>
+        <div class="col-12 d-flex justify-content-center">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Produit" aria-label="Chercher">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Chercher</button>
+            </form>
+        </div>
+        <div class="col-12"> <br/></div>
     </div>
 </div>
-<div class="container" id="story-area">
+<div class="container-fuid border" id="story-area">
     <div class="row">
-        <div class="col-12"><h1>Colette et Remy</h1></div>
-        <div class="col-12"><h3>Histoire<br/>{{ data.story }}</h3></div>
+        <div class="col-12"> <br/></div>
+        <div class="col-12 h2">Colette et Remy</div>
+        <div class="col-12"> <br/></div>
+        <div class="col-12 h3 d-flex justify-content-center">{{ data.story }}</div>
         <div class="col-12 col-md-6"><img src="{% static 'substitute/png/colette-tatou-full.png' %}" alt="Photo de Colette"></div>
         <div class="col-12 col-md-6"><img src="{% static 'substitute/png/remy.png' %}" alt="Photo de Remy"></div>
+        <div class="col-12"> <br/></div>
         <!--<div class="col-12 col-md-6"><h3>Photo de Colette</h3></div>-->
         <!--<div class="col-12 col-md-6"><h3>Photo de Remy</h3></div>-->
     </div>
 </div>
-<div class="container" id="contactus-area">
+<div class="container-fuid border" id="contactus-area">
     <div class="row">
-        <div class="col-12"><h1>Contactez - nous !</h1></div>
-        <div class="col-12"><h3>Phrase<br/>{{ data.sentence }}</h3></div>
-        <div class="col-12 col-md-6 h2"><a href="#" class="btn btn-primary"></a> Telephone</div>
-        <div class="col-12 col-md-6 h2"><a href="#" class="btn btn-primary"></a> Mail</div>
+        <div class="col-12"> <br/></div>
+        <div class="col-12 h2">Contactez - nous !</div>
+        <div class="col-12 h3">Phrase<br/>{{ data.sentence }}</div>
+        <div class="col-12 col-md-6 h3"><a href="#" class="btn btn-primary"></a> Telephone</div>
+        <div class="col-12 col-md-6 h3"><a href="#" class="btn btn-primary"></a> Mail</div>
+        <div class="col-12"> <br/></div>
     </div>
 </div>
 {% endblock %}

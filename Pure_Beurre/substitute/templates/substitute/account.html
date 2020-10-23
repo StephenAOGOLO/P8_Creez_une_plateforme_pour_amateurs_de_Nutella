@@ -1,17 +1,27 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>PURE BEURRE</title>
-</head>
-<body>
-    <div id="account-username">
-        <h1>[Prénom utilisateur]</h1>
-        <h3>{{ data }}</h3>
+{% extends 'substitute/base.html'%}
+{% block heart %}
+{% load static %}
+<style type="text/css">
+    #account-area
+    {
+        background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('{% static "substitute/jpg/remy-3.jpg" %}');
+        background-size: cover;
+        background-position: center;
+    }
+</style>
+<div class="container-fuid" id="account-area">
+    <div class="row">
+        <div class="col-12" id="account-username">
+            <h1>[Prénom utilisateur]</h1>
+            <h3>{{ data }}</h3>
+        </div>
     </div>
-    <div id="account-usermail">
-        <h3>mail</h3>
-        <h3>{{ data }}</h3>
+</div>
+<div class="container-fuid">
+    <div class="row">
+        <div id="account-usermail">
+            <h3>{{ data }}</h3>
+        </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

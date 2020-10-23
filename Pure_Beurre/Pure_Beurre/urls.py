@@ -22,4 +22,5 @@ handler500 = "substitute.views.handler500"
 urlpatterns = [
     path('substitute/', include('substitute.urls')),
     path('admin/', admin.site.urls),
+    path('substitute/', include('django.contrib.auth.urls')),
 ]

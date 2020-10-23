@@ -1,0 +1,90 @@
+/* Initialization */
+*
+{
+    margin: 0;
+    padding: 0;
+}
+/* Fonts */
+@import url("http://fonts.googleapis.com/css?family=Open+Sans") ;
+@import url("http://fonts.googleapis.com/css?family=Scope+One") ;
+
+/* Bootstrap */
+.bg-light
+{
+    background: #DE9440 !important;
+}
+
+.nav-item
+{
+    padding-left: 50px;
+}
+/* Helpers */
+.wrapper
+{
+    width: 1500px;
+    max-width: 90%
+    margin: 0 auto;
+}
+
+.text-center
+{
+    text-align: center;
+}
+
+
+/* Main styles */
+h3
+{
+    font-family: "Open Sans", sans-serif !important;
+}
+body
+{
+    font-family: "Scope One", sans-serif !important;
+}
+
+#brain
+{
+    background-color : #DE9440;
+    border-top: 1px;
+    padding: 1em 0;
+
+}
+
+#brain-components
+{
+    font-size: 1.1em;
+    float: right;
+}
+
+#brain-components li
+{
+    display: inline-block;
+    list-style: none
+    margin-top: 0.3em;
+    margin-right: 0.8em;
+}
+
+#search-area
+{
+    color : #86EBE6;
+}
+#story-area
+{
+    background-color : #86EBE6;
+}
+#contactus-area
+{
+    background-color : #345A61;
+}
+#feet
+{
+    text-align: center;
+    margin-top: 3em;
+}
+#feet
+{
+    content: "";
+    display: block;
+    height: 2px;
+    background-color: #345A61;
+}

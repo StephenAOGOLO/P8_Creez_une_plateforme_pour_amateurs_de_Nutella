@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-from Pure_Beurre.Pure_Beurre import the_secrets as tst
+import Pure_Beurre.the_secrets as tst
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'purebeurre_db',
         'USER': 'stephen',
         'PASSWORD': 'stephen',
-        'HOST': '',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
