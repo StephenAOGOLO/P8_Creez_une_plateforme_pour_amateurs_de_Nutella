@@ -10,10 +10,14 @@
 @import url("http://fonts.googleapis.com/css?family=Scope+One") ;
 
 /* Bootstrap */
+.border {
+  border: 1px solid #C45525 !important;
+}
+
 .bg-light
 {
     /*background: #DE9440 !important;*/
-    background: -webkit-linear-gradient(top, #DE9440, #C45525);
+    background: -webkit-linear-gradient(bottom, #DE9440, #C45525);
 }
 
 .nav-item
@@ -62,15 +66,20 @@ body
 
 #search-area
 {
-    color : #86EBE6;
+    color : #DE9440;
 }
 #story-area
 {
-    background-color : #86EBE6;
+    background-color : white;
+    color : #C45525;
 }
 #contactus-area
 {
-    background-color : #345A61;
+    background-color : white;
+    color : #C45525;
+}
+#account-area
+{
     color : white;
 }
 #feet
@@ -78,7 +87,7 @@ body
     text-align: center;
     content: "";
     display: block;
-    background-color: #DE9440;
+    background: -webkit-linear-gradient(top, #DE9440, #C45525);
 }
 
 

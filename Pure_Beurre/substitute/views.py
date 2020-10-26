@@ -61,8 +61,11 @@ def aliment(request):
 
 
 def account(request):
-    list_info = ["info_1", "info_2", "info_3"]
-    return render(request, "substitute/account.html", {'data': list_info})
+    context = {}
+    context["salutation"] = "AHOY !!"
+    context["user"] = "Prénom Utilisateur"
+    context["mail"] = "utilisateur@purebeurre.com"
+    return render(request, "substitute/account.html", context)
 
 
 def login(request):
