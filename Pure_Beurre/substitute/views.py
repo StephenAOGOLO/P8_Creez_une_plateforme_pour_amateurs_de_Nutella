@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 
+from django.contrib.auth import authenticate, login as lgi, logout as lgo
 from django.contrib import messages
 
 # Create your views here.
@@ -56,28 +57,55 @@ def results(request):
 
 
 def aliment(request):
-    list_info = ["info_1", "info_2", "info_3"]
-    return render(request, "substitute/aliment.html", {'data': list_info})
+    context = {}
+    context["opfofa"] = "https://fr.openfoodfacts.org"
+    return render(request, "substitute/aliment.html", context)
 
 
 def account(request):
     context = {}
     context["salutation"] = "AHOY !!"
-    context["user"] = "Prénom Utilisateur"
     context["mail"] = "utilisateur@purebeurre.com"
     return render(request, "substitute/account.html", context)
 
 
 def login(request):
+    #if request.user.is_authenticated:
+    #    return redirect("/substitute/home")
+    #else:
+    is_user_authenticate(request)
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            lgi(request, user)
+            return redirect("/substitute/account")
+        else:
+            messages.info(request, "Les informations saisies sont incorrectes !")
     context = {}
     return render(request, "registration/login.html", context)
 
 
+def is_user_authenticate(request):
+    if request.user.is_authenticated:
+        return redirect("/account/account")
+    else:
+        pass
+
+
+def logout(request):
+    lgo(request)
+    return redirect("login")
+
+
 def register(request):
-    #form = UserCreationForm()
+    #if request.user.is_authenticated:
+    #    return redirect("/substitute/home")
+    #else:
+    is_user_authenticate(request)
     form = CreateUserForm()
     if request.method == "POST":
-        #form = UserCreationForm(request.POST)
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
@@ -87,3 +115,6 @@ def register(request):
             return redirect("login")
     context = {"form": form}
     return render(request, "registration/register.html", context)
+
+
+
