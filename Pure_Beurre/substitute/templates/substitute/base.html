@@ -18,20 +18,23 @@
     <link href="http://fonts.googleapis.com/css?family=Scope+One" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div id="brain">
-        {% include "substitute/browser.html" %}
+    <div id="page-container">
+      <div id="content-wrap">
+       <div id="brain">
+           {% include "substitute/browser.html" %}
+       </div>
+       <div id="heart">
+           {% block heart %}
+           {% endblock %}
+       </div>
+       <footer id="footer">
+           <div id="feet">
+               {% include "substitute/footer.html" %}
+               <!--<h2> mentions légales - contact</h2>
+               <h3> 1.4 - Stephen AOGOLO</h3>-->
+           </div>
+       </footer>
     </div>
-    <div id="heart">
-        {% block heart %}
-        {% endblock %}
-    <!--</div>-->
-    <footer>
-    <div id="feet">
-        {% include "substitute/footer.html" %}
-        <!--<h2> mentions légales - contact</h2>
-        <h3> 1.4 - Stephen AOGOLO</h3>-->
-    </div>
-</footer>
 
 
 

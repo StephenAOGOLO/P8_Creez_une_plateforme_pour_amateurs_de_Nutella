@@ -7,7 +7,6 @@
         background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static "substitute/jpg/remy-2.jpg" %}');
         background-size: cover;
         background-position: center;
-
     }
 </style>
 <div class="container-fluid border" id="search-area">
@@ -46,8 +45,10 @@
         <div class="col-12 h3">{{ data.sentence }}</div>
         <div class="col-12"> <br/></div>
         <div class="col-12"> <br/></div>
-        <div class="col-12 col-md-6 h3"><a href="#" class="btn btn-primary"></a> Telephone</div>
-        <div class="col-12 col-md-6 h3"><a href="#" class="btn btn-primary"></a> Mail</div>
+        <div class="col-12 col-md-6 h3"><input type="image" height="50" width="50" alt="Boutton - telephone"  src="{% static 'substitute/png/telephone.png' %}" /></div>
+        <div class="col-12 col-md-6 h3"><input type="image" height="50" width="50" alt="Boutton - email"  src="{% static 'substitute/png/mail.png' %}" /></div>
+        <div class="col-12 col-md-6 h3"> 01.02.03.04.05 </div>
+        <div class="col-12 col-md-6 h3"> contact@purebeurre.fr </div>
         <div class="col-12"> <br/></div>
     </div>
 </div>
