@@ -1,0 +1,55 @@
+{% extends 'substitute/base.html'%}
+{% block heart %}
+{% load static %}
+<style type="text/css">
+    #search-area
+    {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static "substitute/jpg/remy-2.jpg" %}');
+        background-size: cover;
+        background-position: center;
+    }
+</style>
+<div class="container-fluid border" id="search-area">
+    <div class="row">
+        <div class="col-12"> <br/></div>
+        <div class="col-12 h1">Du gras, oui, mais de qualité !</div>
+        <div class="col-12"> <br/></div>
+        <div class="col-12 h2 d-flex justify-content-center"><p>{{ data.goal }}</p></div>
+        <div class="col-12 d-flex justify-content-center">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Produit" aria-label="Chercher">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Chercher</button>
+            </form>
+        </div>
+        <div class="col-12"> <br/></div>
+    </div>
+</div>
+<div class="container-fuid border" id="story-area">
+    <div class="row">
+        <div class="col-12"> <br/></div>
+        <div class="col-12 h2">Colette et Remy</div>
+        <div class="col-12"> <br/></div>
+        <div class="col-12 h3 d-flex justify-content-center">{{ data.story }}</div>
+        <div class="col-12 col-md-6"><img src="{% static 'substitute/png/colette-tatou-full.png' %}" alt="Photo de Colette"></div>
+        <div class="col-12 col-md-6"><img src="{% static 'substitute/png/remy.png' %}" alt="Photo de Remy"></div>
+        <div class="col-12"> <br/></div>
+        <!--<div class="col-12 col-md-6"><h3>Photo de Colette</h3></div>-->
+        <!--<div class="col-12 col-md-6"><h3>Photo de Remy</h3></div>-->
+    </div>
+</div>
+<div class="container-fuid border" id="contactus-area">
+    <div class="row">
+        <div class="col-12"> <br/></div>
+        <div class="col-12 h2">Contactez - nous !</div>
+        <div class="col-12"> <br/></div>
+        <div class="col-12 h3">{{ data.sentence }}</div>
+        <div class="col-12"> <br/></div>
+        <div class="col-12"> <br/></div>
+        <div class="col-12 col-md-6 h3"><input type="image" height="50" width="50" alt="Boutton - telephone"  src="{% static 'substitute/png/telephone.png' %}" /></div>
+        <div class="col-12 col-md-6 h3"><input type="image" height="50" width="50" alt="Boutton - email"  src="{% static 'substitute/png/mail.png' %}" /></div>
+        <div class="col-12 col-md-6 h3"> 01.02.03.04.05 </div>
+        <div class="col-12 col-md-6 h3"> contact@purebeurre.fr </div>
+        <div class="col-12"> <br/></div>
+    </div>
+</div>
+{% endblock %}

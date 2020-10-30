@@ -1,0 +1,31 @@
+{% extends 'substitute/base.html'%}
+{% block heart %}
+{% load static %}
+<style type="text/css">
+    #aliment-area
+    {
+        background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('{% static "substitute/jpg/photo_aliments.jpg" %}');
+        background-size: cover;
+        background-position: center;
+
+    }
+</style>
+<div class="container-fuid" id="aliment-area">
+    <div class="row">
+        <div class="col-12"><br/></div>
+        <div class="col-12 h1">[Nom Aliment]</div>
+        <div class="col-12 h2">{{ data }}</div>
+        <div class="col-12"><br/></div>
+    </div>
+</div>
+<div class="container-fuid">
+    <div class="row">
+        <div class="col-12"> <br/></div>
+        <div class="col-6 d-flex justify-content-center h3">Nutriscore abCde</div>
+        <div class="col-6 d-flex justify-content-center h3">Repères nutritionnels pour 100g</div>
+        <div class="col-12"> <br/></div>
+        <div class="col-12 h3"> Voir les fiches d'OpenFoodFacts !</div>
+        <div class="col-12"> <br/></div>
+    </div>
+</div>
+{% endblock %}

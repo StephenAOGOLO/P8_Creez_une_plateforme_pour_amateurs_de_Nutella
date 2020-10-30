@@ -62,6 +62,10 @@ Toutes les étapes du projet sont disponibles sur ce [Trello](https://trello.com
 ## Versions  
 
     - En cours d'étude
+    - Langage programmation : Python 3.9.0
+    - Framework : Django 3.1.2
+    - Base de données : PostgreSql 13
+    
 
 ## Rappel des liens  
 
