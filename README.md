@@ -1,6 +1,7 @@
 # P8 Creez une plateforme pour amateurs de Nutella
 [![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeH7711sJeOaZ_HOpwi3M7MjPOQeOPE2TyMxn-_NyxyHu_O2tm&s)](https://openclassrooms.com/fr)
-[![](biscuit.png)](biscuit.png) 
+[![](biscuit.png)](biscuit.png)  
+
 ## Introduction 
 
     La startup Pur Beurre, avec laquelle vous avez déjà travaillé,  
@@ -41,6 +42,7 @@ Toutes les étapes du projet sont disponibles sur ce [Trello](https://trello.com
 ### Back-End  
 
     - En cours d'étude
+
     
 ## Réalisation
 
