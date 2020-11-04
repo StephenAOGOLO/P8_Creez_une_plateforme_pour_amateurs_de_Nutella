@@ -8,6 +8,8 @@ from django.contrib import messages
 # Create your views here.
 from .forms import CreateUserForm
 
+from .operations import Data
+
 def handler404(request, exception=None):
     page = "acceuil"
     return render(request, "errors/404.html", {"data": page}, status=404)
@@ -26,7 +28,7 @@ def index(request):
 
 
 def homepage(request):
-    list_info = {"story": "Lorem ipsum dolor sit amet,"
+    context = {"story": "Lorem ipsum dolor sit amet,"
                           " consectetur adipiscing elit."
                           " Sed non risus."
                           " Suspendisse lectus tortor,"
@@ -48,7 +50,14 @@ def homepage(request):
                         " adipiscing nec, ultricies sed, dolor."
                         " Cras elementum ultrices diam.",
                  "goal": "Trouvez un produit de substitution pour ceux que vous consommez tous les jours"}
-    return render(request, "substitute/home.html", {'data': list_info})
+    if request.method == "POST":
+        raw_data = request.POST.get("raw_data")
+        session = Data(raw_data)
+        data = session.big_data
+        context["product"] = raw_data
+        context["results"] = data
+        return render(request, "substitute/results.html", context)
+    return render(request, "substitute/home.html", context)
 
 
 def results(request):
@@ -70,51 +79,44 @@ def account(request):
 
 
 def login(request):
-    #if request.user.is_authenticated:
-    #    return redirect("/substitute/home")
-    #else:
-    is_user_authenticate(request)
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            lgi(request, user)
-            return redirect("/substitute/account")
-        else:
-            messages.info(request, "Les informations saisies sont incorrectes !")
-    context = {}
-    return render(request, "registration/login.html", context)
-
-
-def is_user_authenticate(request):
     if request.user.is_authenticated:
-        return redirect("/account/account")
+        return redirect("/substitute/account")
     else:
-        pass
+        if request.method == "POST":
+            username = request.POST.get("username")
+            password = request.POST.get("password")
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                lgi(request, user)
+                return redirect("/substitute/account")
+            else:
+                messages.info(request, "Les informations saisies sont incorrectes !")
+        context = {}
+        return render(request, "registration/login.html", context)
 
 
 def logout(request):
     lgo(request)
-    return redirect("login")
+    return redirect("/substitute/home")
 
 
 def register(request):
-    #if request.user.is_authenticated:
-    #    return redirect("/substitute/home")
-    #else:
-    is_user_authenticate(request)
-    form = CreateUserForm()
-    if request.method == "POST":
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            user = form.cleaned_data.get("username")
-            text = "Bienvenue {} !!! Votre compte a bien été créé !!!".format(user)
-            messages.success(request, text)
-            return redirect("login")
-    context = {"form": form}
-    return render(request, "registration/register.html", context)
+    if request.user.is_authenticated:
+        return redirect("/substitute/account")
+    else:
+        form = CreateUserForm()
+        if request.method == "POST":
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get("username")
+                text = "Bienvenue {} !!! Votre compte a bien été créé !!!".format(user)
+                messages.success(request, text)
+                return redirect("login")
+        context = {"form": form}
+        return render(request, "registration/register.html", context)
 
 
-
+def is_user_authenticate(request):
+    if request.user.is_authenticated:
+        return redirect("/substitute/account")

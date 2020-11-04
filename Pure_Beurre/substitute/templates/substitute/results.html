@@ -13,13 +13,21 @@
 <div class="container-fuid" id="aliment-area">
     <div class="row" id="searched-aliment-area">
         <div class="col-12"><br/></div>
-        <div class="col-12 h1">Aliment cherché !!</div>
+        <div class="col-12 h1">{{ product }}</div>
         <div class="col-12"><br/></div>
     </div>
-    <div class="row">
+    <div class="row" style="align-items:center">
         <div class="col-12 h2" id="found-substitutes-area">Vous pouvez remplacez cet aliment par :</div>
-        {% for info in data %}
-            <div class="col-sm-4 col-12 h2">{{ info }}</div>
+        <div class="col-12"><br/></div>
+        {% for info in results.search %}
+        <div class="col-sm-4 col-12 h2 border offset-box-results">
+            <div class="result-items">
+                <img src="{{ info.selected_images.front.display.fr }}">
+                <a class="chocolate-text " style="text-decoration:none" href="{% url 'substitute:aliment' %}"></a>
+            </div>
+        </div>
+        <!--<div class="col-sm-4 col-12 h2 border offset-box-results"><img src="{{ info.image_small_url }}"><a class="chocolate-text " style="text-decoration:none" href="{% url 'substitute:aliment' %}"></a></div>-->
+        <!--<div class="col-sm-4 col-12 h2 offset-box-results"><img class="border" src="{{ info.image_front_small_url }}"><a class="chocolate-text " style="text-decoration:none" href="{% url 'substitute:aliment' %}"></a></div>-->
         {% endfor %}
     </div>
 </div>
