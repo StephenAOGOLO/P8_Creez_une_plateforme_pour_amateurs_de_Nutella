@@ -10,6 +10,8 @@ from .forms import CreateUserForm
 
 from .operations import Data
 
+from .models import *
+
 def handler404(request, exception=None):
     page = "acceuil"
     return render(request, "errors/404.html", {"data": page}, status=404)
@@ -53,12 +55,33 @@ def homepage(request):
     if request.method == "POST":
         raw_data = request.POST.get("raw_data")
         session = Data(raw_data)
+        store_data(session.big_data)
         data = session.big_data
         context["product"] = raw_data
         context["results"] = data
         return render(request, "substitute/results.html", context)
     return render(request, "substitute/home.html", context)
 
+
+def store_data(data):
+    data = data["formated"]
+    print(data)
+    for k, v in data.items():
+        brand = v["brand"]
+        product_name = v["product_name"]
+        nutriscore = v["nutriscore"]
+        purchase_place = str(v["purchase_place"])
+        store = str(v["store"])
+        url = v["url"]
+        an_aliment = Aliment(
+            brand=brand,
+            name=product_name,
+            nutriscore=nutriscore,
+            purchase_places=purchase_place,
+            store=store,
+            url=url
+        )
+        an_aliment.save()
 
 def results(request):
     list_info = ["info_1", "info_2", "info_3", "info_4", "info_5", "info_6"]

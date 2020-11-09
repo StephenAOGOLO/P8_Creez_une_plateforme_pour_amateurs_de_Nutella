@@ -41,9 +41,11 @@ class Data:
     #    print("La récupération des données depuis le serveur OpenFoodFacts est en cours...")
         all_data = self.response_urls(all_data)
         all_data["rcvd"]["aliments"] = {}
+        all_data["rcvd"]["formated"] = {}
     #    print("Récupération des données terminée OpenFoodFacts avec succès")
-    #    print("Organisation des données en cours...")
+        print("Organisation des données en cours...")
         all_data = get_data(all_data)
+        all_data = formatting_data(all_data)
     #    all_data = get_aliments(all_data)
     #    print("Préparation des données pour l'interface en cours...")
     #    print("Préparation des données pour la base de données en cours...")
@@ -52,7 +54,8 @@ class Data:
     #    all_data = prepare_sql_values(all_data)
     #    all_data = prepare_hmi_values(all_data)
     #    all_data = classify_ihm_values(all_data)
-    #    print("Préparation des données terminée!!!")
+        print("Préparation des données terminée!!!")
+        print("Préparation des données terminée!!!")
     #    print("Initialisation du système terminée avec succès.\n")
         return all_data
 
@@ -87,6 +90,29 @@ class Data:
             response = response["products"]
             all_data["rcvd"][url_name] = response
         return all_data
+
+
+def formatting_data(data):
+    #formated = data["rcvd"]["formated"]
+    forbidden_char = "[]{}'"
+    for i, e in enumerate(data["search"]):
+        formated = {}
+        if "nutriscore_data" in e.keys():
+            formated["nutriscore"] = e["nutriscore_data"]["grade"]
+            formated["url"] = e["url"]
+            formated["product_name"] = e["product_name_fr"]
+            formated["brand"] = e["brands"].replace(",",", ")
+            #formated["brand"] = str(e["brands_tags"]).replace("'", "")
+            formated["purchase_place"] = e["purchase_places"].replace(",",", ")
+            #formated["purchase_place"] = str(e["purchase_places_tags"]).replace("'","")
+            formated["store"] = e["stores"].replace(",",", ")
+            #formated["store"] = str(e["stores_tags"]).replace("'","")
+            data["formated"][i] = formated
+            print("\n-")
+            print(formated)
+            print("-\n")
+    return data
+    #data["rcvd"]["formated"] =
 
 
 def get_data(data):
@@ -126,16 +152,7 @@ def get_aliments(data):
     return data
 
 if __name__ == "__main__":
-    session = Data("pizza")
+    session = Data("biscuit")
     result = session.big_data
     print("\n")
-    #print(result["search"])
-    print("\n")
-    print("\n")
-    print(result["search"][0]["product_name"])
-    print(result["search"][0]["nutriscore_grade"])
-    print(result["search"][0]["brands"])
-    print(result["search"][0]["stores"])
-    print(result["search"][0]["purchase_places"])
-    print(result["search"][0]["url"])
     print("\n")
