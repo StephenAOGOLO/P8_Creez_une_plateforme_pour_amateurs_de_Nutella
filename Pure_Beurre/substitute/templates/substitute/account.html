@@ -9,25 +9,14 @@
         background-position: center;
     }
 </style>
-<div class="container-fuid" id="account-area">
-    <div class="row">
-        <div class="col-12" id="account-username">
-            <div class="col-12"> <br/></div>
-            <h2>{{ salutation }}</h2>
-            <div class="col-12"> <br/></div>
-            <h3>{{ request.user }}</h3>
-            <div class="col-12"> <br/></div>
-        </div>
+<div class="container-fluid" id="account-area">
+    <div class="col-12 d-flex justify-content-center"><h2>{{ salutation }}</h2></div>
+    <div class="col-12 d-flex justify-content-center" id="account-username"><h3>{{ request.user }}</h3></div>
     </div>
 </div>
-<div class="container-fuid">
-    <div class="row">
+<div class="container-fluid">
         <div class="col-12 h2 d-flex justify-content-center" id="account-usermail">
-            <div class="col-12"> <br/></div>
-            <div class="col-12"> <br/></div>
             <h3>{{ request.user.email }}</h3>
-            <div class="col-12"> <br/></div>
-            <div class="col-12"> <br/></div>
         </div>
     </div>
 </div>

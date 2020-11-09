@@ -10,18 +10,28 @@
 
     }
 </style>
-<div class="container-fuid" id="aliment-area">
+<div class="container-fluid" id="aliment-area">
     <div class="row">
         <div class="col-12"><br/></div>
-        <div class="col-12 h1">[Nom Aliment]</div>
-        <div class="col-12 h2">{{ <div class="col-sm-4 col-12 h2 border offset-box-results"><img src="{{ info.selected_images.ingredients.display.fr }}"><a class="chocolate-text " style="text-decoration:none" href="{% url 'substitute:aliment' %}"></a></div> }}</div>
-        <div class="col-sm-4 col-12 h2 border offset-box-results"><img src="{{ info.selected_images.nutrition.display.fr }}"><a class="chocolate-text " style="text-decoration:none" href="{% url 'substitute:aliment' %}"></a></div>
+        <div class="col-12 h1 justify-content-center"> {{ info.product_name }} </div>
         <div class="col-12"><br/></div>
     </div>
 </div>
-<div class="container-fuid">
+<div class="container-fluid">
     <div class="row">
         <div class="col-12"> <br/></div>
+                <div class="col-12 h2">
+                <img src="{{ info.selected_images.ingredients.display.fr }}">
+                <a class="chocolate-text " style="text-decoration:none" href="{% url 'substitute:aliment' %}">
+
+                </a>
+        </div>
+        <div class="col-12 h2">
+            <img src="{{ info.selected_images.nutrition.display.fr }}">
+            <a class="chocolate-text " style="text-decoration:none" href="{% url 'substitute:aliment' %}">
+
+            </a>
+        </div>
         <div class="col-6 d-flex justify-content-center h3">Nutriscore abCde</div>
         <div class="col-6 d-flex justify-content-center h3">Repères nutritionnels pour 100g</div>
         <div class="col-12"> <br/></div>

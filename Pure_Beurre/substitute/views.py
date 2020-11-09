@@ -67,6 +67,11 @@ def results(request):
 
 def aliment(request):
     context = {}
+    raw_data = "biscuit"
+    session = Data(raw_data)
+    data = session.big_data
+    context["product"] = raw_data
+    context["results"] = data
     context["opfofa"] = "https://fr.openfoodfacts.org"
     return render(request, "substitute/aliment.html", context)
 

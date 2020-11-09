@@ -9,11 +9,19 @@
 @import url("http://fonts.googleapis.com/css?family=Open+Sans") ;
 @import url("http://fonts.googleapis.com/css?family=Scope+One") ;
 
+.font-1
+{
+    font-size: 1rem;
+}
+
+
 /* Bootstrap */
 .border
 {
   border: 1px solid #C45525 !important;
 }
+
+
 
 .bg-light
 {
@@ -306,7 +314,20 @@ body
   }
 }
 
+/* Results */
+.result-img
+{
+    width : 10%;
+}
 
+.results-box
+{
+    /*display : block;
+    float : left;
+    align : center;
+    align-items : center;*/
+    align-items : auto;
+}
 
 
 /* Colors */
@@ -334,4 +355,17 @@ body
 .chocolate-text
 {
     color: #C45525;
+}
+
+.nutriscore_tag
+{
+	position: relative;
+	height: 80px;
+	width: 80px;
+	top: -20px;
+	left: 90%;
+	border-radius: 50%;
+	background: #86EBE6;
+	padding: 5%;
+	text-align: center;
 }
