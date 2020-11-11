@@ -1,3 +1,4 @@
 {
-  "search": "https://fr.openfoodfacts.org/cgi/search.pl?search_simple=1&action=process&json=1&search_terms="
+  "aliments": "https://fr.openfoodfacts.org/cgi/search.pl?search_simple=1&action=process&json=1&search_terms=",
+  "categories": "https://fr.openfoodfacts.org/categories.json"
 }

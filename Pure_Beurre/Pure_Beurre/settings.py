@@ -125,3 +125,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ("substitute/static",)
+
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 20000

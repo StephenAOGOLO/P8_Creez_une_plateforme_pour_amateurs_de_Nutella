@@ -11,7 +11,9 @@ class Users(models.Model):
 
 
 class Category(models.Model):
+    id_name = models.CharField(max_length=500, null=True)
     name = models.CharField(max_length=500, null=True)
+    url = models.URLField(max_length=500, null=True)
 
     def __str__(self):
         return self.name

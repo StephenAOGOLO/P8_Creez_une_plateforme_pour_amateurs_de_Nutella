@@ -40,10 +40,8 @@ class Data:
         all_data = self.request_urls(all_data)
     #    print("La récupération des données depuis le serveur OpenFoodFacts est en cours...")
         all_data = self.response_urls(all_data)
-        all_data["rcvd"]["aliments"] = {}
-        all_data["rcvd"]["formated"] = {}
     #    print("Récupération des données terminée OpenFoodFacts avec succès")
-        print("Organisation des données en cours...")
+    #    print("Organisation des données en cours...")
         all_data = get_data(all_data)
         all_data = formatting_data(all_data)
     #    all_data = get_aliments(all_data)
@@ -54,8 +52,8 @@ class Data:
     #    all_data = prepare_sql_values(all_data)
     #    all_data = prepare_hmi_values(all_data)
     #    all_data = classify_ihm_values(all_data)
-        print("Préparation des données terminée!!!")
-        print("Préparation des données terminée!!!")
+    #    print("Préparation des données terminée!!!")
+    #    print("Préparation des données terminée!!!")
     #    print("Initialisation du système terminée avec succès.\n")
         return all_data
 
@@ -83,40 +81,58 @@ class Data:
         :return all_data:
         """
         for url_name, url in all_data["sent"]["urls"].items():
-            url = url + self.raw_data
-
-            response = requests.get(url)
-            response = json.loads(response.content.decode("utf-8"))
-            response = response["products"]
+            if url_name == "aliments":
+                url = url + self.raw_data
+                response = requests.get(url)
+                response = json.loads(response.content.decode("utf-8"))
+                response = response["products"]
+            elif url_name == "categories":
+                response = requests.get(url)
+                response = json.loads(response.content.decode("utf-8"))
+                response = response["tags"]
             all_data["rcvd"][url_name] = response
         return all_data
 
 
 def formatting_data(data):
-    #formated = data["rcvd"]["formated"]
-    forbidden_char = "[]{}'"
-    for i, e in enumerate(data["search"]):
-        formated = {}
-        if "nutriscore_data" in e.keys():
-            formated["nutriscore"] = e["nutriscore_data"]["grade"]
-            formated["url"] = e["url"]
-            formated["product_name"] = e["product_name_fr"]
-            formated["brand"] = e["brands"].replace(",",", ")
-            #formated["brand"] = str(e["brands_tags"]).replace("'", "")
-            formated["purchase_place"] = e["purchase_places"].replace(",",", ")
-            #formated["purchase_place"] = str(e["purchase_places_tags"]).replace("'","")
-            formated["store"] = e["stores"].replace(",",", ")
-            #formated["store"] = str(e["stores_tags"]).replace("'","")
-            data["formated"][i] = formated
-            print("\n-")
-            print(formated)
-            print("-\n")
+    data = formatting_aliments(data)
+    data = formatting_categories(data)
     return data
-    #data["rcvd"]["formated"] =
+
+
+def formatting_categories(data):
+    for i, e in enumerate(data["rcvd"]["categories"]):
+        categories = {}
+        check_data = "known"
+        if check_data in e.keys() and e[check_data] == 1:
+            categories["id"] = e["id"].replace("en:","")
+            categories["name"] = e["name"]
+            categories["url"] = e["url"]
+            data["rcvd"]["essentials"]["categories"][i] = categories
+    return data
+
+
+def formatting_aliments(data):
+    for i, e in enumerate(data["rcvd"]["aliments"]):
+        aliments = {}
+        check_data = "nutriscore_data"
+        if check_data in e.keys():
+            aliments["nutriscore"] = e["nutriscore_data"]["grade"]
+            aliments["url"] = e["url"]
+            aliments["product_name"] = e["product_name_fr"]
+            aliments["categories"] = e["categories"]
+            aliments["brand"] = e["brands"].replace(",",", ")
+            aliments["purchase_place"] = e["purchase_places"].replace(",",", ")
+            aliments["store"] = e["stores"].replace(",",", ")
+            aliments["images"] = e["selected_images"]
+            data["rcvd"]["essentials"]["aliments"][i] = aliments
+    return data
 
 
 def get_data(data):
-    data = data["rcvd"]
+    data["rcvd"]["essentials"] = {}
+    data["rcvd"]["essentials"]["aliments"] = {}
+    data["rcvd"]["essentials"]["categories"] = {}
     return data
 
 def get_aliments(data):
@@ -151,8 +167,12 @@ def get_aliments(data):
                         = "NOT_PROVIDED"
     return data
 
+
+
+
 if __name__ == "__main__":
+
     session = Data("biscuit")
     result = session.big_data
-    print("\n")
+    print("fin d'operation")
     print("\n")

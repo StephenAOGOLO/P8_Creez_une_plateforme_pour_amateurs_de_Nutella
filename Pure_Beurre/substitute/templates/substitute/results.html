@@ -19,16 +19,16 @@
     <div class="row" style="align-items:center">
         <div class="col-12 h2" id="found-substitutes-area">Vous pouvez remplacez cet aliment par :</div>
         <div class="col-12"><br/></div>
-        {% for info in results.search %}
+        {% for key, value in results.rcvd.essentials.aliments.items %}
         <div class="col-sm-4 col-12 h2">
             <div class="col-8 h2 border"style="margin-left:auto">
-                <div class="col-12 nutriscore_tag chocolate-text border">{{ info.nutriscore_grade }}</div>
-                <div><img src="{{ info.selected_images.front.small.fr }}"></div>
+                <div class="col-12 nutriscore_tag chocolate-text border">{{ value.nutriscore }}</div>
+                <div><img src="{{ value.images.front.small.fr }}"></div>
                 <div class="col-12 justify-content-center">
                     <div class="col-12"><br/></div>
                     <a href="{% url 'substitute:aliment' %}" class="chocolate-text " style="text-decoration:none">
-                        <div class="col-12 justify-content-center font-1"> {{ info.product_name }} </div>
-                        <div class="col-12 justify-content-center font-1"> {{ info.brands }} </div>
+                        <div class="col-12 justify-content-center font-1"> {{ value.product_name }} </div>
+                        <div class="col-12 justify-content-center font-1"> {{ value.brand }} </div>
                     </a>
                     <div class="col-12"><br/></div>
                     <form method="GET" class="form-inline my-2 my-lg-0">
