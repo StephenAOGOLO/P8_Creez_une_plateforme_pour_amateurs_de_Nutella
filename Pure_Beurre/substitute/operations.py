@@ -11,6 +11,68 @@ import logging as lg
 import json
 import requests
 from django.http import JsonResponse, HttpRequest, HttpResponse
+from substitute.models import Category, Aliment
+
+
+
+class DataEngine:
+    def __init__(self, raw_data):
+        self.raw_data = raw_data
+        self.categories = self.get_all_categories()
+        self.aliments = self.get_aliments()
+        self.big_data = self.formatting_result()
+
+    def get_all_categories(self):
+        all_categories = Category.objects.all()
+        #print(all_categories)
+        candidate = []
+        #print("***")
+        #print(self.raw_data)
+        #print("***")
+        for e in all_categories:
+            #print(e.name)
+            if self.raw_data in str(e.name):
+                candidate.append(e)
+            if self.raw_data in str(e.id_name):
+                candidate.append(e)
+        #print(candidate)
+        return candidate
+
+    def get_aliments(self):
+        candidate = []
+        #print(self.categories)
+        for e in self.categories:
+            #print(e.id)
+            try:
+                aliment = Aliment.objects.get(tag=e.id)
+                candidate.append(aliment)
+            except Exception as e:
+                print(e)
+        all_aliments = Aliment.objects.all()
+        for e in all_aliments:
+            try:
+                if self.raw_data in e.category:
+                    candidate.append(e)
+            except:
+                print(e)
+        #print(candidate)
+        return candidate
+
+    def formatting_result(self):
+        result = {}
+        for i, e in enumerate(self.aliments):
+            result[i] = {}
+            result[i]["brand"] = e.brand
+            result[i]["name"] = e.name
+            result[i]["nutriscore"] = e.nutriscore
+            result[i]["purchase_places"] = e.purchase_places
+            result[i]["store"] = e.store
+            result[i]["url"] = e.url
+            result[i]["url_image"] = e.url_image
+        return result
+
+
+
 
 
 class Data:
@@ -173,7 +235,11 @@ def get_aliments(data):
 
 if __name__ == "__main__":
 
-    session = Data("biscuit")
+    #session = Data("biscuit")
+    #result = session.big_data
+    #print("fin d'operation")
+    ##print("\n")
+
+    session = DataEngine("biscuit")
     result = session.big_data
-    print("fin d'operation")
-    print("\n")
+    print("ok")

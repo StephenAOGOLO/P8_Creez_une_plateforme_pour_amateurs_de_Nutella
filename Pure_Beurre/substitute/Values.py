@@ -5,7 +5,7 @@ from .models import Aliment as AlimentDB, Category as CategoryDB
 
 class AlimentValue:
     """"""
-    def __init__(self, brand, product_name, category, nutriscore, purchase_place, store, url):
+    def __init__(self, brand, product_name, category, nutriscore, purchase_place, store, url, url_image):
         #print("\n**** creation aliment en cours ****\n")
         self.brand = brand
         self.product_name = product_name
@@ -14,6 +14,7 @@ class AlimentValue:
         self.purchase_place = purchase_place
         self.store = store
         self.url = url
+        self.url_image = url_image
 
     def store_items(self):
 
@@ -24,6 +25,7 @@ class AlimentValue:
         an_aliment.nutriscore = self.nutriscore
         an_aliment.store = self.store
         an_aliment.url = self.url
+        an_aliment.url_image = self.url_image
         str_cat = ""
         for e in self.category:
             str_cat = str_cat+" "+e

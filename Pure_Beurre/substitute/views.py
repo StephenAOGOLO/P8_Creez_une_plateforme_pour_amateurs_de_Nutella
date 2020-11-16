@@ -8,7 +8,7 @@ from django.contrib import messages
 # Create your views here.
 from .forms import CreateUserForm
 
-from .operations import Data
+from .operations import Data, DataEngine
 
 #from .Values import AlimentValue, CategoryValue
 
@@ -56,9 +56,12 @@ def homepage(request):
                  "goal": "Trouvez un produit de substitution pour ceux que vous consommez tous les jours"}
     if request.method == "POST":
         raw_data = request.POST.get("raw_data")
-        session = Data(raw_data)
-        store_data(session.big_data)
-        data = session.big_data
+        #session = Data(raw_data)
+        #store_data(session.big_data)
+        result_engine = DataEngine(raw_data)
+        data = result_engine.big_data
+        print(data)
+        #data = session.big_data
         context["product"] = raw_data
         context["results"] = data
         return render(request, "substitute/results.html", context)
@@ -221,3 +224,5 @@ def is_user_authenticate(request):
 #                the_aliments.store_items()
 #        else:
 #            print("KO")
+
+

@@ -31,6 +31,7 @@ class Aliment(models.Model):
     store = models.CharField(max_length=500, null=True)
     purchase_places = models.CharField(max_length=500, null=True)
     url = models.URLField(max_length=500, null=True)
+    url_image = models.URLField(max_length=500, null=True)
 
     def __str__(self):
         return self.name
