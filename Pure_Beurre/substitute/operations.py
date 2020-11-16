@@ -120,7 +120,8 @@ def formatting_aliments(data):
             aliments["nutriscore"] = e["nutriscore_data"]["grade"]
             aliments["url"] = e["url"]
             aliments["product_name"] = e["product_name_fr"]
-            aliments["categories"] = e["categories"]
+            #aliments["categories"] = e["categories"]
+            aliments["categories"] = [e_1.replace("en:", "") for e_1 in e["categories_hierarchy"]]
             aliments["brand"] = e["brands"].replace(",",", ")
             aliments["purchase_place"] = e["purchase_places"].replace(",",", ")
             aliments["store"] = e["stores"].replace(",",", ")

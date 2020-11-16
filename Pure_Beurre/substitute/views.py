@@ -180,7 +180,7 @@ def store_data(data):
         #print(k)
         if k == check_categories:
         #elif k == check_categories and "id" in v.keys():
-            print(k)
+            #print(k)
             for k_1, v_1 in v.items():
                 id_name = v_1["id"]
                 name = v_1["name"]
@@ -190,10 +190,12 @@ def store_data(data):
                     name=name,
                     url=url
                 )
-                print("\n" + "*" * 10)
-                print("Lancement sauvegarde category")
-                print("*" * 10 + "\n")
+                #print("\n" + "*" * 10)
+                #print("Lancement sauvegarde category")
+                #print("*" * 10 + "\n")
                 the_categories.store_items()
+            #print("\n**** categories creees ****\n")
+    for k, v in data.items():
         if k == check_aliments:
             for k_1, v_1 in v.items():
                 #print(v_1["brand"])

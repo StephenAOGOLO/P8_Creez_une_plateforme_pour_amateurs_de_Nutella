@@ -19,9 +19,13 @@ class Category(models.Model):
         return self.name
 
 
+
+
+
 class Aliment(models.Model):
     name = models.CharField(max_length=500, null=True)
-    category = models.ManyToManyField(Category)
+    tag = models.ManyToManyField(Category)
+    category = models.CharField(max_length=500, null=True)
     brand = models.CharField(max_length=500, null=True)
     nutriscore = models.CharField(max_length=1, null=True)
     store = models.CharField(max_length=500, null=True)
@@ -33,9 +37,12 @@ class Aliment(models.Model):
 
 
 class Historic(models.Model):
-    user = models.ForeignKey(Users, null=True, on_delete=models.SET_NULL)
-    aliment = models.ForeignKey(Aliment, related_name="aliment", null=True, on_delete=models.SET_NULL)
-    substitute = models.ForeignKey(Aliment,related_name="substitute", null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(Users, null=True, on_delete=models.CASCADE)
+    aliment = models.ForeignKey(Aliment, related_name="aliment", null=True, on_delete=models.CASCADE)
+    substitute = models.ForeignKey(Aliment,related_name="substitute", null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
+
+
+
