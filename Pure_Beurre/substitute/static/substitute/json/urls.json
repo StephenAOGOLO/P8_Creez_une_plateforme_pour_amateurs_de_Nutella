@@ -1,13 +1,5 @@
 {
   "aliments": "https://fr.openfoodfacts.org/cgi/search.pl?search_simple=1&action=process&json=1&page_size=50&search_terms=",
   "categories": "https://fr.openfoodfacts.org/categories.json",
-  "target":
-  {
-    "snacks": "snacks",
-    "sweet-snacks": "sweet-snacks",
-    "meats": "meats",
-    "meals": "meals",
-    "biscuits-and-cakes": "biscuits-and-cakes",
-    "breakfasts": "breakfasts"
-  }
+  "target": ["biscuit", "jus", "yahourt", "pizza", "tarte", "soupe", "frites"]
 }

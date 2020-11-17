@@ -80,16 +80,19 @@ class Data:
     Data class create an instance which centralizing
     all pure data coming from Openfoodfacts server.
     """
-    def __init__(self, raw_data):
+    def __init__(self):
         """
         Init constructor has two attributes:
         json_url_file : URLS file path needed to request OpFoFa server.
         big_data : Containing OpFoFa response, sliced and sorted.
         'big_data' is a dict.
         """
-        self.raw_data = raw_data
+
         self.json_url_file = ".\\substitute\\static\\substitute\\json\\urls.json"
         #self.json_url_file = ".\\static\\substitute\\json\\urls.json"
+        #self.all_data = self.request_urls()
+        #self.target = self.all_data["sent"]["urls"]["target"]
+        #self.raw_data = raw_data
         self.big_data = self.load_api_data()
 
     def load_api_data(self):
@@ -98,9 +101,11 @@ class Data:
          getting, slicing and sorting
          before the data providing.
          """
-        all_data = {"sent": {}, "rcvd": {}}
-        all_data = self.request_urls(all_data)
+
+        #all_data = self.request_urls()
     #    print("La récupération des données depuis le serveur OpenFoodFacts est en cours...")
+        #all_data = self.all_data
+        all_data = self.request_urls()
         all_data = self.response_urls(all_data)
     #    print("Récupération des données terminée OpenFoodFacts avec succès")
     #    print("Organisation des données en cours...")
@@ -126,13 +131,18 @@ class Data:
             data = json.load(file)
         return data
 
-    def request_urls(self, all_data):
+    def get_target(self, all_data):
+        return all_data["sent"]["urls"]["target"]
+
+    def request_urls(self):
         """
         'request_urls' method adds url requests into the big data
         :param all_data:
         :return all_data:
         """
+        all_data = {"sent": {}, "rcvd": {}}
         all_data["sent"]["urls"] = self.open_json_file()
+        self.target = self.get_target(all_data)
         return all_data
 
     def response_urls(self, all_data):
@@ -142,23 +152,76 @@ class Data:
         :param all_data:
         :return all_data:
         """
+
         for url_name, url in all_data["sent"]["urls"].items():
             if url_name == "aliments":
-                url = url + self.raw_data
-                response = requests.get(url)
-                response = json.loads(response.content.decode("utf-8"))
-                response = response["products"]
-            elif url_name == "categories":
+                all_data["rcvd"][url_name] = {}
+                for raw_data in self.target:
+                    all_data["rcvd"][url_name][raw_data] = {}
+                    #if url_name == "aliments":
+                    new_url = url + raw_data
+                    #url = url + self.raw_data
+                    response = requests.get(new_url)
+                    response = json.loads(response.content.decode("utf-8"))
+                    response = response["products"]
+                    all_data["rcvd"][url_name][raw_data] = response
+        for url_name, url in all_data["sent"]["urls"].items():
+            #all_data["rcvd"][url_name] = {}
+            if url_name == "categories":
+                #url = url + self.raw_data + ".json"
                 response = requests.get(url)
                 response = json.loads(response.content.decode("utf-8"))
                 response = response["tags"]
-            all_data["rcvd"][url_name] = response
+                all_data["rcvd"][url_name] = response
+                #response = response["products"]
+            elif url_name == "target":
+                response = url
+                all_data["rcvd"][url_name] = response
+
+
+                #self.all_data["rcvd"][url_name] = response
         return all_data
 
 
 def formatting_data(data):
     data = formatting_aliments(data)
     data = formatting_categories(data)
+    data = cleaning_categories(data)
+
+    return data
+
+
+def cleaning_categories(data):
+    cleaner = data["rcvd"]["essentials"]["aliments"]
+    cleaned = data["rcvd"]["essentials"]["categories"]
+    list_big = []
+    list_cleaner = []
+    dict_cleaned = {}
+    for k, v in cleaner.items():
+        for k_1, v_1 in v.items():
+            for e in v_1["categories"]:
+                list_big.append(e)
+    for e in list_big:
+        if not e in list_cleaner:
+            list_cleaner.append(e)
+    data["cleaner_categories"] = list_cleaner
+    for k, v in cleaned.items():
+        if not v["id"] in list_cleaner:
+            continue
+        dict_cleaned[k] = v
+    data["cleaned_categories"] = dict_cleaned
+    return data
+
+
+def uptodate_formatting_categories(data):
+    for i, e in enumerate(data["rcvd"]["categories"]):
+        categories = {}
+        #check_data = "known"
+        #if check_data in e.keys() and e[check_data] == 1:
+        categories["id"] = e["id"].replace("en:","")
+        categories["name"] = e["product_name"]
+        categories["url"] = e["url"]
+        data["rcvd"]["essentials"]["categories"][i] = categories
     return data
 
 
@@ -174,21 +237,34 @@ def formatting_categories(data):
     return data
 
 
+
+
+
+
+
 def formatting_aliments(data):
-    for i, e in enumerate(data["rcvd"]["aliments"]):
-        aliments = {}
-        check_data = "nutriscore_data"
-        if check_data in e.keys():
-            aliments["nutriscore"] = e["nutriscore_data"]["grade"]
-            aliments["url"] = e["url"]
-            aliments["product_name"] = e["product_name_fr"]
-            #aliments["categories"] = e["categories"]
-            aliments["categories"] = [e_1.replace("en:", "") for e_1 in e["categories_hierarchy"]]
-            aliments["brand"] = e["brands"].replace(",",", ")
-            aliments["purchase_place"] = e["purchase_places"].replace(",",", ")
-            aliments["store"] = e["stores"].replace(",",", ")
-            aliments["images"] = e["selected_images"]
-            data["rcvd"]["essentials"]["aliments"][i] = aliments
+    aliments = {}
+    for k, v in data["rcvd"]["aliments"].items():
+        data["rcvd"]["essentials"]["aliments"][k] = {}
+        #aliments[k] = {}
+        for i, e in enumerate(v):
+        #for i, e in enumerate(data["rcvd"]["aliments"]):
+            aliments = {}
+            check_data = "nutriscore_data"
+            if check_data in e.keys():
+                try:
+                    aliments["nutriscore"] = e["nutriscore_data"]["grade"]
+                    aliments["url"] = e["url"]
+                    aliments["product_name"] = e["product_name_fr"]
+                    #aliments["categories"] = e["categories"]
+                    aliments["categories"] = [e_1.replace("en:", "") for e_1 in e["categories_hierarchy"]]
+                    aliments["brand"] = e["brands"].replace(",",", ")
+                    aliments["purchase_place"] = e["purchase_places"].replace(",",", ")
+                    aliments["store"] = e["stores"].replace(",",", ")
+                    aliments["images"] = e["selected_images"]
+                    data["rcvd"]["essentials"]["aliments"][k][i] = aliments
+                except Exception as e:
+                    print(e)
     return data
 
 
@@ -235,11 +311,13 @@ def get_aliments(data):
 
 if __name__ == "__main__":
 
-    #session = Data("biscuit")
-    #result = session.big_data
-    #print("fin d'operation")
+
+
+    session = Data()
+    result = session.big_data
+    print("fin d'operation")
     ##print("\n")
 
-    session = DataEngine("biscuit")
-    result = session.big_data
-    print("ok")
+    #session = DataEngine("biscuit")
+    #result = session.big_data
+    #print("ok")
