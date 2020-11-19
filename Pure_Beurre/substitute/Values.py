@@ -1,12 +1,13 @@
 """"""
 # -*- coding: utf-8 -*-
+import logging as lg
 from .models import Aliment as AlimentDB, Category as CategoryDB
+lg.basicConfig(level=lg.INFO)
 
 
 class AlimentValue:
     """"""
     def __init__(self, brand, product_name, category, nutriscore, purchase_place, store, url, url_image):
-        #print("\n**** creation aliment en cours ****\n")
         self.brand = brand
         self.product_name = product_name
         self.category = category
@@ -30,48 +31,22 @@ class AlimentValue:
         for e in self.category:
             str_cat = str_cat+" "+e
         an_aliment.category = str_cat
-        print("LES ALIMENTS")
-        #print(self.category)
         an_aliment.save()
+        print("Enregistrement de l'aliment :\n{}\n".format(an_aliment))
         for i, e in enumerate(self.category):
-            print("before statement")
             try:
-                status = bool(CategoryDB.objects.get(id_name=e))
-                print(status)
                 if CategoryDB.objects.get(id_name=e):
-                    print("after statement")
-                    print(e)
-                    print(CategoryDB.objects.get(id_name=e))
-        #        if CategoryDB.objects.get(id_name=e):
-        #            an_aliment.category = e
-                    print("before his category")
                     his_category = CategoryDB.objects.get(id_name=e)
-                    print("after his category")
                     an_aliment.tag.add(his_category)
-                    print("after add")
             except Exception as e:
-                print(e)
+                lg.debug(e)
 
-
-        #an_aliment = AlimentDB(
-        #    brand=self.brand,
-        #    name=self.product_name,
-        #    category=self.category,
-        #    nutriscore=self.nutriscore,
-        #    purchase_places=self.purchase_place,
-        #    store=self.store,
-        #    url=self.url
-        #)
-        #print("\n**** aliment cree ****\n")
-        #an_aliment.save()
-        #an_aliment.tag.add(self.category)
 
 
 class CategoryValue:
     """"""
 
     def __init__(self, id_name, name, url):
-        #print("\n**** creation aliment en cours ****\n")
         self.id_name = id_name
         self.name = name
         self.url = url
@@ -82,9 +57,6 @@ class CategoryValue:
             name=self.name,
             url=self.url
         )
-        #print("\n**** categorie cree ****\n")
         a_category.save()
+        print("Enregistrement de la catégorie :\n{}\n".format(a_category))
 
-if __name__ == "__main__":
-
-    pass
