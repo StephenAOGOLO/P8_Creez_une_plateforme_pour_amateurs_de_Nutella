@@ -7,7 +7,7 @@ lg.basicConfig(level=lg.INFO)
 
 class AlimentValue:
     """"""
-    def __init__(self, brand, product_name, category, nutriscore, purchase_place, store, url, url_image):
+    def __init__(self, brand, product_name, category, nutriscore, purchase_place, store, url, url_image, energy_img, energy_kj, energy_kcal, energy_kj_unit, energy_kcal_unit):
         self.brand = brand
         self.product_name = product_name
         self.category = category
@@ -16,6 +16,11 @@ class AlimentValue:
         self.store = store
         self.url = url
         self.url_image = url_image
+        self.energy_img = energy_img
+        self.energy_kj = energy_kj
+        self.energy_kj_unit = energy_kj_unit
+        self.energy_kcal = energy_kcal
+        self.energy_kcal_unit = energy_kcal_unit
 
     def store_items(self):
 
@@ -27,6 +32,13 @@ class AlimentValue:
         an_aliment.store = self.store
         an_aliment.url = self.url
         an_aliment.url_image = self.url_image
+
+        an_aliment.image_nutriments = self.energy_img
+        an_aliment.energy_kcal = self.energy_kcal
+        an_aliment.energy_kcal_unit = self.energy_kcal_unit
+        an_aliment.energy_kj = self.energy_kj
+        an_aliment.energy_kj_unit = self.energy_kj_unit
+
         str_cat = ""
         for e in self.category:
             str_cat = str_cat+" "+e

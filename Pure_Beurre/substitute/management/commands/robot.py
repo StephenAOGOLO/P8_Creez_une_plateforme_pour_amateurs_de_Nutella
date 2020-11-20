@@ -54,6 +54,12 @@ def fill_aliment(data):
                 store = str(v_2["store"])
                 url = v_2["url"]
                 url_image = v_2["images"]["front"]["small"]["fr"]
+
+                nutriments_image = v_2["nutriments_image"]
+                nutriments_energy_kj = v_2["nutriments_energy_kj"]
+                nutriments_energy_kj_unit = v_2["nutriments_energy_kj_unit"]
+                nutriments_energy_kcal = v_2["nutriments_energy_kcal"]
+                nutriments_energy_kcal_unit = v_2["nutriments_energy_kcal_unit"]
                 the_aliments = AlimentValue(
                     brand=brand,
                     product_name=product_name,
@@ -62,7 +68,12 @@ def fill_aliment(data):
                     purchase_place=purchase_place,
                     store=store,
                     url=url,
-                    url_image=url_image
+                    url_image=url_image,
+                    energy_img=nutriments_image,
+                    energy_kj=nutriments_energy_kj,
+                    energy_kj_unit=nutriments_energy_kj_unit,
+                    energy_kcal=nutriments_energy_kcal,
+                    energy_kcal_unit=nutriments_energy_kcal_unit
                 )
                 the_aliments.store_items()
 

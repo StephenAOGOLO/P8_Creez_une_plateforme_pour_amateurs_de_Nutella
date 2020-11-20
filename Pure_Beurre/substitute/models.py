@@ -28,6 +28,13 @@ class Aliment(models.Model):
     category = models.CharField(max_length=500, null=True)
     brand = models.CharField(max_length=500, null=True)
     nutriscore = models.CharField(max_length=1, null=True)
+
+    image_nutriments = models.URLField(max_length=500, null=True)
+    energy_kj = models.CharField(max_length=100, null=True)
+    energy_kj_unit = models.CharField(max_length=100, null=True)
+    energy_kcal = models.CharField(max_length=100, null=True)
+    energy_kcal_unit = models.CharField(max_length=100, null=True)
+
     store = models.CharField(max_length=500, null=True)
     purchase_places = models.CharField(max_length=500, null=True)
     url = models.URLField(max_length=500, null=True)

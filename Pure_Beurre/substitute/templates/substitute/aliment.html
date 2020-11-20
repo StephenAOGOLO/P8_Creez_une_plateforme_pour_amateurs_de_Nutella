@@ -5,9 +5,17 @@
     #aliment-area
     {
         background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('{{ aliment.url_image}}');
-        background-size: 200px 500px;;
+        background-size: 200px 500px;
         background-position: center;
 
+
+    }
+    .certificate
+    {
+        background : url('{% static "substitute/jpg/certificate.jpg" %}');
+        background-size: 50% 100%;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 </style>
 <div class="container-fluid" id="aliment-area">
@@ -27,18 +35,31 @@
                     <img src="{{ aliment.url_image}}">
                     <a class="chocolate-text " style="text-decoration:none" href="{% url 'substitute:aliment' aliment.id %}"></a>
                 </div>
-        <div class="col-4"></div>
-        <div class="col-8 h2 d-flex justify-content-left chocolate-text">Marque : {{ aliment.brand|upper }}</div>
-        <div class="col-4"></div>
-        <div class="col-8 h2 d-flex justify-content-left chocolate-text">Produit : {{ aliment.name }}</div>
-        <div class="col-4"></div>
-        <div class="col-8 h2 d-flex justify-content-left chocolate-text">Magasin(s) : {{ aliment.store }}</div>
-        <div class="col-4"></div>
-        <div class="col-8 h2 d-flex justify-content-left chocolate-text">Lieu(x) de vente : {{ aliment.purchase_places }}</div>
+        <div class="col-12 h2 d-flex justify-content-center chocolate-text">Marque : {{ aliment.brand|upper }}</div>
+        <div class="col-12 h2 d-flex justify-content-center chocolate-text">Produit : {{ aliment.name }}</div>
+        <div class="col-12 h2 d-flex justify-content-center chocolate-text">Magasin(s) : {{ aliment.store }}</div>
+        <div class="col-12 h2 d-flex justify-content-center chocolate-text">Lieu(x) de vente : {{ aliment.purchase_places }}</div>
+        <div class="col-12 h2 d-flex justify-content-center chocolate-text"> </div>
+        <div class="col-12 h2 d-flex justify-content-center chocolate-text"> </div>
+        <div class="col-12 h2 d-flex justify-content-center chocolate-text"> </div>
+        <div class="col-12 h2 d-flex justify-content-center chocolate-text"> </div>
         <div class="col-6 d-flex justify-content-center h3">Nutriscore abCde</div>
         <div class="col-6 d-flex justify-content-center h3">Repères nutritionnels pour 100g</div>
-        <div class="col-6 d-flex justify-content-center h3">{{ aliment.nutriscore }}</div>
+        <div class="col-6 d-flex justify-content-center certificate h3" style="align-items:center">
+            <div class="col-1 font-3 font-weight-bold text-uppercase  "> {{ aliment.nutriscore }}</div>
+        </div>
+        <div class="col-6 d-flex justify-content-center h3"><img src="{{ aliment.image_nutriments }}"></div>
+        <div class="col-6 d-flex justify-content-center h3"></div>
+        <div class="col-6 d-flex justify-content-center h3">Energie</div>
+        <div class="col-6 d-flex justify-content-center h3"></div>
+        <div class="col-6 d-flex justify-content-center h3">{{ aliment.energy_kj }} {{ aliment.energy_kj_unit }} <br/>{{ aliment.energy_kcal }} {{ aliment.energy_kcal_unit }}</div>
         <div class="col-12"> <br/></div>
+        <div class="col-12 h3">
+            <form method="GET">
+                <input type="image" height="50" width="50" alt="Boutton - disquette"  src="{% static 'substitute/png/blue_save.png' %}" name="found_data"/>
+                <div class="col-12 h3"><a href="#">Sauvegarder</a></div>
+            </form>
+        </div>
         <form class="col-12 d-flex justify-content-center">
             <a href="{{ aliment.url }}" class="col-3 btn btn-lg btn-create-account btn-block text-uppercase "> Voir les fiches d'OpenFoodFacts !</a>
         </form>

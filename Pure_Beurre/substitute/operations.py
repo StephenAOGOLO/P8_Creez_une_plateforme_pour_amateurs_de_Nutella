@@ -263,6 +263,11 @@ def formatting_aliments(data):
                     aliments["purchase_place"] = e["purchase_places"].replace(",",", ")
                     aliments["store"] = e["stores"].replace(",",", ")
                     aliments["images"] = e["selected_images"]
+                    aliments["nutriments_image"] = e["selected_images"]["nutrition"]["display"]["fr"]
+                    aliments["nutriments_energy_kj"] = e["nutriments"]["energy-kj"]
+                    aliments["nutriments_energy_kj_unit"] = e["nutriments"]["energy-kj_unit"]
+                    aliments["nutriments_energy_kcal"] = e["nutriments"]["energy-kcal"]
+                    aliments["nutriments_energy_kcal_unit"] = e["nutriments"]["energy-kcal_unit"]
                     data["rcvd"]["essentials"]["aliments"][k][i] = aliments
                 except Exception as e:
                     lg.debug(e)
@@ -313,9 +318,9 @@ if __name__ == "__main__":
 
 
     ##### TEST on Data class #####
-    #session = Data()
-    #result = session.big_data
-    #print("\nfin d'operation\n")
+    session = Data()
+    result = session.big_data
+    print("\nfin d'operation\n")
     ##print("\n")
     ###############################
 
@@ -329,8 +334,8 @@ if __name__ == "__main__":
     ##### TEST on DataSearch class #####
     #from Pure_Beurre.substitute.models import Aliment
     #import Pure_Beurre.substitute.models
-    session = DataSearch("biscuit")
-    result = session.big_data
-    print("\nfin d'operation\n")
+    #session = DataSearch("biscuit")
+    #result = session.big_data
+    #print("\nfin d'operation\n")
     ##print("\n")
     ###############################
