@@ -8,7 +8,7 @@ from django.contrib import messages
 # Create your views here.
 from .forms import CreateUserForm
 
-from .operations import Data, DataEngine
+from .operations import Data, DataEngine, DataSearch, DataAliment
 
 #from .Values import AlimentValue, CategoryValue
 
@@ -30,6 +30,17 @@ def handler500(request, exception=None):
 def index(request):
     return homepage(request)
 
+#def search(request, context):
+#    raw_data = request.POST.get("raw_data")
+#    #session = Data(raw_data)
+#    #store_data(session.big_data)
+#    result_engine = DataEngine(raw_data)
+#    data = result_engine.big_data
+#    print(data)
+#    #data = session.big_data
+#    context["product"] = raw_data
+#    context["results"] = data
+#    return render(request, "substitute/results.html", context)
 
 def homepage(request):
     context = {"story": "Lorem ipsum dolor sit amet,"
@@ -55,10 +66,16 @@ def homepage(request):
                         " Cras elementum ultrices diam.",
                  "goal": "Trouvez un produit de substitution pour ceux que vous consommez tous les jours"}
     if request.method == "POST":
+        #context = {}
+        #search(request, context)
         raw_data = request.POST.get("raw_data")
         #session = Data(raw_data)
         #store_data(session.big_data)
-        result_engine = DataEngine(raw_data)
+
+        #result_engine = DataEngine(raw_data)
+
+        result_engine = DataSearch(raw_data)
+
         data = result_engine.big_data
         print(data)
         #data = session.big_data
@@ -108,14 +125,10 @@ def results(request):
     return render(request, "substitute/results.html", {'data': list_info})
 
 
-def aliment(request):
-    context = {}
-    raw_data = "biscuit"
-    session = Data(raw_data)
-    data = session.big_data
-    context["product"] = raw_data
-    context["results"] = data
-    context["opfofa"] = "https://fr.openfoodfacts.org"
+def aliment(request, pk):
+    session = DataAliment(pk)
+    aliment = session.aliment
+    context = {"aliment": aliment}
     return render(request, "substitute/aliment.html", context)
 
 

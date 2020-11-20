@@ -4,8 +4,8 @@
 <style type="text/css">
     #aliment-area
     {
-        background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('{% static "substitute/jpg/photo_aliments.jpg" %}');
-        background-size: cover;
+        background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('{{ aliment.url_image}}');
+        background-size: 200px 500px;;
         background-position: center;
 
     }
@@ -13,7 +13,10 @@
 <div class="container-fluid" id="aliment-area">
     <div class="row">
         <div class="col-12"><br/></div>
-        <div class="col-12 h1 justify-content-center"> {{ info.product_name }} </div>
+        <div class="col-12 h1 d-flex justify-content-center" >
+            <a href="{{ opfofa }}" class="col-3 btn btn-lg btn-create-account btn-block text-uppercase bg-butter "> {{ aliment.name }}</a>
+        </div>
+
         <div class="col-12"><br/></div>
     </div>
 </div>
@@ -21,22 +24,23 @@
     <div class="row">
         <div class="col-12"> <br/></div>
                 <div class="col-12 h2">
-                <img src="{{ info.selected_images.ingredients.display.fr }}">
-                <a class="chocolate-text " style="text-decoration:none" href="{% url 'substitute:aliment' %}">
-
-                </a>
-        </div>
-        <div class="col-12 h2">
-            <img src="{{ info.selected_images.nutrition.display.fr }}">
-            <a class="chocolate-text " style="text-decoration:none" href="{% url 'substitute:aliment' %}">
-
-            </a>
-        </div>
+                    <img src="{{ aliment.url_image}}">
+                    <a class="chocolate-text " style="text-decoration:none" href="{% url 'substitute:aliment' aliment.id %}"></a>
+                </div>
+        <div class="col-4"></div>
+        <div class="col-8 h2 d-flex justify-content-left chocolate-text">Marque : {{ aliment.brand|upper }}</div>
+        <div class="col-4"></div>
+        <div class="col-8 h2 d-flex justify-content-left chocolate-text">Produit : {{ aliment.name }}</div>
+        <div class="col-4"></div>
+        <div class="col-8 h2 d-flex justify-content-left chocolate-text">Magasin(s) : {{ aliment.store }}</div>
+        <div class="col-4"></div>
+        <div class="col-8 h2 d-flex justify-content-left chocolate-text">Lieu(x) de vente : {{ aliment.purchase_places }}</div>
         <div class="col-6 d-flex justify-content-center h3">Nutriscore abCde</div>
         <div class="col-6 d-flex justify-content-center h3">Repères nutritionnels pour 100g</div>
+        <div class="col-6 d-flex justify-content-center h3">{{ aliment.nutriscore }}</div>
         <div class="col-12"> <br/></div>
         <form class="col-12 d-flex justify-content-center">
-            <a href="{{ opfofa }}" class="col-3 btn btn-lg btn-create-account btn-block text-uppercase "> Voir les fiches d'OpenFoodFacts !</a>
+            <a href="{{ aliment.url }}" class="col-3 btn btn-lg btn-create-account btn-block text-uppercase "> Voir les fiches d'OpenFoodFacts !</a>
         </form>
         <div class="col-12"> <br/></div>
     </div>

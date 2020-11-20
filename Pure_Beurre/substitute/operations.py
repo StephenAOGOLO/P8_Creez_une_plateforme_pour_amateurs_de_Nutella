@@ -16,58 +16,6 @@ from .models import Category, Aliment
 lg.basicConfig(level=lg.INFO)
 
 
-
-class DataEngine:
-    def __init__(self, raw_data):
-        self.raw_data = raw_data
-        self.categories = self.get_all_categories()
-        self.aliments = self.get_aliments()
-        self.big_data = self.formatting_result()
-
-    def get_all_categories(self):
-        all_categories = Category.objects.all()
-        candidate = []
-        for e in all_categories:
-            if self.raw_data in str(e.name):
-                candidate.append(e)
-            if self.raw_data in str(e.id_name):
-                candidate.append(e)
-        return candidate
-
-    def get_aliments(self):
-        candidate = []
-        for e in self.categories:
-            try:
-                aliment = Aliment.objects.get(tag=e.id)
-                candidate.append(aliment)
-            except Exception as e:
-                lg.debug(e)
-        all_aliments = Aliment.objects.all()
-        for e in all_aliments:
-            try:
-                if self.raw_data in e.category:
-                    candidate.append(e)
-            except:
-                lg.debug(e)
-        return candidate
-
-    def formatting_result(self):
-        result = {}
-        for i, e in enumerate(self.aliments):
-            result[i] = {}
-            result[i]["brand"] = e.brand
-            result[i]["name"] = e.name
-            result[i]["nutriscore"] = e.nutriscore
-            result[i]["purchase_places"] = e.purchase_places
-            result[i]["store"] = e.store
-            result[i]["url"] = e.url
-            result[i]["url_image"] = e.url_image
-        return result
-
-
-
-
-
 class Data:
     """
     Data class create an instance which centralizing
@@ -148,6 +96,102 @@ class Data:
                 all_data["rcvd"][url_name] = response
         return all_data
 
+class DataEngine:
+    def __init__(self, raw_data):
+        self.raw_data = raw_data
+        self.categories = self.get_all_categories()
+        self.aliments = self.get_aliments()
+        self.big_data = self.formatting_result()
+
+    def get_all_categories(self):
+        all_categories = Category.objects.all()
+        candidate = []
+        for e in all_categories:
+            if self.raw_data in str(e.name):
+                candidate.append(e)
+            if self.raw_data in str(e.id_name):
+                candidate.append(e)
+        return candidate
+
+    def get_aliments(self):
+        candidate = []
+        for e in self.categories:
+            try:
+                aliment = Aliment.objects.get(tag=e.id)
+                candidate.append(aliment)
+            except Exception as e:
+                lg.debug(e)
+        all_aliments = Aliment.objects.all()
+        for e in all_aliments:
+            try:
+                if self.raw_data in e.category:
+                    candidate.append(e)
+            except:
+                lg.debug(e)
+        return candidate
+
+    def formatting_result(self):
+        result = {}
+        for i, e in enumerate(self.aliments):
+            result[i] = {}
+            result[i]["brand"] = e.brand
+            result[i]["name"] = e.name
+            result[i]["nutriscore"] = e.nutriscore
+            result[i]["purchase_places"] = e.purchase_places
+            result[i]["store"] = e.store
+            result[i]["url"] = e.url
+            result[i]["url_image"] = e.url_image
+        return result
+
+class DataSearch:
+    def __init__(self, raw_data):
+        self.raw_data = raw_data
+        self.direct_aliment = self.get_direct_aliment()
+        self.indirect_aliment = self.get_indirect_aliment()
+        self.big_data = self.build_big_data()
+
+    def get_direct_aliment(self):
+        direct_aliment = {}
+        aliments = Aliment.objects.filter(name__icontains=self.raw_data)
+        for e in aliments:
+            direct_aliment[e.id] = e
+        return direct_aliment
+
+    def get_indirect_aliment(self):
+        indirect_aliment = {}
+        aliments = []
+        categories = Category.objects.filter(name__icontains=self.raw_data)
+        for e in categories:
+            aliment = Aliment.objects.filter(category__contains=e.id_name)
+            aliments.append(aliment)
+        for e in aliments:
+            for e_1 in e:
+                print("\n*****")
+                print(e_1)
+                print(e_1.category)
+                print("*****\n")
+                indirect_aliment[e_1.id] = e_1
+        return indirect_aliment
+
+    def build_big_data(self):
+        #big_data = {"direct": self.direct_aliment}
+        #big_data = {"direct": self.direct_aliment,
+        #            "indirect": self.indirect_aliment}
+        big_data = {}
+        big_data = self.direct_aliment
+        big_data.update(self.indirect_aliment)
+        return big_data
+
+
+class DataAliment:
+    def __init__(self, pk):
+        self.aliment_id = pk
+        self.aliment = self.get_aliment()
+
+    def get_aliment(self):
+        aliment = Aliment.objects.get(id=self.aliment_id)
+        print(aliment)
+        return aliment
 
 def formatting_data(data):
     print("\nMise en forme des données collectées..\n")
@@ -202,11 +246,6 @@ def formatting_categories(data):
     return data
 
 
-
-
-
-
-
 def formatting_aliments(data):
     aliments = {}
     for k, v in data["rcvd"]["aliments"].items():
@@ -235,6 +274,7 @@ def get_data(data):
     data["rcvd"]["essentials"]["aliments"] = {}
     data["rcvd"]["essentials"]["categories"] = {}
     return data
+
 
 def get_aliments(data):
     """
@@ -269,17 +309,28 @@ def get_aliments(data):
     return data
 
 
-
-
 if __name__ == "__main__":
 
 
+    ##### TEST on Data class #####
+    #session = Data()
+    #result = session.big_data
+    #print("\nfin d'operation\n")
+    ##print("\n")
+    ###############################
 
-    session = Data()
+    ##### TEST on DataEngine class #####
+    #session = DataEngine("biscuit")
+    #result = session.big_data
+    #print("\nfin d'operation\n")
+    ##print("\n")
+    ###############################
+
+    ##### TEST on DataSearch class #####
+    #from Pure_Beurre.substitute.models import Aliment
+    #import Pure_Beurre.substitute.models
+    session = DataSearch("biscuit")
     result = session.big_data
     print("\nfin d'operation\n")
     ##print("\n")
-
-    #session = DataEngine("biscuit")
-    #result = session.big_data
-    #print("ok")
+    ###############################
