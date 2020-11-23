@@ -43,20 +43,23 @@
         <div class="col-12 h2 d-flex justify-content-center chocolate-text"> </div>
         <div class="col-12 h2 d-flex justify-content-center chocolate-text"> </div>
         <div class="col-12 h2 d-flex justify-content-center chocolate-text"> </div>
-        <div class="col-6 d-flex justify-content-center h3">Nutriscore abCde</div>
-        <div class="col-6 d-flex justify-content-center h3">Repères nutritionnels pour 100g</div>
+        <div class="col-6 d-flex justify-content-center underline-text h3">Nutriscore abCde</div>
+        <div class="col-6 d-flex justify-content-center underline-text h3">Repères nutritionnels pour 100g</div>
         <div class="col-6 d-flex justify-content-center certificate h3" style="align-items:center">
             <div class="col-1 font-3 font-weight-bold text-uppercase  "> {{ aliment.nutriscore }}</div>
         </div>
-        <div class="col-6 d-flex justify-content-center h3"><img src="{{ aliment.image_nutriments }}"></div>
+        <div class="col-6 d-flex justify-content-center h3">
+            <div class="col-12"><img src="{{ aliment.image_nutriments }}"></div>
+        </div>
         <div class="col-6 d-flex justify-content-center h3"></div>
-        <div class="col-6 d-flex justify-content-center h3">Energie</div>
+        <div class="col-6 d-flex justify-content-center underline-text h3">Energie</div>
         <div class="col-6 d-flex justify-content-center h3"></div>
         <div class="col-6 d-flex justify-content-center h3">{{ aliment.energy_kj }} {{ aliment.energy_kj_unit }} <br/>{{ aliment.energy_kcal }} {{ aliment.energy_kcal_unit }}</div>
         <div class="col-12"> <br/></div>
         <div class="col-12 h3">
-            <form method="GET">
-                <input type="image" height="50" width="50" alt="Boutton - disquette"  src="{% static 'substitute/png/blue_save.png' %}" name="found_data"/>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="image" height="50" width="50" alt="Boutton - disquette"  src="{% static 'substitute/png/blue_save.png' %}" name="store_it"/>
                 <div class="col-12 h3"><a href="#">Sauvegarder</a></div>
             </form>
         </div>

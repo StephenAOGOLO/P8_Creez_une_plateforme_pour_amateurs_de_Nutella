@@ -365,6 +365,11 @@ body
     color: #C45525;
 }
 
+.underline-text
+{
+    text-decoration: underline;
+}
+
 .nutriscore_tag
 {
 	position: relative;

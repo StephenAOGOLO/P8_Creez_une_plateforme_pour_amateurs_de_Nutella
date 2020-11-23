@@ -4,7 +4,7 @@ from django.contrib import admin
 
 from .models import *
 
-admin.site.register(Users)
+admin.site.register(Customer)
 admin.site.register(Aliment)
 admin.site.register(Category)
 admin.site.register(Historic)

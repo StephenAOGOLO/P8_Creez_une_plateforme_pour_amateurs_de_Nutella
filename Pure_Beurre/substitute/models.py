@@ -1,13 +1,14 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 
-class Users(models.Model):
-    name = models.CharField(max_length=100, null=True)
+class Customer(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 
 class Category(models.Model):
@@ -45,7 +46,7 @@ class Aliment(models.Model):
 
 
 class Historic(models.Model):
-    user = models.ForeignKey(Users, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(Customer, null=True, on_delete=models.CASCADE)
     aliment = models.ForeignKey(Aliment, related_name="aliment", null=True, on_delete=models.CASCADE)
     substitute = models.ForeignKey(Aliment,related_name="substitute", null=True, on_delete=models.CASCADE)
 

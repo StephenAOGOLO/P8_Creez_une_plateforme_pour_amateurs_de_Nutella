@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User as usr
 
 from django.contrib.auth import authenticate, login as lgi, logout as lgo
 from django.contrib import messages
@@ -43,6 +44,12 @@ def index(request):
 #    return render(request, "substitute/results.html", context)
 
 def homepage(request):
+    #all_users = User.objects.all()
+    #a_user = all_users[0]
+    a_user = User.objects.filter(username="test")
+    for a in a_user:
+        print(a.id)
+    #print(a_user)
     context = {"story": "Lorem ipsum dolor sit amet,"
                           " consectetur adipiscing elit."
                           " Sed non risus."
@@ -129,6 +136,11 @@ def aliment(request, pk):
     session = DataAliment(pk)
     aliment = session.aliment
     context = {"aliment": aliment}
+    if request.method == "POST":
+        store_it = request.POST.get("store_it")
+        print(store_it)
+        for e in store_it:
+            print(e)
     return render(request, "substitute/aliment.html", context)
 
 
@@ -171,6 +183,9 @@ def register(request):
             if form.is_valid():
                 form.save()
                 user = form.cleaned_data.get("username")
+                a_user = User.objects.get(username=user)
+                a_customer = Customer(user_id=a_user.id)
+                a_customer.save()
                 text = "Bienvenue {} !!! Votre compte a bien été créé !!!".format(user)
                 messages.success(request, text)
                 return redirect("login")
