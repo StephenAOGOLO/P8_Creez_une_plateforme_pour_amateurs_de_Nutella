@@ -6,15 +6,17 @@
     {
         background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static "substitute/jpg/remy-2.jpg" %}');
         background-size: cover;
+        /*background-size: contain;*/
+        background-repeat: no-repeat;
         background-position: center;
     }
 </style>
 <div class="container-fluid border" id="search-area">
     <div class="row">
         <div class="col-12"> <br/></div>
-        <div class="col-12 h1 d-flex justify-content-center">Du gras, oui, mais de qualité !</div>
+        <div class="col-12 h1 d-flex justify-content-center font-weight-bold font-4">Du gras, oui, mais de qualité !</div>
         <div class="col-12"> <br/></div>
-        <div class="col-12 h2 d-flex justify-content-center"><p>{{ goal }}</p></div>
+        <div class="col-12 h2 d-flex justify-content-center font-weight-bold"><p>{{ goal }}</p></div>
         <div class="col-12 d-flex justify-content-center">
             <form method="POST" class="form-inline my-2 my-lg-0">
                 {% csrf_token %}

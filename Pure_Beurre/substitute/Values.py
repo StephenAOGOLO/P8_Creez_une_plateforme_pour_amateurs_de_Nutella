@@ -1,7 +1,7 @@
 """"""
 # -*- coding: utf-8 -*-
 import logging as lg
-from .models import Aliment as AlimentDB, Category as CategoryDB
+from .models import Aliment as AlimentDB, Category as CategoryDB, Historic as HistoricDB
 lg.basicConfig(level=lg.INFO)
 
 
@@ -72,3 +72,18 @@ class CategoryValue:
         a_category.save()
         print("Enregistrement de la catégorie :\n{}\n".format(a_category))
 
+
+class HistoricValue:
+    def __init__(self, aliment, substitute, customer):
+        self.aliment = aliment
+        self.substitute = substitute
+        self.customer = customer
+
+    def store_items(self):
+        a_historic = HistoricDB(
+            user=self.customer,
+            aliment=self.aliment,
+            substitute=self.substitute
+        )
+        a_historic.save()
+        print("Enregistrement ajouté à l'historique :\n{}\n".format(a_historic.id))

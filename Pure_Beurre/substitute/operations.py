@@ -11,8 +11,9 @@ import logging as lg
 import json
 import requests
 from django.http import JsonResponse, HttpRequest, HttpResponse
-#from substitute.models import Category, Aliment
-from .models import Category, Aliment
+#from substitute.models import *
+from .models import *
+from .Values import HistoricValue
 lg.basicConfig(level=lg.INFO)
 
 
@@ -180,7 +181,32 @@ class DataSearch:
         big_data = {}
         big_data = self.direct_aliment
         big_data.update(self.indirect_aliment)
+        big_data = sort_big_data(big_data)
         return big_data
+
+
+class DataSave:
+    def __init__(self, aliment, substitute, customer):
+        self.aliment = aliment
+        self.substitute = substitute
+        self.customer = customer
+
+    def store_data(self):
+        the_historic = HistoricValue(self.aliment, self.substitute, self.customer)
+        the_historic.store_items()
+
+def get_historic(customer):
+    the_historic = Historic.objects.filter(user_id=customer.id)
+    return the_historic
+
+
+
+def sort_big_data(big_data):
+    new_data = sorted(big_data.items(), key=lambda t: t[1].nutriscore)
+    big_data = {}
+    for e in new_data:
+        big_data[e[0]] = e[1]
+    return big_data
 
 
 class DataAliment:
@@ -192,6 +218,33 @@ class DataAliment:
         aliment = Aliment.objects.get(id=self.aliment_id)
         print(aliment)
         return aliment
+
+    def get_substitute(self):
+        aliment = self.aliment
+        substitute = ""
+        categories_id = aliment.tag.all()
+        for e in categories_id:
+            print(e.id)
+            print(e.name)
+            print(e.id_name)
+            same_aliments = Aliment.objects.filter(tag=e.id)
+            print(same_aliments)
+            print("\n")
+        print("Le nutriscore de l'aliment initial est : {}\n".format(aliment.nutriscore))
+        for i, a in enumerate(same_aliments):
+            print("\nLe nutriscore du substitut potentiel {} est : {}\n".format(i, a.nutriscore))
+        for a in same_aliments:
+            if a.id == aliment.id:
+                substitute = ""
+            elif a.nutriscore <= aliment.nutriscore:
+                substitute = a
+        if substitute == "":
+            print("nous n'avons pas trouvé de substitut")
+        else:
+            print("l'aliment initial était {} avec un nutriscore de {}\nLe substitut est {} avec un nutriscore de {}\n".format(aliment,aliment.nutriscore, substitute, substitute.nutriscore))
+        #substitute = ""
+        #substitute = ""
+        return substitute
 
 def formatting_data(data):
     print("\nMise en forme des données collectées..\n")
@@ -318,9 +371,9 @@ if __name__ == "__main__":
 
 
     ##### TEST on Data class #####
-    session = Data()
-    result = session.big_data
-    print("\nfin d'operation\n")
+    #session = Data()
+    #result = session.big_data
+    #print("\nfin d'operation\n")
     ##print("\n")
     ###############################
 
@@ -334,8 +387,8 @@ if __name__ == "__main__":
     ##### TEST on DataSearch class #####
     #from Pure_Beurre.substitute.models import Aliment
     #import Pure_Beurre.substitute.models
-    #session = DataSearch("biscuit")
-    #result = session.big_data
-    #print("\nfin d'operation\n")
+    session = DataSearch("biscuit")
+    result = session.big_data
+    print("\nfin d'operation\n")
     ##print("\n")
     ###############################

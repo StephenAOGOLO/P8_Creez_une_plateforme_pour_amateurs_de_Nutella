@@ -51,7 +51,7 @@ class Historic(models.Model):
     substitute = models.ForeignKey(Aliment,related_name="substitute", null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return str(self.id)
 
 
 

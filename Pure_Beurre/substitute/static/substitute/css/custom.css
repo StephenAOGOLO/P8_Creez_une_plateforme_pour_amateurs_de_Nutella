@@ -19,7 +19,22 @@
     font-size: 3rem;
 }
 
+.font-4
+{
+    font-size: 4rem;
+}
 /* Bootstrap */
+.table .thead-butter th {
+  color: #fff;
+  background-color: #DE9440;
+  border-color: white;
+}
+.table .tbody-butter td
+{
+    border-color: #DE9440;
+}
+
+
 .border
 {
   border: 1px solid #C45525 !important;
@@ -91,16 +106,19 @@ body
 #search-area
 {
     color : #DE9440;
+    height: 100%;
 }
 #story-area
 {
     background-color : white;
     color : #C45525;
+    height: 80%;
 }
 #contactus-area
 {
     background-color : white;
     color : #C45525;
+    height: 30%;
 }
 #account-area
 {
@@ -392,4 +410,14 @@ body
   border:2px solid #679403;
   padding: 5%;
   text-align: center;
+}
+
+.historic-table
+{
+    border-collapse: collapse;
+    min-width: 400px;
+    width: auto;
+    box-shadow: 0 5px 50px #345A61;
+    margin: 100px auto;
+    border: 2px solid #345A61;
 }

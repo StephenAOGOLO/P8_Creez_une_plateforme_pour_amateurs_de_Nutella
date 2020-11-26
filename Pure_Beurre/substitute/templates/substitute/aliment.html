@@ -4,18 +4,8 @@
 <style type="text/css">
     #aliment-area
     {
-        background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('{{ aliment.url_image}}');
-        background-size: 200px 500px;
+        background: url('{{ aliment.url_image}}');
         background-position: center;
-
-
-    }
-    .certificate
-    {
-        background : url('{% static "substitute/jpg/certificate.jpg" %}');
-        background-size: 50% 100%;
-        background-position: center;
-        background-repeat: no-repeat;
     }
 </style>
 <div class="container-fluid" id="aliment-area">
@@ -45,8 +35,20 @@
         <div class="col-12 h2 d-flex justify-content-center chocolate-text"> </div>
         <div class="col-6 d-flex justify-content-center underline-text h3">Nutriscore abCde</div>
         <div class="col-6 d-flex justify-content-center underline-text h3">Repères nutritionnels pour 100g</div>
-        <div class="col-6 d-flex justify-content-center certificate h3" style="align-items:center">
-            <div class="col-1 font-3 font-weight-bold text-uppercase  "> {{ aliment.nutriscore }}</div>
+        <div class="col-6 d-flex justify-content-center  h3" style="align-items:center">
+        <div class="col-6 d-flex justify-content-center  h3" style="align-items:center">
+            {% if aliment.nutriscore == "a" %}
+            <img src="{% static 'substitute/png/a_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+            {% elif aliment.nutriscore == "b" %}
+            <img src="{% static 'substitute/png/b_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+            {% elif aliment.nutriscore == "c" %}
+            <img src="{% static 'substitute/png/c_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+            {% elif aliment.nutriscore == "d" %}
+            <img src="{% static 'substitute/png/d_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+            {% elif aliment.nutriscore == "e" %}
+            <img src="{% static 'substitute/png/e_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+            {% endif %}
+            <!--<div class="col-1 font-3 font-weight-bold text-uppercase  "> {{ aliment.nutriscore }}</div>-->
         </div>
         <div class="col-6 d-flex justify-content-center h3">
             <div class="col-12"><img src="{{ aliment.image_nutriments }}"></div>
@@ -59,8 +61,10 @@
         <div class="col-12 h3">
             <form method="POST">
                 {% csrf_token %}
-                <input type="image" height="50" width="50" alt="Boutton - disquette"  src="{% static 'substitute/png/blue_save.png' %}" name="store_it"/>
-                <div class="col-12 h3"><a href="#">Sauvegarder</a></div>
+                <a href="#">
+                    <input type="image" name="store_it" height="200" width="200" alt="Boutton - disquette"  src="{% static 'substitute/png/blue_save.png' %}"/>
+                    <div class="col-12 h3">Sauvegarder</div>
+                </a>
             </form>
         </div>
         <form class="col-12 d-flex justify-content-center">

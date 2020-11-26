@@ -1,0 +1,52 @@
+{% extends 'substitute/base.html'%}
+{% block heart %}
+{% load static %}
+<style type="text/css">
+    #account-area
+    {
+        background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('{% static "substitute/jpg/remy-3.jpg" %}');
+        background-size: cover;
+        background-position: center;
+    }
+</style>
+<div class="container-fluid" id="account-area">
+    <div class="col-12 d-flex justify-content-center"><h2>{{ salutation }}</h2></div>
+    <div class="col-12 d-flex justify-content-center" id="account-username"><h3>{{ request.user }}</h3></div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row" style="align-items:center">
+        <div class="col-12 h2 d-flex justify-content-center" id="account-usermail">
+            <h3>{{ request.user.email }}</h3>
+        </div>
+        <div class="col-6 h2 d-flex justify-content-center"><h4>{{ title.0 }}</h4></div>
+        <div class="col-6 h2 d-flex justify-content-center"><h4>{{ title.1 }}</h4></div>
+        <div class="col-6 h2 d-flex justify-content-center"><h4>{{ p.name }}</h4></div>
+        <div class="col-6 h2 d-flex justify-content-center"><h4>{{ s.name }}</h4></div>
+        <div class="col-6 h2 d-flex justify-content-center"><h4>{{ p.brand }} <br/><div><img src="{{ p.url_image }}"></div><br/>
+            {% if p.nutriscore == "a" %}
+                <div><img src="{% static 'substitute/png/a_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+                {% elif p.nutriscore == "b" %}
+                <div><img src="{% static 'substitute/png/b_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+                {% elif p.nutriscore == "c" %}
+                <div><img src="{% static 'substitute/png/c_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+                {% elif p.nutriscore == "d" %}
+                <div><img src="{% static 'substitute/png/d_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+                {% elif p.nutriscore == "e" %}
+                <div><img src="{% static 'substitute/png/e_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+            {% endif %}</h4></div>
+        <div class="col-6 h2 d-flex justify-content-center"><h4>{{ s.brand }} <br/><div><img src="{{ s.url_image }}"></div><br/>
+            {% if s.nutriscore == "a" %}
+                <div><img src="{% static 'substitute/png/a_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+                {% elif s.nutriscore == "b" %}
+                <div><img src="{% static 'substitute/png/b_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+                {% elif s.nutriscore == "c" %}
+                <div><img src="{% static 'substitute/png/c_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+                {% elif s.nutriscore == "d" %}
+                <div><img src="{% static 'substitute/png/d_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+                {% elif s.nutriscore == "e" %}
+                <div><img src="{% static 'substitute/png/e_nutriscore_good.png' %}" alt="Photo de Colette"></div>
+            {% endif %}</h4></div>
+    </div>
+</div>
+{% endblock %}

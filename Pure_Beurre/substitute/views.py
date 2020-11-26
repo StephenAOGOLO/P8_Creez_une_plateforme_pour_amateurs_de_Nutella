@@ -9,7 +9,8 @@ from django.contrib import messages
 # Create your views here.
 from .forms import CreateUserForm
 
-from .operations import Data, DataEngine, DataSearch, DataAliment
+#from .operations import Data, DataEngine, DataSearch, DataAliment
+from .operations import *
 
 #from .Values import AlimentValue, CategoryValue
 
@@ -78,18 +79,32 @@ def homepage(request):
         raw_data = request.POST.get("raw_data")
         #session = Data(raw_data)
         #store_data(session.big_data)
-
         #result_engine = DataEngine(raw_data)
-
         result_engine = DataSearch(raw_data)
-
         data = result_engine.big_data
-        print(data)
-        #data = session.big_data
-        context["product"] = raw_data
+        #context["product"] = raw_data
+        found_aliment = next(reversed(data.items()))[1]
+        context["product"] = found_aliment
         context["results"] = data
         return render(request, "substitute/results.html", context)
     return render(request, "substitute/home.html", context)
+
+
+def save(request, p_id, s_id, u_id):
+    context = {}
+    p = Aliment.objects.get(id=p_id)
+    s = Aliment.objects.get(id=s_id)
+    u = User.objects.get(id=u_id)
+    c = Customer.objects.get(user_id=u_id)
+    record = DataSave(p, s, c)
+    record.store_data()
+    context["title"] = ["Aliment initial", "Aliment de substitution"]
+    context["p"] = p
+    context["s"] = s
+    context["u"] = u
+    return render(request, "substitute/save.html", context)
+
+
 
 
 #def store_aliment(data):
@@ -137,15 +152,23 @@ def aliment(request, pk):
     aliment = session.aliment
     context = {"aliment": aliment}
     if request.method == "POST":
-        store_it = request.POST.get("store_it")
-        print(store_it)
-        for e in store_it:
-            print(e)
+        pass
+        #store_it = request.POST.get(aliment)
+        #for e in store_it:
+        #    print(e)
+
+
+    #print(session.get_substitute())
     return render(request, "substitute/aliment.html", context)
 
 
 def account(request):
     context = {}
+    c = Customer.objects.get(user_id=request.user.id)
+    the_historic = get_historic(c)
+    context["history"] = the_historic
+    context["titre_aliment"] = "ALIMENT"
+    context["titre_substitut"] = "SUBSTITUT"
     context["salutation"] = "AHOY !!"
     context["mail"] = "utilisateur@purebeurre.com"
     return render(request, "substitute/account.html", context)
