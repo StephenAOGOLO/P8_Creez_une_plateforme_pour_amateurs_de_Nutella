@@ -80,8 +80,15 @@ def homepage(request):
         #session = Data(raw_data)
         #store_data(session.big_data)
         #result_engine = DataEngine(raw_data)
+        raw_data = secure_text(raw_data)
+        if is_entry_empty(raw_data)["status"]:
+            context["error_entry"] = is_entry_empty(raw_data)["text"]
+            return render(request, "substitute/home.html", context)
         result_engine = DataSearch(raw_data)
         data = result_engine.big_data
+        if len(data) == 0:
+            context["unknow_product"] = "inconnu au bataillon !!! essayez un autre..."
+            return render(request, "substitute/home.html", context)
         #context["product"] = raw_data
         found_aliment = next(reversed(data.items()))[1]
         context["product"] = found_aliment

@@ -144,6 +144,7 @@ class DataEngine:
             result[i]["url_image"] = e.url_image
         return result
 
+
 class DataSearch:
     def __init__(self, raw_data):
         self.raw_data = raw_data
@@ -167,10 +168,10 @@ class DataSearch:
             aliments.append(aliment)
         for e in aliments:
             for e_1 in e:
-                print("\n*****")
-                print(e_1)
-                print(e_1.category)
-                print("*****\n")
+                #print("\n*****")
+                #print(e_1)
+                #print(e_1.category)
+                #print("*****\n")
                 indirect_aliment[e_1.id] = e_1
         return indirect_aliment
 
@@ -194,6 +195,37 @@ class DataSave:
     def store_data(self):
         the_historic = HistoricValue(self.aliment, self.substitute, self.customer)
         the_historic.store_items()
+
+
+def open_js_file(js_file):
+    """'open_json_file' method read a given json file.
+    It returns the content file into a dict."""
+    with open(js_file) as file:
+        data = json.load(file)
+    return data
+
+def is_entry_empty(text):
+    """ This function checks if no words is given for search """
+    status = False
+    text = text.strip()
+    if text == "":
+        status = True
+        text = "Pouvez-vous reformuler votre saisie pour ce "
+    report = {"status": status, "text": text}
+    return report
+
+
+def secure_text(text, js_file=".\\substitute\\static\\substitute\\json\\xss.json"):
+    """ This function handles XSS breaches """
+    #print("> {}".format(text))
+    bad_words = open_js_file(js_file)
+    #print("- {}".format(bad_words["xss"]))
+    for c_1 in bad_words["xss"]:
+        if c_1 in text:
+            text = text.replace(c_1, "")
+    #print("= {}".format(text))
+    return text
+
 
 def get_historic(customer):
     the_historic = Historic.objects.filter(user_id=customer.id)
