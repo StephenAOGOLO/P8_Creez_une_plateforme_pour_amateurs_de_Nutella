@@ -44,6 +44,25 @@ def index(request):
 #    context["results"] = data
 #    return render(request, "substitute/results.html", context)
 
+
+def search(request, product):
+    context = {}
+    #raw_data = request.POST.get("raw_data")
+    raw_data = secure_text(product)
+    if is_entry_empty(raw_data)["status"]:
+        context["error_entry"] = is_entry_empty(raw_data)["text"]
+        return render(request, "substitute/home.html", context)
+    result_engine = DataSearch(raw_data)
+    data = result_engine.big_data
+    if len(data) == 0:
+        context["unknow_product"] = "inconnu au bataillon !!! essayez un autre..."
+        return render(request, "substitute/home.html", context)
+    found_aliment = next(reversed(data.items()))[1]
+    context["product"] = found_aliment
+    context["results"] = data
+    return render(request, "substitute/search.html", context)
+
+
 def homepage(request):
     #all_users = User.objects.all()
     #a_user = all_users[0]
@@ -74,26 +93,35 @@ def homepage(request):
                         " Cras elementum ultrices diam.",
                  "goal": "Trouvez un produit de substitution pour ceux que vous consommez tous les jours"}
     if request.method == "POST":
-        #context = {}
-        #search(request, context)
-        raw_data = request.POST.get("raw_data")
-        #session = Data(raw_data)
-        #store_data(session.big_data)
-        #result_engine = DataEngine(raw_data)
-        raw_data = secure_text(raw_data)
-        if is_entry_empty(raw_data)["status"]:
-            context["error_entry"] = is_entry_empty(raw_data)["text"]
-            return render(request, "substitute/home.html", context)
-        result_engine = DataSearch(raw_data)
-        data = result_engine.big_data
-        if len(data) == 0:
-            context["unknow_product"] = "inconnu au bataillon !!! essayez un autre..."
-            return render(request, "substitute/home.html", context)
-        #context["product"] = raw_data
-        found_aliment = next(reversed(data.items()))[1]
-        context["product"] = found_aliment
-        context["results"] = data
-        return render(request, "substitute/results.html", context)
+
+        ##context = {}
+        ##search(request, context)
+        #
+        ##raw_data = request.POST.get("raw_data")
+
+        product = request.POST.get("product")
+        return redirect("/substitute/search/product={}".format(product))
+        #return redirect(search, product)
+
+
+        #search(request, product)
+        ##session = Data(raw_data)
+        ##store_data(session.big_data)
+        ##result_engine = DataEngine(raw_data)
+        #raw_data = secure_text(raw_data)
+        #if is_entry_empty(raw_data)["status"]:
+        #    context["error_entry"] = is_entry_empty(raw_data)["text"]
+        #    return render(request, "substitute/home.html", context)
+        #result_engine = DataSearch(raw_data)
+        #data = result_engine.big_data
+        #if len(data) == 0:
+        #    context["unknow_product"] = "inconnu au bataillon !!! essayez un autre..."
+        #    return render(request, "substitute/home.html", context)
+        ##context["product"] = raw_data
+        #found_aliment = next(reversed(data.items()))[1]
+        #context["product"] = found_aliment
+        #context["results"] = data
+        #return render(request, "substitute/results.html", context)
     return render(request, "substitute/home.html", context)
 
 
@@ -149,9 +177,7 @@ def save(request, p_id, s_id, u_id):
 #    store_aliment(data)
 #    store_category()
 
-def results(request):
-    list_info = ["info_1", "info_2", "info_3", "info_4", "info_5", "info_6"]
-    return render(request, "substitute/results.html", {'data': list_info})
+
 
 
 def aliment(request, pk):
