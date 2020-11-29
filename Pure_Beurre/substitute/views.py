@@ -16,6 +16,7 @@ from .operations import *
 
 from .models import *
 
+
 def handler404(request, exception=None):
     page = "acceuil"
     return render(request, "errors/404.html", {"data": page}, status=404)
@@ -46,17 +47,44 @@ def index(request):
 
 
 def search(request, product):
-    context = {}
+    context = {"story": "Lorem ipsum dolor sit amet,"
+                        " consectetur adipiscing elit."
+                        " Sed non risus."
+                        " Suspendisse lectus tortor,"
+                        " dignissim sit amet,"
+                        " adipiscing nec, ultricies sed, dolor."
+                        " Cras elementum ultrices diam."
+                        " Maecenas ligula massa, varius a,"
+                        " semper congue, euismod non, mi."
+                        " Proin porttitor, orci nec nonummy molestie,"
+                        " enim est eleifend mi, non fermentum diam nisl sit amet erat."
+                        " Duis semper. Duis arcu massa, scelerisque vitae,"
+                        " consequat in, pretium a, enim."
+                        " Pellentesque congue."
+                        " Ut in risus volutpat libero pharetra tempor.",
+               "sentence": "Lorem ipsum dolor sit amet,"
+                           " consectetur adipiscing elit."
+                           " Sed non risus. Suspendisse lectus tortor,"
+                           " dignissim sit amet,"
+                           " adipiscing nec, ultricies sed, dolor."
+                           " Cras elementum ultrices diam.",
+               "goal": "Trouvez un produit de substitution pour ceux que vous consommez tous les jours"}
     #raw_data = request.POST.get("raw_data")
     raw_data = secure_text(product)
-    if is_entry_empty(raw_data)["status"]:
-        context["error_entry"] = is_entry_empty(raw_data)["text"]
-        return render(request, "substitute/home.html", context)
+    #if is_entry_empty(raw_data)["status"]:
+    #    context["error_entry"] = is_entry_empty(raw_data)["text"]
+    #    print("search is_entry : {}".format(request))
+    #    #return render(request, "substitute/home.html", context)
+    #    return redirect("/substitute/home")
     result_engine = DataSearch(raw_data)
     data = result_engine.big_data
     if len(data) == 0:
-        context["unknow_product"] = "inconnu au bataillon !!! essayez un autre..."
-        return render(request, "substitute/home.html", context)
+        #context["unknow_product"] = "inconnu au bataillon !!! essayez un autre..."
+        msg = "Produit inconnu au bataillon !!! Veuillez reformuler votre saisie ou essayez un autre..."
+        print("search len(data) : {}".format(request))
+        #return render(request, "substitute/home.html", context)
+        messages.error(request, msg)
+        return redirect("/substitute/home")
     found_aliment = next(reversed(data.items()))[1]
     context["product"] = found_aliment
     context["results"] = data
@@ -64,6 +92,7 @@ def search(request, product):
 
 
 def homepage(request):
+    print("before if : {}".format(request))
     #all_users = User.objects.all()
     #a_user = all_users[0]
     a_user = User.objects.filter(username="test")
@@ -93,6 +122,7 @@ def homepage(request):
                         " Cras elementum ultrices diam.",
                  "goal": "Trouvez un produit de substitution pour ceux que vous consommez tous les jours"}
     if request.method == "POST":
+        print("if : {}".format(request))
 
         ##context = {}
         ##search(request, context)
@@ -100,8 +130,17 @@ def homepage(request):
         ##raw_data = request.POST.get("raw_data")
 
         product = request.POST.get("product")
+        if is_entry_empty(product)["status"]:
+            context["error_entry"] = is_entry_empty(product)["text"]
+            print("search is_entry : {}".format(request))
+            # return render(request, "substitute/home.html", context)
+            #return redirect("/substitute/home")
+            msg = context["error_entry"]
+            messages.error(request, msg)
+            return render(request, "substitute/home.html", context)
         return redirect("/substitute/search/product={}".format(product))
-        #return redirect(search, product)
+    return render(request, "substitute/home.html", context)
+
 
 
         #search(request, product)
@@ -180,18 +219,14 @@ def save(request, p_id, s_id, u_id):
 
 
 
-def aliment(request, pk):
-    session = DataAliment(pk)
-    aliment = session.aliment
-    context = {"aliment": aliment}
-    if request.method == "POST":
-        pass
-        #store_it = request.POST.get(aliment)
-        #for e in store_it:
-        #    print(e)
+def aliment(request, p_id, s_id, u_id):
+    s_session = DataAliment(s_id)
+    substitute = s_session.aliment
+    p_session = DataAliment(p_id)
+    product = p_session.aliment
 
-
-    #print(session.get_substitute())
+    context = {"substitut": substitute, "produit": product, "utilisateur_id": u_id
+               }
     return render(request, "substitute/aliment.html", context)
 
 

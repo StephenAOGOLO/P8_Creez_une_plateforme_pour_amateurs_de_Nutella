@@ -210,7 +210,7 @@ def is_entry_empty(text):
     text = text.strip()
     if text == "":
         status = True
-        text = "Pouvez-vous reformuler votre saisie pour ce "
+        text = "Pouvez-vous reformuler votre saisie pour ce produit"
     report = {"status": status, "text": text}
     return report
 
