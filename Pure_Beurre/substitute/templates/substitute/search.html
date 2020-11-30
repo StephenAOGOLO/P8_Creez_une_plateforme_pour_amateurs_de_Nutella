@@ -12,7 +12,8 @@
 <div class="container-fluid" id="aliment-area">
     <div class="row d-flex justify-content-center " id="searched-aliment-area">
         <div class="col-12"><br/></div>
-        <div class="col-3 h1 btn btn-lg btn-create-account btn-block text-uppercase bg-butter">
+        <div class="col-3 h1 ">
+            <a class="btn btn-lg btn-create-account btn-block text-uppercase bg-butter" href="{{ product.url }}">
             <div>{{ product.brand }} {{ product.name }}</div>
                 {% if product.nutriscore == "a" %}
                 <div><img src="{% static 'substitute/png/a_nutriscore_good.png' %}" alt="Photo de Colette"></div>
@@ -25,6 +26,7 @@
                 {% elif product.nutriscore == "e" %}
                 <div><img src="{% static 'substitute/png/e_nutriscore_good.png' %}" alt="Photo de Colette"></div>
                 {% endif %}
+                </a>
         </div>
         <div class="col-12"><br/></div>
     </div>
@@ -38,7 +40,6 @@
                 <div><img src="{{ value.url_image }}"></div>
                 <div class="col-12 justify-content-center">
                     <div class="col-12"><br/></div>
-
                     <a href="{% url 'substitute:aliment' s_id=key p_id=product.id u_id=user.id %}" class="chocolate-text " style="text-decoration:none">
                     {% comment %}
                         <a href="{% url 'substitute:aliment' s_id=key %}" class="chocolate-text " style="text-decoration:none">
@@ -50,11 +51,7 @@
                     <form method="POST" class="form-inline my-2 my-lg-0">
                         {% csrf_token %}
                         {% if request.user.is_authenticated %}
-                        {% comment %}
-                        <a href="{% url 'substitute:save' p_id=produit.id s_id=key u_id=user.id %}">
-                            {% endcomment %}
                         <a href="{% url 'substitute:save' s_id=key p_id=product.id u_id=user.id %}">
-
                             <div class="col-6 col-md-6 h3"><img height="20" width="20" alt="Boutton - disquette"  src="{% static 'substitute/png/blue_save.png' %}"></div>
                             <div class="col-6 col-md-6 h3">Sauvegarder</div>
                         </a>

@@ -54,7 +54,6 @@ class AlimentValue:
                 lg.debug(e)
 
 
-
 class CategoryValue:
     """"""
 

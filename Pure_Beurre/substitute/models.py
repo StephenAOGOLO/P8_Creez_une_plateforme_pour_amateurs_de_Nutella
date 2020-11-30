@@ -20,9 +20,6 @@ class Category(models.Model):
         return self.name
 
 
-
-
-
 class Aliment(models.Model):
     name = models.CharField(max_length=500, null=True)
     tag = models.ManyToManyField(Category)

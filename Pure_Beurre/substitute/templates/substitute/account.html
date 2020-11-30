@@ -15,6 +15,7 @@
 </div>
 <div class="container-fluid">
     <div class="row" style="align-items:center">
+        <div class="col-12 h3 d-flex justify-content-center underline-text">Historique</div>
         <div class="col-12 h3 d-flex justify-content-center">{{ request.user.email }}</div>
     </div>
 </div>
@@ -26,34 +27,32 @@
             <div class="col-12 h3 d-flex justify-content-center"></div>
             <div class="col-12 h3 d-flex justify-content-center"></div>
         </div>
-
-
         <div class="col-4 h3 d-flex justify-content-center"></div>
         <div class="col-4 h3 d-flex justify-content-center">
-
             <table class="table">
-
                 <thead class="thead-butter">
-
                 <tr>
                     <th>  {{ titre_aliment }} </th>
+                    <th></th>
                     <th>  {{ titre_substitut }} </th>
                 </tr>
                 </thead>
-
                 <tbody class="tbody-butter">
                 {% for e in history %}
-                <tr>
-                    <td> {{ e.aliment.name }}</td>
-                    <td>{{ e.substitute.name }}</td>
+                <tr class="text-align-center">
+                    <td class="d-flex justify-content-center"><div>{{ e.aliment.name }}<br/><img src="{{ e.aliment.url_image}}"></div></td>
+                    <td>
+                        <div id="content-carott">
+                            <div class="box-carott"></div>
+                            <div class="box-carott"><img src="{% static 'substitute/png/arrow_carott.png' %}" alt="La flèche carotte" height="50" width="50"></div>
+                            <div class="box-carott"></div>
+                        </div>
+                    </td>
+                    <td class="d-flex justify-content-center"><div>{{ e.substitute.name }}<br/><img src="{{ e.substitute.url_image}}"></div></td>
                 </tr>
                 {% endfor %}
                 </tbody>
-
-
             </table>
-
-
         </div>
         <div class="col-4 h3 d-flex justify-content-center"></div>
         </div>

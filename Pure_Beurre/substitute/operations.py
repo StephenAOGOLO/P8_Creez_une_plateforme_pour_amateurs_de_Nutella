@@ -97,6 +97,7 @@ class Data:
                 all_data["rcvd"][url_name] = response
         return all_data
 
+
 class DataEngine:
     def __init__(self, raw_data):
         self.raw_data = raw_data
@@ -168,17 +169,10 @@ class DataSearch:
             aliments.append(aliment)
         for e in aliments:
             for e_1 in e:
-                #print("\n*****")
-                #print(e_1)
-                #print(e_1.category)
-                #print("*****\n")
                 indirect_aliment[e_1.id] = e_1
         return indirect_aliment
 
     def build_big_data(self):
-        #big_data = {"direct": self.direct_aliment}
-        #big_data = {"direct": self.direct_aliment,
-        #            "indirect": self.indirect_aliment}
         big_data = {}
         big_data = self.direct_aliment
         big_data.update(self.indirect_aliment)
@@ -195,50 +189,6 @@ class DataSave:
     def store_data(self):
         the_historic = HistoricValue(self.aliment, self.substitute, self.customer)
         the_historic.store_items()
-
-
-def open_js_file(js_file):
-    """'open_json_file' method read a given json file.
-    It returns the content file into a dict."""
-    with open(js_file) as file:
-        data = json.load(file)
-    return data
-
-def is_entry_empty(text):
-    """ This function checks if no words is given for search """
-    status = False
-    text = text.strip()
-    if text == "":
-        status = True
-        text = "Pouvez-vous reformuler votre saisie pour ce produit"
-    report = {"status": status, "text": text}
-    return report
-
-
-def secure_text(text, js_file=".\\substitute\\static\\substitute\\json\\xss.json"):
-    """ This function handles XSS breaches """
-    #print("> {}".format(text))
-    bad_words = open_js_file(js_file)
-    #print("- {}".format(bad_words["xss"]))
-    for c_1 in bad_words["xss"]:
-        if c_1 in text:
-            text = text.replace(c_1, "")
-    #print("= {}".format(text))
-    return text
-
-
-def get_historic(customer):
-    the_historic = Historic.objects.filter(user_id=customer.id)
-    return the_historic
-
-
-
-def sort_big_data(big_data):
-    new_data = sorted(big_data.items(), key=lambda t: t[1].nutriscore)
-    big_data = {}
-    for e in new_data:
-        big_data[e[0]] = e[1]
-    return big_data
 
 
 class DataAliment:
@@ -277,6 +227,48 @@ class DataAliment:
         #substitute = ""
         #substitute = ""
         return substitute
+
+
+def open_js_file(js_file):
+    """'open_json_file' method read a given json file.
+    It returns the content file into a dict."""
+    with open(js_file) as file:
+        data = json.load(file)
+    return data
+
+
+def is_entry_empty(text):
+    """ This function checks if no words is given for search """
+    status = False
+    text = text.strip()
+    if text == "":
+        status = True
+        text = "Pouvez-vous reformuler votre saisie pour ce produit"
+    report = {"status": status, "text": text}
+    return report
+
+
+def secure_text(text, js_file=".\\substitute\\static\\substitute\\json\\xss.json"):
+    """ This function handles XSS breaches """
+    bad_words = open_js_file(js_file)
+    for c_1 in bad_words["xss"]:
+        if c_1 in text:
+            text = text.replace(c_1, "")
+    return text
+
+
+def get_historic(customer):
+    the_historic = Historic.objects.filter(user_id=customer.id)
+    return the_historic
+
+
+def sort_big_data(big_data):
+    new_data = sorted(big_data.items(), key=lambda t: t[1].nutriscore)
+    big_data = {}
+    for e in new_data:
+        big_data[e[0]] = e[1]
+    return big_data
+
 
 def formatting_data(data):
     print("\nMise en forme des données collectées..\n")

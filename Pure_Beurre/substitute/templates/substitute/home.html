@@ -14,15 +14,15 @@
 <div class="container-fluid border" id="search-area">
     <div class="row">
         <div class="col-12 ">
-                    <div class="col-12"> <br/></div>
-        <div class="col-12 h1 d-flex justify-content-center font-weight-bold font-4">Du gras, oui, mais de qualité !</div>
-        <div class="col-12"> <br/></div>
-        <div class="col-12 h2 d-flex justify-content-center font-weight-bold">
-            <p>
-                {{ goal }}
-            </p>
-        </div>
-        <div class="col-12 d-flex justify-content-center" >
+            <div class="col-12"> <br/></div>
+            <div class="col-12 h1 d-flex justify-content-center font-weight-bold font-4">Du gras, oui, mais de qualité !</div>
+            <div class="col-12"> <br/></div>
+            <div class="col-12 h2 d-flex justify-content-center font-weight-bold">
+                <p>
+                    {{ goal }}
+                </p>
+            </div>
+            <div class="col-12 d-flex justify-content-center" >
             <form method="POST" class="form-inline my-2 my-lg-0">
                 {% csrf_token %}
                 <input class="form-control mr-sm-2 font-weight-bold" id="home-searchbar" size="100" type="search" name="product" placeholder="produit " aria-label="Chercher">
@@ -35,9 +35,7 @@
             {% endfor %}
         </div>
         <div class="col-12"> <br/></div>
-
         </div>
-
     </div>
 </div>
 <div class="container-fluid border" id="story-area">

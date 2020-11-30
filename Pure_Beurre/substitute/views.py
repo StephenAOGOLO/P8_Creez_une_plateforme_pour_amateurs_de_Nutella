@@ -21,29 +21,14 @@ def handler404(request, exception=None):
     page = "acceuil"
     return render(request, "errors/404.html", {"data": page}, status=404)
 
+
 def handler500(request, exception=None):
     page = "acceuil"
     return render(request, "errors/500.html", {"data": page}, status=500)
 
-#def index(request):
-#    template = 'Du gras, oui, mais de qualité !!!!!!!!!!!!!!!!!'
-#    return HttpResponse(template)
-
 
 def index(request):
     return homepage(request)
-
-#def search(request, context):
-#    raw_data = request.POST.get("raw_data")
-#    #session = Data(raw_data)
-#    #store_data(session.big_data)
-#    result_engine = DataEngine(raw_data)
-#    data = result_engine.big_data
-#    print(data)
-#    #data = session.big_data
-#    context["product"] = raw_data
-#    context["results"] = data
-#    return render(request, "substitute/results.html", context)
 
 
 def search(request, product):
@@ -69,20 +54,12 @@ def search(request, product):
                            " adipiscing nec, ultricies sed, dolor."
                            " Cras elementum ultrices diam.",
                "goal": "Trouvez un produit de substitution pour ceux que vous consommez tous les jours"}
-    #raw_data = request.POST.get("raw_data")
     raw_data = secure_text(product)
-    #if is_entry_empty(raw_data)["status"]:
-    #    context["error_entry"] = is_entry_empty(raw_data)["text"]
-    #    print("search is_entry : {}".format(request))
-    #    #return render(request, "substitute/home.html", context)
-    #    return redirect("/substitute/home")
     result_engine = DataSearch(raw_data)
     data = result_engine.big_data
     if len(data) == 0:
-        #context["unknow_product"] = "inconnu au bataillon !!! essayez un autre..."
         msg = "Produit inconnu au bataillon !!! Veuillez reformuler votre saisie ou essayez un autre..."
         print("search len(data) : {}".format(request))
-        #return render(request, "substitute/home.html", context)
         messages.error(request, msg)
         return redirect("/substitute/home")
     found_aliment = next(reversed(data.items()))[1]
@@ -92,13 +69,9 @@ def search(request, product):
 
 
 def homepage(request):
-    print("before if : {}".format(request))
-    #all_users = User.objects.all()
-    #a_user = all_users[0]
     a_user = User.objects.filter(username="test")
     for a in a_user:
         print(a.id)
-    #print(a_user)
     context = {"story": "Lorem ipsum dolor sit amet,"
                           " consectetur adipiscing elit."
                           " Sed non risus."
@@ -122,45 +95,14 @@ def homepage(request):
                         " Cras elementum ultrices diam.",
                  "goal": "Trouvez un produit de substitution pour ceux que vous consommez tous les jours"}
     if request.method == "POST":
-        print("if : {}".format(request))
-
-        ##context = {}
-        ##search(request, context)
-        #
-        ##raw_data = request.POST.get("raw_data")
-
         product = request.POST.get("product")
         if is_entry_empty(product)["status"]:
             context["error_entry"] = is_entry_empty(product)["text"]
             print("search is_entry : {}".format(request))
-            # return render(request, "substitute/home.html", context)
-            #return redirect("/substitute/home")
             msg = context["error_entry"]
             messages.error(request, msg)
             return render(request, "substitute/home.html", context)
         return redirect("/substitute/search/product={}".format(product))
-    return render(request, "substitute/home.html", context)
-
-
-
-        #search(request, product)
-        ##session = Data(raw_data)
-        ##store_data(session.big_data)
-        ##result_engine = DataEngine(raw_data)
-        #raw_data = secure_text(raw_data)
-        #if is_entry_empty(raw_data)["status"]:
-        #    context["error_entry"] = is_entry_empty(raw_data)["text"]
-        #    return render(request, "substitute/home.html", context)
-        #result_engine = DataSearch(raw_data)
-        #data = result_engine.big_data
-        #if len(data) == 0:
-        #    context["unknow_product"] = "inconnu au bataillon !!! essayez un autre..."
-        #    return render(request, "substitute/home.html", context)
-        ##context["product"] = raw_data
-        #found_aliment = next(reversed(data.items()))[1]
-        #context["product"] = found_aliment
-        #context["results"] = data
-        #return render(request, "substitute/results.html", context)
     return render(request, "substitute/home.html", context)
 
 
@@ -177,46 +119,6 @@ def save(request, p_id, s_id, u_id):
     context["s"] = s
     context["u"] = u
     return render(request, "substitute/save.html", context)
-
-
-
-
-#def store_aliment(data):
-#    an_aliment = Aliment(
-#        brand=data.brand,
-#        name=data.product_name,
-#        category=data.categories,
-#        nutriscore=data.nutriscore,
-#        purchase_places=data.purchase_place,
-#        store=data.store,
-#        url=data.url
-#    )
-#    an_aliment.save()
-#
-#
-#def store_category(data):
-#    a_category = Category(
-#        id=data.id,
-#        name=data.name,
-#        url=data.url
-#    )
-#    a_category.save()
-#
-#
-#def store_data(data):
-#    data = data["rcvd"]["essentials"]
-#    print(data)
-#    for k, v in data.items():
-#        brand = v["brand"]
-#        product_name = v["product_name"]
-#        nutriscore = v["nutriscore"]
-#        purchase_place = str(v["purchase_place"])
-#        store = str(v["store"])
-#        url = v["url"]
-#    store_aliment(data)
-#    store_category()
-
-
 
 
 def aliment(request, p_id, s_id, u_id):
@@ -237,7 +139,7 @@ def account(request):
     context["history"] = the_historic
     context["titre_aliment"] = "ALIMENT"
     context["titre_substitut"] = "SUBSTITUT"
-    context["salutation"] = "AHOY !!"
+    context["salutation"] = "BIENVENUE"
     context["mail"] = "utilisateur@purebeurre.com"
     return render(request, "substitute/account.html", context)
 
@@ -287,61 +189,3 @@ def register(request):
 def is_user_authenticate(request):
     if request.user.is_authenticated:
         return redirect("/substitute/account")
-
-
-
-#def store_data(data):
-#    print("\n"+"*"*10)
-#    print("STORE DATA")
-#    print("*"*10+"\n")
-#    data = data["rcvd"]["essentials"]
-#    #print(data)
-#    check_aliments = "aliments"
-#    check_categories = "categories"
-#    for k, v in data.items():
-#        #print(k)
-#        if k == check_categories:
-#        #elif k == check_categories and "id" in v.keys():
-#            #print(k)
-#            for k_1, v_1 in v.items():
-#                id_name = v_1["id"]
-#                name = v_1["name"]
-#                url = v_1["url"]
-#                the_categories = CategoryValue(
-#                    id_name=id_name,
-#                    name=name,
-#                    url=url
-#                )
-#                #print("\n" + "*" * 10)
-#                #print("Lancement sauvegarde category")
-#                #print("*" * 10 + "\n")
-#                the_categories.store_items()
-#            #print("\n**** categories creees ****\n")
-#    for k, v in data.items():
-#        if k == check_aliments:
-#            for k_1, v_1 in v.items():
-#                #print(v_1["brand"])
-#                brand = v_1["brand"]
-#                product_name = v_1["product_name"]
-#                categories = v_1["categories"]
-#                nutriscore = v_1["nutriscore"]
-#                purchase_place = str(v_1["purchase_place"])
-#                store = str(v_1["store"])
-#                url = v_1["url"]
-#                the_aliments = AlimentValue(
-#                    brand=brand,
-#                    product_name=product_name,
-#                    category=categories,
-#                    nutriscore=nutriscore,
-#                    purchase_place=purchase_place,
-#                    store=store,
-#                    url=url
-#                )
-#                #print("\n" + "*" * 10)
-#                #print("Lancement sauvegarde aliment")
-#                #print("*" * 10 + "\n")
-#                the_aliments.store_items()
-#        else:
-#            print("KO")
-
-

@@ -5,31 +5,12 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
       <form method="POST" class="form-inline my-2 my-lg-0">
         {% csrf_token %}
         <input class="form-control mr-sm-2" type="search" name="product" size="40" placeholder="produit " aria-label="Chercher">
-        <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-    </form>
-      <!--<li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>-->
+      </form>
       {% if request.user.is_authenticated %}
         <li class="nav-item">
           <a class="navbar-brand" href="{% url 'substitute:login' %}">
@@ -43,14 +24,10 @@
         <li class="nav-item">
           <a class="navbar-brand" href="{% url 'substitute:login' %}">
           <input type="image" height="50" width="50" alt="Boutton - Créer mon compte"  src="{% static 'substitute/png/black_user_sticker_new.png' %}" />
-          <!--<span class="white-text">{{ request.user }}</span>-->
         </a>
         </li>
       {% endif %}
-        <!--<a class="navbar-brand" href="{% url 'substitute:login' %}"><input type="image" height="50" width="50" alt="Boutton - Créer mon compte"  src="{% static 'substitute/png/green_user_sticker.png' %}" /></a>-->
-
       <li class="nav-item">
-        <!--<input type="image" height="50" width="50" alt="Boutton - Déconnexion"  src="{% static 'substitute/png/disconnect_sticker.png' %}" />-->
         <a class="navbar-brand" href="{% url 'substitute:logout' %}"><input type="image" height="50" width="50" alt="Boutton - Déconnexion"  src="{% static 'substitute/png/disconnect_sticker.png' %}" /></a>
       </li>
     </ul>
