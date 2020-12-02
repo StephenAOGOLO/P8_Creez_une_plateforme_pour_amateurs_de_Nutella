@@ -259,8 +259,14 @@ def secure_text(text, js_file=".\\substitute\\static\\substitute\\json\\xss.json
 
 def get_historic(customer):
     the_historic = Historic.objects.filter(user_id=customer.id)
+    for e in the_historic:
+        e.aliment.nutriscore = set_nutriscore_tag(e.aliment.nutriscore)
+        e.substitute.nutriscore = set_nutriscore_tag(e.substitute.nutriscore)
     return the_historic
 
+#def get_historic_nutriscore(customer):
+#    the_historic = Historic.objects.filter(user_id=customer.id)
+#    pass
 
 def sort_big_data(big_data):
     new_data = sorted(big_data.items(), key=lambda t: t[1].nutriscore)
@@ -390,6 +396,9 @@ def get_aliments(data):
                         = "NOT_PROVIDED"
     return data
 
+def set_nutriscore_tag(tag):
+    new_tag = '/static/substitute/png/{}_nutriscore_good.png'.format(tag)
+    return new_tag
 
 if __name__ == "__main__":
 

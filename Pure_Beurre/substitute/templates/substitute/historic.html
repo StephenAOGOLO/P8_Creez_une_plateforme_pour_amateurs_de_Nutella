@@ -1,0 +1,80 @@
+{% extends 'substitute/base.html'%}
+{% block heart %}
+{% load static %}
+<style type="text/css">
+    #account-area
+    {
+        background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('{% static "substitute/jpg/ratatouille-11.jpg" %}');
+        background-size: cover;
+        background-position: center;
+        height: 40%;
+    }
+</style>
+<div class="container-fluid historic-container" id="account-area">
+    <div class="col-12 d-flex justify-content-center white-butter-text font-4">Historique</div>
+</div>
+<div class="container-fluid ">
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 ">
+            <div class="col-12 h3 d-flex justify-content-center"></div>
+            <div class="col-12 h3 d-flex justify-content-center"></div>
+            <div class="col-12 h3 d-flex justify-content-center"></div>
+            <div class="col-12 h3 d-flex justify-content-center"></div>
+        </div>
+        <div class="col-4 h3 d-flex justify-content-center"></div>
+        <div class="col-4 h3 d-flex justify-content-center">
+            <table class="table">
+                <thead class="thead-butter">
+                <tr class="text-align-center font-2">
+                    <th>  {{ titre_aliment }} </th>
+                    <th></th>
+                    <th>  {{ titre_substitut }} </th>
+                </tr>
+                </thead>
+                <tbody class="tbody-butter">
+                <tr>
+                    <td><div class="d-flex justify-content-center">---</div></td>
+                    <td class="d-flex justify-content-center">
+                        <div class="chocolate-text">{{ empty }}</div>
+                    </td>
+                    <td><div  class="d-flex justify-content-center">---</div></td>
+                </tr>
+                {% for e in history %}
+                <tr class="text-align-center font-2">
+                    <td class="d-flex justify-content-center">
+                        <div class="historic-container">
+                            <a href="{{ e.aliment.url }}">
+                                <div>{{ e.aliment.name }}<br/><img src="{{ e.aliment.url_image}}"><br/><img src="{{ e.aliment.nutriscore}}"></div>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="content-carott">
+                            <div class="box-carott"></div>
+                            <div class="box-carott"><img src="{% static 'substitute/png/arrow_carott.png' %}" alt="La flèche carotte" height="50" width="50"></div>
+                            <div class="box-carott"></div>
+                        </div>
+                    </td>
+                    <td class="d-flex justify-content-center">
+                        <div class="historic-container">
+                            <a href="{{ e.substitute.url }}">
+                                <div>{{ e.substitute.name }}<br/><img src="{{ e.substitute.url_image}}"><br/><img src="{{ e.substitute.nutriscore}}"></div>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-4 h3 d-flex justify-content-center"></div>
+        </div>
+
+    </div>
+</div>
+<div class="account-container">
+    <div><img src="{% static 'substitute/jpg/remy_and_carott.jpg' %}" alt="Remy et sa carotte"></div>
+</div>
+{% endblock %}

@@ -4,23 +4,22 @@
 <style type="text/css">
     #search-area
     {
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static "substitute/jpg/remy-2.jpg" %}');
+        background: url('{% static "substitute/jpg/remy_welcome.jpg" %}');
         background-size: cover;
-        /*background-size: contain;*/
-        background-repeat: no-repeat;
-        background-position: center;
     }
 </style>
-<div class="container-fluid border" id="search-area">
+<div class="container-fluid border home-container" id="search-area">
     <div class="row">
-        <div class="col-12 ">
+        <div class="col-12">
             <div class="col-12"> <br/></div>
-            <div class="col-12 h1 d-flex justify-content-center font-weight-bold font-4">Du gras, oui, mais de qualité !</div>
+            <div class="col-12 h1 d-flex justify-content-center font-weight-bold butter-text font-4">Du gras, oui, mais de qualité !</div>
             <div class="col-12"> <br/></div>
-            <div class="col-12 h2 d-flex justify-content-center font-weight-bold">
+            <div class="home-container">
+            <div class="col-4 h2 d-flex justify-content-center white-butter-text butter-text">
                 <p>
                     {{ goal }}
                 </p>
+            </div>
             </div>
             <div class="col-12 d-flex justify-content-center" >
             <form method="POST" class="form-inline my-2 my-lg-0">

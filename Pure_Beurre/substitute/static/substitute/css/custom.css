@@ -13,7 +13,10 @@
 {
     font-size: 1rem;
 }
-
+.font-2
+{
+    font-size: 2rem;
+}
 .font-3
 {
     font-size: 3rem;
@@ -388,7 +391,23 @@ body
     text-shadow: -1px 0 red, 0 1px red,
       1px 0 red, 0 -1px red;
 }
-
+.butter-text
+{
+    color: #DE9440;
+    text-shadow: -1px 0 white, 0 2px black,
+      1px 0 #C45525, 0 -1px #C45525;
+}
+.chocolate-shadow-text
+{
+    color: #C45525;
+    text-shadow: -1px 0 #DE9440, 0 2px #DE9440,
+      1px 0 #C45525, 0 -1px #DE9440;
+}
+.white-butter-text
+{
+    color: white;
+    text-shadow: 2px 1px black, -2px -1px #DE9440
+}
 .bold-text
 {
     font-weight: bolder;
@@ -460,4 +479,22 @@ body
 .box-carott
 {
     height: 100%;
+}
+.historic-container
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.account-container
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.home-container
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

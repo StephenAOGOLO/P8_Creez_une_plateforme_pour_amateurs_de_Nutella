@@ -31,6 +31,7 @@ def index(request):
     return homepage(request)
 
 
+
 def search(request, product):
     context = {"story": "Lorem ipsum dolor sit amet,"
                         " consectetur adipiscing elit."
@@ -64,6 +65,7 @@ def search(request, product):
         return redirect("/substitute/home")
     found_aliment = next(reversed(data.items()))[1]
     context["product"] = found_aliment
+    context["product_nutriscore"] = set_nutriscore_tag(found_aliment.nutriscore)
     context["results"] = data
     return render(request, "substitute/search.html", context)
 
@@ -118,6 +120,8 @@ def save(request, p_id, s_id, u_id):
     context["p"] = p
     context["s"] = s
     context["u"] = u
+    context["p_nutriscore"] = set_nutriscore_tag(p.nutriscore)
+    context["s_nutriscore"] = set_nutriscore_tag(s.nutriscore)
     return render(request, "substitute/save.html", context)
 
 
@@ -126,8 +130,11 @@ def aliment(request, p_id, s_id, u_id):
     substitute = s_session.aliment
     p_session = DataAliment(p_id)
     product = p_session.aliment
-
-    context = {"substitut": substitute, "produit": product, "utilisateur_id": u_id
+    substitute_nutrscore = set_nutriscore_tag(substitute.nutriscore)
+    context = {"substitut": substitute,
+               "substitut_nutriscore": substitute_nutrscore,
+               "produit": product,
+               "utilisateur_id": u_id
                }
     return render(request, "substitute/aliment.html", context)
 
@@ -136,13 +143,22 @@ def account(request):
     context = {}
     c = Customer.objects.get(user_id=request.user.id)
     the_historic = get_historic(c)
+    context["salutation"] = "SALUT"
+    return render(request, "substitute/account.html", context)
+
+
+def historic(request):
+    context = {}
+    c = Customer.objects.get(user_id=request.user.id)
+    the_historic = get_historic(c)
+    if len(the_historic) == 0:
+        context["empty"] = "Votre historique est vide"
     context["history"] = the_historic
     context["titre_aliment"] = "ALIMENT"
     context["titre_substitut"] = "SUBSTITUT"
     context["salutation"] = "BIENVENUE"
     context["mail"] = "utilisateur@purebeurre.com"
-    return render(request, "substitute/account.html", context)
-
+    return render(request, "substitute/historic.html", context)
 
 def login(request):
     if request.user.is_authenticated:
