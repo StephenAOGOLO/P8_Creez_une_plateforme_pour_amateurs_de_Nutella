@@ -31,8 +31,12 @@ def index(request):
     return homepage(request)
 
 
-
 def search(request, product):
+    if "browser_product" in request.POST:
+        browser_product = request.POST.get("browser_product")
+        print(browser_product)
+        return redirect("/substitute/search/product={}".format(browser_product))
+
     context = {"story": "Lorem ipsum dolor sit amet,"
                         " consectetur adipiscing elit."
                         " Sed non risus."
@@ -70,10 +74,11 @@ def search(request, product):
     return render(request, "substitute/search.html", context)
 
 
+
+
+
+
 def homepage(request):
-    a_user = User.objects.filter(username="test")
-    for a in a_user:
-        print(a.id)
     context = {"story": "Lorem ipsum dolor sit amet,"
                           " consectetur adipiscing elit."
                           " Sed non risus."
@@ -97,18 +102,27 @@ def homepage(request):
                         " Cras elementum ultrices diam.",
                  "goal": "Trouvez un produit de substitution pour ceux que vous consommez tous les jours"}
     if request.method == "POST":
-        product = request.POST.get("product")
-        if is_entry_empty(product)["status"]:
-            context["error_entry"] = is_entry_empty(product)["text"]
-            print("search is_entry : {}".format(request))
-            msg = context["error_entry"]
-            messages.error(request, msg)
-            return render(request, "substitute/home.html", context)
-        return redirect("/substitute/search/product={}".format(product))
+        if "browser_product" in request.POST:
+            browser_product = request.POST.get("browser_product")
+            print(browser_product)
+            return redirect("/substitute/search/product={}".format(browser_product))
+        if "product" in request.POST:
+            product = request.POST.get("product")
+            if is_entry_empty(product)["status"]:
+                context["error_entry"] = is_entry_empty(product)["text"]
+                print("search is_entry : {}".format(request))
+                msg = context["error_entry"]
+                messages.error(request, msg)
+                return render(request, "substitute/home.html", context)
+            return redirect("/substitute/search/product={}".format(product))
     return render(request, "substitute/home.html", context)
 
 
 def save(request, p_id, s_id, u_id):
+    if "browser_product" in request.POST:
+        browser_product = request.POST.get("browser_product")
+        print(browser_product)
+        return redirect("/substitute/search/product={}".format(browser_product))
     context = {}
     p = Aliment.objects.get(id=p_id)
     s = Aliment.objects.get(id=s_id)
@@ -126,6 +140,10 @@ def save(request, p_id, s_id, u_id):
 
 
 def aliment(request, p_id, s_id, u_id):
+    if "browser_product" in request.POST:
+        browser_product = request.POST.get("browser_product")
+        print(browser_product)
+        return redirect("/substitute/search/product={}".format(browser_product))
     s_session = DataAliment(s_id)
     substitute = s_session.aliment
     p_session = DataAliment(p_id)
@@ -140,6 +158,10 @@ def aliment(request, p_id, s_id, u_id):
 
 
 def account(request):
+    if "browser_product" in request.POST:
+        browser_product = request.POST.get("browser_product")
+        print(browser_product)
+        return redirect("/substitute/search/product={}".format(browser_product))
     context = {}
     c = Customer.objects.get(user_id=request.user.id)
     the_historic = get_historic(c)
@@ -148,6 +170,10 @@ def account(request):
 
 
 def historic(request):
+    if "browser_product" in request.POST:
+        browser_product = request.POST.get("browser_product")
+        print(browser_product)
+        return redirect("/substitute/search/product={}".format(browser_product))
     context = {}
     c = Customer.objects.get(user_id=request.user.id)
     the_historic = get_historic(c)
@@ -161,6 +187,10 @@ def historic(request):
     return render(request, "substitute/historic.html", context)
 
 def login(request):
+    if "browser_product" in request.POST:
+        browser_product = request.POST.get("browser_product")
+        print(browser_product)
+        return redirect("/substitute/search/product={}".format(browser_product))
     if request.user.is_authenticated:
         return redirect("/substitute/account")
     else:
