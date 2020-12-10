@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="baa77245-edd1-410a-89f2-498fecd183e0" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1lBSTlD80AI0pGQU92sB31W4UeU" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="baa77245-edd1-410a-89f2-498fecd183e0" name="Default Changelist" comment="" />
+      <created>1607069001270</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1607069001270</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="548" y="154" key="FileChooserDialogImpl" timestamp="1607070332690">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="548" y="154" key="FileChooserDialogImpl/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1607070332690" />
+    <state x="639" y="306" width="258" height="269" key="Github.ShareDialog" timestamp="1607069405144">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="639" y="306" width="258" height="269" key="Github.ShareDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1607069405144" />
+    <state x="277" y="55" width="1195" height="714" key="SettingsEditor" timestamp="1607070335110">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="277" y="55" width="1195" height="714" key="SettingsEditor/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1607070335110" />
+    <state x="599" y="203" key="svn.repositoryBrowser" timestamp="1607070034508">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="599" y="203" key="svn.repositoryBrowser/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1607070034508" />
+  </component>
+</project>
