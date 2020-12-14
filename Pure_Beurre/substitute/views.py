@@ -213,6 +213,10 @@ def logout(request):
 
 
 def register(request):
+    if "browser_product" in request.POST:
+        browser_product = request.POST.get("browser_product")
+        print(browser_product)
+        return redirect("/substitute/search/product={}".format(browser_product))
     if request.user.is_authenticated:
         return redirect("/substitute/account")
     else:

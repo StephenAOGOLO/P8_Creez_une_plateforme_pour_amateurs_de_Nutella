@@ -1,6 +1,9 @@
 from . import views
 from .models import *
-from .operations import DataSearch
+#from .operations import DataSearch, DataAliment, DataSave, Data
+from .operations import *
+#from .management.commands import fillDB
+from django.conf.urls import handler404, handler500
 from django.contrib.auth.models import User
 from django.urls import reverse, resolve
 from django.test import TestCase, SimpleTestCase, Client
@@ -18,8 +21,11 @@ class TestViewsUnlogged(TestCase):
         self.a_second_user = User.objects.create_user(username="a_second_user", email="a__second_user@purebeurre.com", password="a_second_user.1234")
         self.a_customer = Customer(user=self.a_user)
         self.a_customer.save()
+        self.error_404_url = handler404
+        self.error_500_url = handler500
         self.home_url = reverse("substitute:home")
         self.historic_url = reverse("substitute:historic")
+        self.register_url = reverse("substitute:register")
         self.account_url = reverse("substitute:account")
         self.login_url = reverse("substitute:login")
         self.logout_url = reverse("substitute:logout")
@@ -117,6 +123,25 @@ class TestViewsUnlogged(TestCase):
         self.assertTemplateUsed(response, "substitute/aliment.html")
 
 
+    def test_register_html(self):
+        print("\n\ntest_register_html")
+        response = self.c.get(self.register_url, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "registration/register.html")
+
+    def test_login_html(self):
+        print("\n\ntest_login_html")
+        response = self.c.get(self.login_url, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "registration/login.html")
+
+
+    def test_logout_html(self):
+        print("\n\ntest_logout_html")
+        response = self.c.get(self.logout_url, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "substitute/home.html")
+
     def test_search_POST(self):
         print("\n\ntest_search_POST")
         response = self.c.post(self.search_url)
@@ -135,6 +160,11 @@ class TestViewsUnlogged(TestCase):
         print(response)
         self.assertEqual(response.status_code, 200)
 
+    def test_register_POST(self):
+        print("\n\ntest_register_POST")
+        response = self.c.post(self.register_url)
+        print(response)
+        self.assertEqual(response.status_code, 200)
 
     def test_login_POST(self):
         print("\n\ntest_login_POST")
@@ -149,6 +179,24 @@ class TestViewsUnlogged(TestCase):
         print(response)
         self.assertEqual(response.status_code, 200)
 
+    def test_404(self):
+        print("\n\ntest_404")
+        response = self.c.post("/substitute/home/error404")
+        print(response)
+        self.assertEqual(response.status_code, 404)
+
+    def test_404_html(self):
+        print("\n\ntest_404_html")
+        response = self.c.get(self.error_404_url, follow=True)
+        self.assertTemplateUsed(response, "errors/404.html")
+
+
+    #def test_500_html(self):
+    #    print("\n\ntest_500_html")
+    #    response = self.c.get(self.error_500_url, follow=True)
+    #    self.assertTemplateUsed(response, "errors/500.html")
+
+
 
 class TestViewsLogged(TestCase):
     def setUp(self):
@@ -162,8 +210,11 @@ class TestViewsLogged(TestCase):
         self.c.login(username="a_user", password="user.1234")
         self.browser_product = {"browser_product": "browser_product"}
         self.index_url = reverse("substitute:index")
+        self.error_404_url = handler404
+        self.error_500_url = handler500
         self.home_url = reverse("substitute:home")
         self.historic_url = reverse("substitute:historic")
+        self.register_url = reverse("substitute:register")
         self.account_url = reverse("substitute:account")
         self.login_url = reverse("substitute:login")
         self.search_url = reverse("substitute:search", args=["an_aliment"])
@@ -188,6 +239,23 @@ class TestViewsLogged(TestCase):
         response = self.c.post("/substitute/home/")
         result = response.status_code
         self.assertEqual(result, 200)
+
+    def test_404(self):
+        print("\n\ntest_404")
+        response = self.c.post("/substitute/home/error404")
+        print(response)
+        self.assertEqual(response.status_code, 404)
+
+    def test_404_html(self):
+        print("\n\ntest_404_html")
+        response = self.c.get(self.error_404_url, follow=True)
+        self.assertTemplateUsed(response, "errors/404.html")
+
+
+    #def test_500_html(self):
+    #    print("\n\ntest_500_html")
+    #    response = self.c.get(self.error_500_url, follow=True)
+    #    self.assertTemplateUsed(response, "errors/500.html")
 
     def test_index_view(self):
         print("\n\ntest_search_view_2")
@@ -355,6 +423,18 @@ class TestViewsLogged(TestCase):
         self.assertEqual(response.status_code, 302)
 
 
+    def test_register_POST(self):
+        print("\n\ntest_register_POST")
+        response = self.c.post(self.register_url)
+        print(response)
+        self.assertEqual(response.status_code, 302)
+
+    def test_register_POST_browser_product(self):
+        print("\n\ntest_register_POST_browser_product")
+        response = self.c.post(self.register_url)
+        print(response)
+        self.assertEqual(response.status_code, 302)
+
     def test_login_POST(self):
         print("\n\ntest_login_POST")
         a_user = {"id": self.a_user.id, "username": self.a_user.username, "email":self.a_user.email, "password": self.a_user.password}
@@ -367,6 +447,7 @@ class TestViewsLogged(TestCase):
         response = self.c.post(self.login_url, self.browser_product)
         print(response)
         self.assertEqual(response.status_code, 302)
+
 
     def test_historic_POST(self):
         print("\n\ntest_historic_POST")
@@ -473,6 +554,64 @@ class TestModels(TestCase):
         size_after = len(Historic.objects.all())
         self.assertEqual(size_before, 0)
         self.assertEqual(size_after, 3)
+
+
+class TestOperations(TestCase):
+    def setUp(self):
+        self.c = Client()
+        self.a_user = User.objects.create_user(username="a_user", email="a_user@purebeurre.com", password="user.1234")
+        self.a_customer = Customer(user=self.a_user)
+        self.a_customer.save()
+        self.c.login(username="a_user", password="user.1234")
+        self.an_aliment = Aliment.objects.create(name="an_aliment")
+        self.text = "text"
+
+    def test_DataSearch(self):
+        result = DataSearch(self.text)
+        data = result.big_data
+        print(data)
+        self.assertEqual(data, {})
+
+    def test_DataSearch_aliment(self):
+        result = DataSearch(self.an_aliment.name)
+        data = result.big_data
+        print(data)
+        self.assertEqual(data, {self.an_aliment.id: self.an_aliment})
+
+    def test_DataAliment(self):
+        result = DataAliment(self.an_aliment.id)
+        data = result.aliment
+        print(data)
+        self.assertEqual(data, self.an_aliment)
+
+
+    def test_DataSave(self):
+        size_before = len(Historic.objects.all())
+        another_aliment = Aliment.objects.create(name="another_aliment")
+        record = DataSave(self.an_aliment, another_aliment, self.a_customer)
+        record.store_data()
+        size_after = len(Historic.objects.all())
+        self.assertEqual(size_after, size_before + 1)
+
+
+    def test_Data(self):
+        result = Data()
+        size_aliment_before = len(Aliment.objects.all())
+        size_category_before = len(Category.objects.all())
+        data = result.big_data
+        print(data)
+        fill_category(data)
+        fill_aliment(data)
+        size_aliment_after = len(Aliment.objects.all())
+        size_category_after = len(Category.objects.all())
+        print(size_aliment_after)
+        print(size_category_after)
+        self.assertGreater(size_aliment_after, size_aliment_before)
+        self.assertGreater(size_category_after, size_category_before)
+
+
+
+
 
 
 
