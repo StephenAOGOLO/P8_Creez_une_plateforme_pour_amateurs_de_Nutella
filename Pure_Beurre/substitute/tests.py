@@ -563,7 +563,9 @@ class TestOperations(TestCase):
         self.a_customer = Customer(user=self.a_user)
         self.a_customer.save()
         self.c.login(username="a_user", password="user.1234")
-        self.an_aliment = Aliment.objects.create(name="an_aliment")
+        self.a_category = Category.objects.create(id_name="a_category", name="a_category")
+        self.an_aliment = Aliment.objects.create(name="an_aliment", category=self.a_category.name)
+        self.an_aliment.tag.add(self.a_category)
         self.text = "text"
 
     def test_DataSearch(self):
@@ -572,8 +574,16 @@ class TestOperations(TestCase):
         print(data)
         self.assertEqual(data, {})
 
-    def test_DataSearch_aliment(self):
+    def test_DataSearch_direct_aliment(self):
         result = DataSearch(self.an_aliment.name)
+        data = result.big_data
+        print(data)
+        self.assertEqual(data, {self.an_aliment.id: self.an_aliment})
+
+    def test_DataSearch_indirect_aliment(self):
+        print(self.an_aliment.category)
+        result = DataSearch(self.a_category.name)
+        print("-")
         data = result.big_data
         print(data)
         self.assertEqual(data, {self.an_aliment.id: self.an_aliment})
@@ -595,7 +605,7 @@ class TestOperations(TestCase):
 
 
     def test_Data(self):
-        result = Data()
+        result = Data(".\\substitute\\static\\substitute\\json\\min_urls.json")
         size_aliment_before = len(Aliment.objects.all())
         size_category_before = len(Category.objects.all())
         data = result.big_data
@@ -608,6 +618,17 @@ class TestOperations(TestCase):
         print(size_category_after)
         self.assertGreater(size_aliment_after, size_aliment_before)
         self.assertGreater(size_category_after, size_category_before)
+
+    def test_get_historic(self):
+        the_historic = get_historic(self.a_customer)
+        self.assertEqual(len(the_historic), 0)
+        another_aliment = Aliment.objects.create(name="another_aliment")
+        record = DataSave(self.an_aliment, another_aliment, self.a_customer)
+        record.store_data()
+        the_historic = get_historic(self.a_customer)
+        self.assertEqual(len(the_historic), 1)
+
+
 
 
 

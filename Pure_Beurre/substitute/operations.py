@@ -10,10 +10,7 @@ needed for each packages module.
 import logging as lg
 import json
 import requests
-from django.http import JsonResponse, HttpRequest, HttpResponse
-#from substitute.models import *
 from .models import *
-#from .Values import HistoricValue
 from .Values import *
 lg.basicConfig(level=lg.INFO)
 
@@ -23,7 +20,7 @@ class Data:
     Data class create an instance which centralizing
     all pure data coming from Openfoodfacts server.
     """
-    def __init__(self):
+    def __init__(self, urls_json=".\\substitute\\static\\substitute\\json\\urls.json"):
         """
         Init constructor has two attributes:
         json_url_file : URLS file path needed to request OpFoFa server.
@@ -31,8 +28,7 @@ class Data:
         'big_data' is a dict.
         """
 
-        self.json_url_file = ".\\substitute\\static\\substitute\\json\\urls.json"
-        #self.json_url_file = ".\\static\\substitute\\json\\urls.json"
+        self.json_url_file = urls_json
         self.big_data = self.load_api_data()
 
     def load_api_data(self):
@@ -99,54 +95,6 @@ class Data:
         return all_data
 
 
-#class DataEngine:
-#    def __init__(self, raw_data):
-#        self.raw_data = raw_data
-#        self.categories = self.get_all_categories()
-#        self.aliments = self.get_aliments()
-#        self.big_data = self.formatting_result()
-#
-#    def get_all_categories(self):
-#        all_categories = Category.objects.all()
-#        candidate = []
-#        for e in all_categories:
-#            if self.raw_data in str(e.name):
-#                candidate.append(e)
-#            if self.raw_data in str(e.id_name):
-#                candidate.append(e)
-#        return candidate
-#
-#    def get_aliments(self):
-#        candidate = []
-#        for e in self.categories:
-#            try:
-#                aliment = Aliment.objects.get(tag=e.id)
-#                candidate.append(aliment)
-#            except Exception as e:
-#                lg.debug(e)
-#        all_aliments = Aliment.objects.all()
-#        for e in all_aliments:
-#            try:
-#                if self.raw_data in e.category:
-#                    candidate.append(e)
-#            except:
-#                lg.debug(e)
-#        return candidate
-#
-#    def formatting_result(self):
-#        result = {}
-#        for i, e in enumerate(self.aliments):
-#            result[i] = {}
-#            result[i]["brand"] = e.brand
-#            result[i]["name"] = e.name
-#            result[i]["nutriscore"] = e.nutriscore
-#            result[i]["purchase_places"] = e.purchase_places
-#            result[i]["store"] = e.store
-#            result[i]["url"] = e.url
-#            result[i]["url_image"] = e.url_image
-#        return result
-
-
 class DataSearch:
     def __init__(self, raw_data):
         self.raw_data = raw_data
@@ -202,30 +150,6 @@ class DataAliment:
         print(aliment)
         return aliment
 
-    def get_substitute(self):
-        aliment = self.aliment
-        substitute = ""
-        categories_id = aliment.tag.all()
-        for e in categories_id:
-            print(e.id)
-            print(e.name)
-            print(e.id_name)
-            same_aliments = Aliment.objects.filter(tag=e.id)
-            print(same_aliments)
-            print("\n")
-        print("Le nutriscore de l'aliment initial est : {}\n".format(aliment.nutriscore))
-        for i, a in enumerate(same_aliments):
-            print("\nLe nutriscore du substitut potentiel {} est : {}\n".format(i, a.nutriscore))
-        for a in same_aliments:
-            if a.id == aliment.id:
-                substitute = ""
-            elif a.nutriscore <= aliment.nutriscore:
-                substitute = a
-        if substitute == "":
-            print("nous n'avons pas trouvé de substitut")
-        else:
-            print("l'aliment initial était {} avec un nutriscore de {}\nLe substitut est {} avec un nutriscore de {}\n".format(aliment,aliment.nutriscore, substitute, substitute.nutriscore))
-        return substitute
 
 
 def open_js_file(js_file):
@@ -303,15 +227,6 @@ def cleaning_categories(data):
     return data
 
 
-def uptodate_formatting_categories(data):
-    for i, e in enumerate(data["rcvd"]["categories"]):
-        categories = {}
-        categories["id"] = e["id"].replace("en:","")
-        categories["name"] = e["product_name"]
-        categories["url"] = e["url"]
-        data["rcvd"]["essentials"]["categories"][i] = categories
-    return data
-
 
 def formatting_categories(data):
     for i, e in enumerate(data["rcvd"]["categories"]):
@@ -360,38 +275,6 @@ def get_data(data):
     return data
 
 
-def get_aliments(data):
-    """
-    'get_aliments' method analyses each OpFoFa response
-    and catches all aliments located in.
-    These aliments are sorted by quality.
-    Actually, some aliments info may not be provided.
-    If it is so, this method set 'EMPTY' and 'NOT_PROVIDED'
-    tags in the impacted field. All aliment information
-    are stored in to the big data.
-    Keys to find '["rcvd"]["aliments"]'.
-    :param data:
-    :return data:
-    """
-    list_r = ["product_name", "brands", "nutriscore_grade",
-              "stores", "purchase_places", "url"]
-    for url_name in data["sent"]["urls"].keys():
-        data["rcvd"]["aliments"][url_name] = {}
-        for i in range(0, len(data["rcvd"][url_name]["products"])):
-            data["rcvd"]["aliments"][url_name][str(i)] = {}
-            for element in list_r:
-                if element in data["rcvd"][url_name]["products"][i]:
-                    if data["rcvd"][url_name]["products"][i][element] == "":
-                        data["rcvd"]["aliments"][url_name][str(i)][element]\
-                            = "EMPTY"
-                    else:
-                        data["rcvd"]["aliments"][url_name][str(i)][element] = \
-                            data["rcvd"][url_name]["products"][i][element]
-                else:
-                    data["rcvd"]["aliments"][url_name][str(i)][element]\
-                        = "NOT_PROVIDED"
-    return data
-
 def set_nutriscore_tag(tag):
     new_tag = '/static/substitute/png/{}_nutriscore_good.png'.format(tag)
     return new_tag
@@ -422,7 +305,6 @@ def fill_aliment(data):
                 store = str(v_1["store"])
                 url = v_1["url"]
                 url_image = v_1["images"]["front"]["small"]["fr"]
-
                 nutriments_image = v_1["nutriments_image"]
                 nutriments_energy_kj = v_1["nutriments_energy_kj"]
                 nutriments_energy_kj_unit = v_1["nutriments_energy_kj_unit"]
@@ -447,8 +329,7 @@ def fill_aliment(data):
             except Exception as e:
                 print(e)
 
-if __name__ == "__main__":
-
+#if __name__ == "__main__":
 
     ##### TEST on Data class #####
     #session = Data()
@@ -467,8 +348,8 @@ if __name__ == "__main__":
     ##### TEST on DataSearch class #####
     #from Pure_Beurre.substitute.models import Aliment
     #import Pure_Beurre.substitute.models
-    session = DataSearch("biscuit")
-    result = session.big_data
-    print("\nfin d'operation\n")
+    #session = DataSearch("biscuit")
+    #result = session.big_data
+    #print("\nfin d'operation\n")
     ##print("\n")
     ###############################
