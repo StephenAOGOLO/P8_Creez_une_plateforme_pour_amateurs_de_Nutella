@@ -22,13 +22,13 @@
       </li>
           {% else %}
         <li class="nav-item">
-          <a class="navbar-brand" href="{% url 'substitute:login' %}">
+          <a class="navbar-brand login" href="{% url 'substitute:login' %}">
           <input type="image" height="50" width="50" alt="Boutton - Créer mon compte"  src="{% static 'substitute/png/black_user_sticker_new.png' %}" />
         </a>
         </li>
       {% endif %}
       <li class="nav-item">
-        <a class="navbar-brand" href="{% url 'substitute:logout' %}"><input type="image" height="50" width="50" alt="Boutton - Déconnexion"  src="{% static 'substitute/png/disconnect_sticker.png' %}" /></a>
+        <a class="navbar-brand logout" href="{% url 'substitute:logout' %}"><input type="image" height="50" width="50" alt="Boutton - Déconnexion"  src="{% static 'substitute/png/disconnect_sticker.png' %}" /></a>
       </li>
     </ul>
     </div>
