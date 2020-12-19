@@ -6,8 +6,11 @@
 /auto_install.bat
 biscuit.png
 Cahier_des_charges.pdf
-!Pure_Beurre/Pure_Beurre/the_secrets.py
+/Pure_Beurre/Pure_Beurre/the_secrets.py
 /starter.bat
 /Pure_Beurre/.coverage
-!Pure_Beurre/start_test.bat
-!Pure_Beurre/substitute/project_tester
+/Pure_Beurre/start_test.bat
+/Pure_Beurre/substitute/project_tester
+/requirements_auto.txt
+
+
