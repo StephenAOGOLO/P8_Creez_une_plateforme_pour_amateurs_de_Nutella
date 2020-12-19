@@ -21,7 +21,7 @@ class Data:
     Data class create an instance which centralizing
     all pure data coming from Openfoodfacts server.
     """
-    def __init__(self, urls_json="\\substitute\\static\\substitute\\json\\urls.json"):
+    def __init__(self, urls_json="/static/substitute/json/urls.json"):
     #def __init__(self, urls_json=".\\substitute\\static\\substitute\\json\\urls.json"):
         """
         Init constructor has two attributes:
