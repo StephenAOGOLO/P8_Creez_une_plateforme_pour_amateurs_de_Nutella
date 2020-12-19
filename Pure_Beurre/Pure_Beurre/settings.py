@@ -153,7 +153,8 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "substitute/static"),
-                    os.path.join(BASE_DIR, "/static")
+                    os.path.join(BASE_DIR, "/static"),
+                    os.path.join(BASE_DIR, "Pure_Beurre/substitute/static"),
                     ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
