@@ -152,9 +152,9 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "substitute/static"), ]
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-#STATIC_ROOT = "Pure_Beurre/substitute/static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "substitute/static"), "substitute/static", ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
 
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 20000
