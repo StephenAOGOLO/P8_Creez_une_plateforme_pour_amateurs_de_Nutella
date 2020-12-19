@@ -78,38 +78,38 @@ WSGI_APPLICATION = 'Pure_Beurre.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 # Development database config
-if DEBUG:
-    #DATABASES = {
-    #    'default': {
-    #        'ENGINE': 'django.db.backends.postgresql',
-    #        'NAME': 'purebeurre_db',
-    #        'USER': 'stephen',
-    #        'PASSWORD': 'stephen',
-    #        'HOST': '127.0.0.1',
-    #        'PORT': '5432',
-    #    }
-    #}
-
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'mydatabase',
-        }
+#if DEBUG:
+#    #DATABASES = {
+#    #    'default': {
+#    #        'ENGINE': 'django.db.backends.postgresql',
+#    #        'NAME': 'purebeurre_db',
+#    #        'USER': 'stephen',
+#    #        'PASSWORD': 'stephen',
+#    #        'HOST': '127.0.0.1',
+#    #        'PORT': '5432',
+#    #    }
+#    #}
+#
+#    DATABASES = {
+#        'default': {
+#            'ENGINE': 'django.db.backends.sqlite3',
+#            'NAME': 'mydatabase',
+#        }
+#    }
+#
+#
+#else:
+# Production database config
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'purebeurre',
+        'USER': 'purebeurre',
+        'PASSWORD': 'purebeurreoc',
+        'HOST': 'localhost',
+        'PORT': '',
     }
-
-
-else:
-    # Production database config
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'purebeurre',
-            'USER': 'purebeurre',
-            'PASSWORD': 'purebeurreoc',
-            'HOST': 'localhost',
-            'PORT': '',
-        }
-    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
