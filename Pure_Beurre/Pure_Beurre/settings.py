@@ -78,16 +78,25 @@ WSGI_APPLICATION = 'Pure_Beurre.wsgi.application'
 
 # Development database config
 if DEBUG:
+    #DATABASES = {
+    #    'default': {
+    #        'ENGINE': 'django.db.backends.postgresql',
+    #        'NAME': 'purebeurre_db',
+    #        'USER': 'stephen',
+    #        'PASSWORD': 'stephen',
+    #        'HOST': '127.0.0.1',
+    #        'PORT': '5432',
+    #    }
+    #}
+
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'purebeurre_db',
-            'USER': 'stephen',
-            'PASSWORD': 'stephen',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'mydatabase',
         }
     }
+
+
 else:
 # Production database config
     DATABASES = {
