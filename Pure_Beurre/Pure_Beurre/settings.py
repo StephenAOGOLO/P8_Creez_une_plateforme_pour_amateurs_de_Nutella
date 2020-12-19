@@ -154,7 +154,7 @@ STATICFILES_FINDERS = [
 ]
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "substitute/static"), ]
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-STATIC_ROOT = "/Pure_Beurre/substitute/static/"
+STATIC_ROOT = "Pure_Beurre/substitute/static/"
 
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 20000
