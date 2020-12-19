@@ -13,6 +13,7 @@ import requests
 from .models import *
 from .Values import *
 lg.basicConfig(level=lg.INFO)
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 class Data:
@@ -20,7 +21,8 @@ class Data:
     Data class create an instance which centralizing
     all pure data coming from Openfoodfacts server.
     """
-    def __init__(self, urls_json=".\\substitute\\static\\substitute\\json\\urls.json"):
+    def __init__(self, urls_json=BASE_DIR + "\\substitute\\static\\substitute\\json\\urls.json"):
+    #def __init__(self, urls_json=".\\substitute\\static\\substitute\\json\\urls.json"):
         """
         Init constructor has two attributes:
         json_url_file : URLS file path needed to request OpFoFa server.
