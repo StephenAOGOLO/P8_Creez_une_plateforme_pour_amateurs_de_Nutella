@@ -10,6 +10,7 @@ needed for each packages module.
 import logging as lg
 import json
 import requests
+from pathlib import Path
 from .models import *
 from .Values import *
 lg.basicConfig(level=lg.INFO)
