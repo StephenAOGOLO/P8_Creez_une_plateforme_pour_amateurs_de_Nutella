@@ -174,8 +174,11 @@ def is_entry_empty(text):
     return report
 
 
-def secure_text(text, js_file=".\\substitute\\static\\substitute\\json\\xss.json"):
+def secure_text(text, js_file="/static/substitute/json/xss.json"):
+#def secure_text(text, js_file=".\\substitute\\static\\substitute\\json\\xss.json"):
     """ This function handles XSS breaches """
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    js_file = basedir + js_file
     bad_words = open_js_file(js_file)
     for c_1 in bad_words["xss"]:
         if c_1 in text:
