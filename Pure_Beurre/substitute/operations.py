@@ -8,13 +8,12 @@ needed for each packages module.
 """
 # -*- coding: utf-8 -*-
 import logging as lg
+import os
 import json
 import requests
-from pathlib import Path
 from .models import *
 from .Values import *
 lg.basicConfig(level=lg.INFO)
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 class Data:
@@ -22,7 +21,7 @@ class Data:
     Data class create an instance which centralizing
     all pure data coming from Openfoodfacts server.
     """
-    def __init__(self, urls_json=BASE_DIR + "\\substitute\\static\\substitute\\json\\urls.json"):
+    def __init__(self, urls_json="\\substitute\\static\\substitute\\json\\urls.json"):
     #def __init__(self, urls_json=".\\substitute\\static\\substitute\\json\\urls.json"):
         """
         Init constructor has two attributes:
@@ -30,7 +29,8 @@ class Data:
         big_data : Containing OpFoFa response, sliced and sorted.
         'big_data' is a dict.
         """
-
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        urls_json = basedir + urls_json
         self.json_url_file = urls_json
         self.big_data = self.load_api_data()
 
