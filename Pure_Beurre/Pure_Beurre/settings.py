@@ -103,7 +103,7 @@ WSGI_APPLICATION = 'Pure_Beurre.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'purebeurredb',
+        'NAME': 'purebeurre',
         'USER': 'purebeurre',
         'PASSWORD': 'purebeurreoc',
         'HOST': 'localhost',
@@ -152,7 +152,8 @@ STATIC_URL = 'Pure_Beurre/substitute/static/'
 #    'django.contrib.staticfiles.finders.FileSystemFinder',
 #    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #]
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "substitute/static"), ]
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, "substitute/static"), ]
+STATICFILES_DIRS = ("substitute/static")
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
