@@ -154,7 +154,7 @@ STATIC_URL = '/static/'
 #]
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "substitute/static"), "Pure_Beurre/substitute/static/substitute", ]
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-STATIC_ROOT = os.path.join("Pure_Beurre/", 'static/')
+STATIC_ROOT = os.path.join("Pure_Beurre/substitute/", 'static/')
 
 
 
