@@ -1,7 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import User
+# -*- coding: utf-8 -*-
 
 # Create your models here.
+
+class Text(models.Model):
+    language = models.CharField(max_length=2, null=True)
+    mentions_title = models.CharField(max_length=1000, null=True)
+    mentions_id_fn = models.CharField(max_length=1000, null=True)
+    mentions_id_ln = models.CharField(max_length=1000, null=True)
+    mentions_id_ph = models.CharField(max_length=1000, null=True)
+    mentions_id_m = models.CharField(max_length=1000, null=True)
+    mentions_id_pn = models.CharField(max_length=1000, null=True)
+    mentions_id_s = models.CharField(max_length=1000, null=True)
+    mentions_a_rcs = models.CharField(max_length=1000, null=True)
+    mentions_a_fn = models.CharField(max_length=1000, null=True)
+    mentions_a_cgv = models.CharField(max_length=1000, null=True)
+    mentions_cookies = models.CharField(max_length=1000, null=True)
+    home_s = models.CharField(max_length=1000, null=True)
+    home_c = models.CharField(max_length=1000, null=True)
+    home_bm = models.CharField(max_length=1000, null=True)
+
 
 
 class Customer(models.Model):

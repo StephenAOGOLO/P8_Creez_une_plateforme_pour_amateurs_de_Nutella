@@ -36,28 +36,8 @@ def search(request, product):
         browser_product = request.POST.get("browser_product")
         print(browser_product)
         return redirect("/substitute/search/product={}".format(browser_product))
-
-    context = {"story": "Lorem ipsum dolor sit amet,"
-                        " consectetur adipiscing elit."
-                        " Sed non risus."
-                        " Suspendisse lectus tortor,"
-                        " dignissim sit amet,"
-                        " adipiscing nec, ultricies sed, dolor."
-                        " Cras elementum ultrices diam."
-                        " Maecenas ligula massa, varius a,"
-                        " semper congue, euismod non, mi."
-                        " Proin porttitor, orci nec nonummy molestie,"
-                        " enim est eleifend mi, non fermentum diam nisl sit amet erat."
-                        " Duis semper. Duis arcu massa, scelerisque vitae,"
-                        " consequat in, pretium a, enim."
-                        " Pellentesque congue."
-                        " Ut in risus volutpat libero pharetra tempor.",
-               "sentence": "Lorem ipsum dolor sit amet,"
-                           " consectetur adipiscing elit."
-                           " Sed non risus. Suspendisse lectus tortor,"
-                           " dignissim sit amet,"
-                           " adipiscing nec, ultricies sed, dolor."
-                           " Cras elementum ultrices diam.",
+    text = get_text()
+    context = {"text": text,
                "goal": "Trouvez un produit de substitution pour ceux que vous consommez tous les jours"}
     raw_data = secure_text(product)
     result_engine = DataSearch(raw_data)
@@ -79,28 +59,9 @@ def search(request, product):
 
 
 def homepage(request):
-    context = {"story": "Lorem ipsum dolor sit amet,"
-                          " consectetur adipiscing elit."
-                          " Sed non risus."
-                          " Suspendisse lectus tortor,"
-                          " dignissim sit amet,"
-                          " adipiscing nec, ultricies sed, dolor."
-                          " Cras elementum ultrices diam."
-                          " Maecenas ligula massa, varius a,"
-                          " semper congue, euismod non, mi."
-                          " Proin porttitor, orci nec nonummy molestie,"
-                          " enim est eleifend mi, non fermentum diam nisl sit amet erat."
-                          " Duis semper. Duis arcu massa, scelerisque vitae,"
-                          " consequat in, pretium a, enim."
-                          " Pellentesque congue."
-                          " Ut in risus volutpat libero pharetra tempor.",
-            "sentence": "Lorem ipsum dolor sit amet,"
-                        " consectetur adipiscing elit."
-                        " Sed non risus. Suspendisse lectus tortor,"
-                        " dignissim sit amet,"
-                        " adipiscing nec, ultricies sed, dolor."
-                        " Cras elementum ultrices diam.",
-                 "goal": "Trouvez un produit de substitution pour ceux que vous consommez tous les jours"}
+    text = get_text()
+    context = {"text": text,
+               "goal": "Trouvez un produit de substitution pour ceux que vous consommez tous les jours"}
     if request.method == "POST":
         if "browser_product" in request.POST:
             browser_product = request.POST.get("browser_product")
@@ -239,3 +200,8 @@ def register(request):
 def is_user_authenticate(request):
     if request.user.is_authenticated:
         return redirect("/substitute/account")
+
+def mentions(request):
+    text = get_text()
+    context = {"text": text}
+    return render(request, "substitute/mentions.html", context)

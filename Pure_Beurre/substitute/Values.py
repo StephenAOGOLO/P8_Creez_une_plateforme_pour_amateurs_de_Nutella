@@ -1,9 +1,57 @@
 """"""
 # -*- coding: utf-8 -*-
 import logging as lg
-from .models import Aliment as AlimentDB, Category as CategoryDB, Historic as HistoricDB
+from .models import Aliment as AlimentDB, Category as CategoryDB, Historic as HistoricDB, Text as TextDB
 lg.basicConfig(level=lg.INFO)
 
+
+class TextValue:
+    def __init__(self, data):
+        self.values = data
+        self.set_text()
+
+    def set_text(self):
+        the_text = TextDB()
+        the_text.language = self.values["language"]
+        the_text.mentions_title = self.values["m_t"]
+        the_text.mentions_id_fn = self.values["m_id_fn"]
+        the_text.mentions_id_ln = self.values["m_id_ln"]
+        the_text. mentions_id_ph = self.values["m_id_ph"]
+        the_text.mentions_id_m = self.values["m_id_m"]
+        the_text.mentions_id_pn = self.values["m_id_pn"]
+        the_text.mentions_id_s = self.values["m_id_s"]
+        the_text.mentions_a_rcs = self.values["m_a_rcs"]
+        the_text.mentions_a_fn = self.values["m_a_fn"]
+        the_text.mentions_a_cgv = self.values["m_a_cgv"]
+        the_text.mentions_cookies = self.values["m_c"]
+        the_text.home_s = self.values["h_s"]
+        the_text.home_c = self.values["h_c"]
+        the_text.home_bm = self.values["h_bm"]
+        the_text.save()
+        #(
+        #    language = self.values
+        #    self.m_t =
+        #    self.m_id_fn =
+        #    self.m_id_ln =
+        #    self.m_id_ph =
+        #    self.m_id_m =
+        #    self.m_id_ph =
+        #    self.m_id_s =
+        #    self.m_a_rcs =
+        #    self.m_a_fn =
+        #    self.m_a_cgv =
+        #    self.m_c =
+        #    self.h_s =
+        #    self.h_c =
+        #    self.h_bm =
+        #)
+
+    #def store_data(self):
+    #    the_text = TextDB()
+    #    the_text.language = self.language
+    #    the_text.footer = self.footer
+    #    the_text.home = self.home
+    #    the_text.save()
 
 class AlimentValue:
     """"""

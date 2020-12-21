@@ -329,6 +329,74 @@ def fill_aliment(data):
             except Exception as e:
                 print(e)
 
+def fill_text():
+    data = open_js_file(".\\substitute\\static\\substitute\\json\\text.json")
+    for k, v in data.items():
+        if k == "fr":
+            content = {}
+            content["language"] = "fr"
+            content["m_t"] = v["footer"]["mentions"]["title"]
+            content["m_id_fn"] = v["footer"]["mentions"]["identification"]["first_name"]
+            content["m_id_ln"] = v["footer"]["mentions"]["identification"]["last_name"]
+            content["m_id_ph"] = v["footer"]["mentions"]["identification"]["phone"]
+            content["m_id_m"] = v["footer"]["mentions"]["identification"]["mail"]
+            content["m_id_pn"] = v["footer"]["mentions"]["identification"]["publisher_name"]
+            content["m_id_s"] = v["footer"]["mentions"]["identification"]["site"]
+            content["m_a_rcs"] = v["footer"]["mentions"]["activity"]["rcs"]
+            content["m_a_fn"] = v["footer"]["mentions"]["activity"]["fiscal_number"]
+            content["m_a_cgv"] = v["footer"]["mentions"]["activity"]["cgv"]
+            content["m_c"] = v["footer"]["mentions"]["cookies"]
+            content["h_s"] = v["home"]["story"]
+            content["h_c"] = v["home"]["contact"]
+            content["h_bm"] = v["home"]["button_mail"]
+
+
+            #language = k
+            #m_t = v["mentions"]["title"]
+            #m_id_fn = v["mentions"]["identification"]["first_name"]
+            #m_id_ln = v["mentions"]["identification"]["last_name"]
+            #m_id_ph = v["mentions"]["identification"]["phone"]
+            #m_id_m = v["mentions"]["identification"]["mail"]
+            #m_id_ph = v["mentions"]["identification"]["publisher_name"]
+            #m_id_s = v["mentions"]["identification"]["site"]
+            #m_a_rcs = v["mentions"]["activity"]["rcs"]
+            #m_a_fn = v["mentions"]["activity"]["fiscal_number"]
+            #m_a_cgv = v["mentions"]["activity"]["cgv"]
+            #m_c = v["mentions"]["cookies"]
+            #h_s = v["home"]["story"]
+            #h_c = v["home"]["contact"]
+            #h_bm = v["home"]["button_mail"]
+
+
+
+
+            TextValue(content)
+            #text = TextValue(
+            #language=language,
+            #mentions_title=m_t,
+            #mentions_id_fn=,
+            #mentions_id_ln =,
+            #mentions_id_ph =,
+            #mentions_id_m =,
+            #mentions_id_pn =,
+            #mentions_id_s =,
+            #mentions_a_rcs =,
+            #mentions_a_fn =,
+            #mentions_a_cgv =,
+            #mentions_cookies=,
+            #contact =,
+            #home_s =,
+            #home_c = ,
+            #home_bm =
+            #        )
+            #text.store_data()
+    print("Le texte du site à bien été intégré.")
+
+
+def get_text(lang="fr"):
+    text = Text.objects.get(language=lang)
+    return text
+
 #if __name__ == "__main__":
 
     ##### TEST on Data class #####
