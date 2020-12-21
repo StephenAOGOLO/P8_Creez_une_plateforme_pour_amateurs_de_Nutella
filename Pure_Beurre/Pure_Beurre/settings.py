@@ -77,29 +77,6 @@ WSGI_APPLICATION = 'Pure_Beurre.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# Development database config
-#if DEBUG:
-#    #DATABASES = {
-#    #    'default': {
-#    #        'ENGINE': 'django.db.backends.postgresql',
-#    #        'NAME': 'purebeurre_db',
-#    #        'USER': 'stephen',
-#    #        'PASSWORD': 'stephen',
-#    #        'HOST': '127.0.0.1',
-#    #        'PORT': '5432',
-#    #    }
-#    #}
-#
-#    DATABASES = {
-#        'default': {
-#            'ENGINE': 'django.db.backends.sqlite3',
-#            'NAME': 'mydatabase',
-#        }
-#    }
-#
-#
-#else:
-# Production database config
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -148,11 +125,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATICFILES_FINDERS = [
-#    'django.contrib.staticfiles.finders.FileSystemFinder',
-#    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#]
-#STATICFILES_DIRS = [os.path.join(BASE_DIR, "substitute/static"), ]
 STATICFILES_DIRS = [("substitute/static"),]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
