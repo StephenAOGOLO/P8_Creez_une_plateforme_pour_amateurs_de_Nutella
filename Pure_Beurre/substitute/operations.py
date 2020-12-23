@@ -8,6 +8,7 @@ needed for each packages module.
 """
 # -*- coding: utf-8 -*-
 import logging as lg
+import os
 import json
 import requests
 from .models import *
@@ -27,7 +28,8 @@ class Data:
         big_data : Containing OpFoFa response, sliced and sorted.
         'big_data' is a dict.
         """
-
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        urls_json = basedir + urls_json
         self.json_url_file = urls_json
         self.big_data = self.load_api_data()
 
@@ -173,6 +175,8 @@ def is_entry_empty(text):
 
 def secure_text(text, js_file="/static/substitute/json/xss.json"):
     """ This function handles XSS breaches """
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    js_file = basedir + js_file
     bad_words = open_js_file(js_file)
     for c_1 in bad_words["xss"]:
         if c_1 in text:
@@ -330,7 +334,10 @@ def fill_aliment(data):
                 print(e)
 
 def fill_text():
-    data = open_js_file("/static/substitute/json/text.json")
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    js_file = "/static/substitute/json/text.json"
+    js_file = basedir + js_file
+    data = open_js_file(js_file)
     for k, v in data.items():
         if k == "fr":
             content = {}
