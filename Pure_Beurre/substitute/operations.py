@@ -78,7 +78,8 @@ class Data:
         for url_name, url in all_data["sent"]["urls"].items():
             if url_name == "aliments":
                 all_data["rcvd"][url_name] = {}
-                for raw_data in self.target:
+                for i, raw_data in enumerate(self.target):
+                    print("collecte des produits {}/{}".format(i, len(self.target)))
                     all_data["rcvd"][url_name][raw_data] = {}
                     new_url = url + raw_data
                     response = requests.get(new_url)
