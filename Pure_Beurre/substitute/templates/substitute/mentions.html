@@ -1,0 +1,42 @@
+{% extends 'substitute/base.html'%}
+{% block heart %}
+{% load static %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 h1 d-flex justify-content-center chocolate-text font-3">{{ text.mentions_title }}</div>
+        <div class="col-12 h2 font-2 bg-butter text-white">Identification</div>
+        <div class="col-3"></div>
+            <div class="col-3 h3 chocolate-text bold-text"style="text-align:left">Nom : </div>
+            <div class="col-3 h3 chocolate-text bold-text"style="text-align:left">{{ text.mentions_id_ln }}</div>
+        <div class="col-3"></div>
+        <div class="col-3"></div>
+            <div class="col-3 h3 chocolate-text bold-text"style="text-align:left">Prenom : </div>
+            <div class="col-3 h3 chocolate-text bold-text"style="text-align:left">{{ text.mentions_id_fn }}</div>
+        <div class="col-3"></div>
+        <div class="col-3"></div>
+            <div class="col-3 h3 chocolate-text bold-text"style="text-align:left">Telephone : </div>
+            <div class="col-3 h3 chocolate-text bold-text"style="text-align:left">{{ text.mentions_id_ph }}</div>
+        <div class="col-3"></div>
+        <div class="col-3"></div>
+            <div class="col-3 h3 chocolate-text bold-text"style="text-align:left">Redacteur : </div>
+            <div class="col-3 h3 chocolate-text bold-text"style="text-align:left">{{ text.mentions_id_pn }}</div>
+        <div class="col-3"></div>
+        <div class="col-3"></div>
+            <div class="col-12 h2 font-2 bg-butter text-white">Raison Sociale : </div>
+            <div class="col-12 h3 chocolate-text bold-text "style="text-align:center">{{ text.mentions_id_s }}</div>
+        <div class="col-3"></div>
+        <div class="col-12 h2 font-2 bg-butter text-white">Activite</div>
+                <div class="col-3"></div>
+            <div class="col-3 h3 chocolate-text bold-text"style="text-align:left">RCS : </div>
+            <div class="col-3 h3 chocolate-text bold-text"style="text-align:left">{{ text.mentions_a_rcs }}</div>
+                        <div class="col-3"></div>
+                        <div class="col-3"></div>
+            <div class="col-3 h3 chocolate-text bold-text"style="text-align:left">Identification Fiscale : </div>
+            <div class="col-3 h3 chocolate-text bold-text"style="text-align:left">{{ text.mentions_a_fn }}</div>
+        <div class="col-12 h2 font-2 bg-butter text-white">Conditions Generales de Ventes</div>
+            <div class="col-12 h3 chocolate-text bold-text"style="text-align:center">{{ text.mentions_a_cgv }}</div>
+        <div class="col-12 h2 font-2 bg-butter text-white">Cookies</div>
+            <div class="col-12 h3 chocolate-text bold-text "style="text-align:center">{{ text.mentions_cookies }}</div>
+    </div>
+</div>
+{% endblock %}
