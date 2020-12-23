@@ -1,8 +1,33 @@
 """"""
 # -*- coding: utf-8 -*-
 import logging as lg
-from .models import Aliment as AlimentDB, Category as CategoryDB, Historic as HistoricDB
+from .models import Aliment as AlimentDB, Category as CategoryDB, Historic as HistoricDB, Text as TextDB
 lg.basicConfig(level=lg.INFO)
+
+
+class TextValue:
+    def __init__(self, data):
+        self.values = data
+        self.set_text()
+
+    def set_text(self):
+        the_text = TextDB()
+        the_text.language = self.values["language"]
+        the_text.mentions_title = self.values["m_t"]
+        the_text.mentions_id_fn = self.values["m_id_fn"]
+        the_text.mentions_id_ln = self.values["m_id_ln"]
+        the_text. mentions_id_ph = self.values["m_id_ph"]
+        the_text.mentions_id_m = self.values["m_id_m"]
+        the_text.mentions_id_pn = self.values["m_id_pn"]
+        the_text.mentions_id_s = self.values["m_id_s"]
+        the_text.mentions_a_rcs = self.values["m_a_rcs"]
+        the_text.mentions_a_fn = self.values["m_a_fn"]
+        the_text.mentions_a_cgv = self.values["m_a_cgv"]
+        the_text.mentions_cookies = self.values["m_c"]
+        the_text.home_s = self.values["h_s"]
+        the_text.home_c = self.values["h_c"]
+        the_text.home_bm = self.values["h_bm"]
+        the_text.save()
 
 
 class AlimentValue:
@@ -32,13 +57,11 @@ class AlimentValue:
         an_aliment.store = self.store
         an_aliment.url = self.url
         an_aliment.url_image = self.url_image
-
         an_aliment.image_nutriments = self.energy_img
         an_aliment.energy_kcal = self.energy_kcal
         an_aliment.energy_kcal_unit = self.energy_kcal_unit
         an_aliment.energy_kj = self.energy_kj
         an_aliment.energy_kj_unit = self.energy_kj_unit
-
         str_cat = ""
         for e in self.category:
             str_cat = str_cat+" "+e

@@ -8,7 +8,6 @@ needed for each packages module.
 """
 # -*- coding: utf-8 -*-
 import logging as lg
-import os
 import json
 import requests
 from .models import *
@@ -22,15 +21,13 @@ class Data:
     all pure data coming from Openfoodfacts server.
     """
     def __init__(self, urls_json="/static/substitute/json/urls.json"):
-    #def __init__(self, urls_json=".\\substitute\\static\\substitute\\json\\urls.json"):
         """
         Init constructor has two attributes:
         json_url_file : URLS file path needed to request OpFoFa server.
         big_data : Containing OpFoFa response, sliced and sorted.
         'big_data' is a dict.
         """
-        basedir = os.path.abspath(os.path.dirname(__file__))
-        urls_json = basedir + urls_json
+
         self.json_url_file = urls_json
         self.big_data = self.load_api_data()
 
@@ -175,10 +172,7 @@ def is_entry_empty(text):
 
 
 def secure_text(text, js_file="/static/substitute/json/xss.json"):
-#def secure_text(text, js_file=".\\substitute\\static\\substitute\\json\\xss.json"):
     """ This function handles XSS breaches """
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    js_file = basedir + js_file
     bad_words = open_js_file(js_file)
     for c_1 in bad_words["xss"]:
         if c_1 in text:
@@ -335,27 +329,30 @@ def fill_aliment(data):
             except Exception as e:
                 print(e)
 
-#if __name__ == "__main__":
+def fill_text():
+    data = open_js_file("/static/substitute/json/text.json")
+    for k, v in data.items():
+        if k == "fr":
+            content = {}
+            content["language"] = "fr"
+            content["m_t"] = v["footer"]["mentions"]["title"]
+            content["m_id_fn"] = v["footer"]["mentions"]["identification"]["first_name"]
+            content["m_id_ln"] = v["footer"]["mentions"]["identification"]["last_name"]
+            content["m_id_ph"] = v["footer"]["mentions"]["identification"]["phone"]
+            content["m_id_m"] = v["footer"]["mentions"]["identification"]["mail"]
+            content["m_id_pn"] = v["footer"]["mentions"]["identification"]["publisher_name"]
+            content["m_id_s"] = v["footer"]["mentions"]["identification"]["site"]
+            content["m_a_rcs"] = v["footer"]["mentions"]["activity"]["rcs"]
+            content["m_a_fn"] = v["footer"]["mentions"]["activity"]["fiscal_number"]
+            content["m_a_cgv"] = v["footer"]["mentions"]["activity"]["cgv"]
+            content["m_c"] = v["footer"]["mentions"]["cookies"]
+            content["h_s"] = v["home"]["story"]
+            content["h_c"] = v["home"]["contact"]
+            content["h_bm"] = v["home"]["button_mail"]
+            TextValue(content)
+    print("Le texte du site à bien été intégré.")
 
-    ##### TEST on Data class #####
-    #session = Data()
-    #result = session.big_data
-    #print("\nfin d'operation\n")
-    ##print("\n")
-    ###############################
 
-    ##### TEST on DataEngine class #####
-    #session = DataEngine("biscuit")
-    #result = session.big_data
-    #print("\nfin d'operation\n")
-    ##print("\n")
-    ###############################
-
-    ##### TEST on DataSearch class #####
-    #from Pure_Beurre.substitute.models import Aliment
-    #import Pure_Beurre.substitute.models
-    #session = DataSearch("biscuit")
-    #result = session.big_data
-    #print("\nfin d'operation\n")
-    ##print("\n")
-    ###############################
+def get_text(lang="fr"):
+    text = Text.objects.get(language=lang)
+    return text

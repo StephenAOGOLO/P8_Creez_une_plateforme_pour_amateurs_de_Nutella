@@ -1,26 +1,34 @@
 {
-  "mentions":
+  "fr":
   {
-    "identification":
+    "footer":
     {
-      "first_name": "Stephen",
-      "last_name":"A.OGOLO",
-      "phone":"01.02.03.04.05",
-      "mail":"me@purbeurre.com",
-      "publisher_name":"Stephen A.OGOLO",
-      "site": "Pur Beurre - SA - 1 parvis du sacre-coeur 75018 Paris France "
+      "mentions":
+      {
+        "title": "MENTIONS LEGALES",
+        "identification":
+        {
+          "first_name": "Stephen",
+          "last_name": "A.OGOLO",
+          "phone": "01.02.03.04.05",
+          "mail": "me@purbeurre.com",
+          "publisher_name": "Stephen A.OGOLO",
+          "site": " Ce site web heberge chez Digital Ocean - RCS Marseille B 498 210 897 - Adresse postale hebergeur : 175 CHE DEPARTEMENTAL 43A 13400 Aubagne France - Adresse postale restaurant : Pur Beurre SA - 1 parvis du sacre-coeur 75018 Paris France "
+        },
+        "activity":
+        {
+          "rcs": "RCS PARIS B 123456789",
+          "fiscal_number": "12 34 567 890 123",
+          "cgv": "Pur Beurre.com, numero de societe 1234567, est une societe immatriculee en France. Lorsque vous visitez notre site, ces conditions s'appliquent. Celles-ci sont importantes a la fois pour vous et pour nous car elles determinent ce que nous attendons les uns des autres, et apportent aussi des informations utiles. Si vous avez besoin d'autres choses, vous pouvez contacter notre Service Client, cela nous fait toujours plaisir de recevoir vos messages!"
+        },
+        "cookies": "Bientot, notre site utilisera le systeme de cookie afin d'ameliorer votre experience durant votre visite au sein de notre site. Bien entendu, vous aurez la possibilite de refuser leur utilisation avant de debuter votre navigation. Toutefois, nous vous informons qu'un refus de votre part pourrait affecter le bon comportement de notre site."
+      }
     },
-    "activity":
+    "home":
     {
-      "rcs": "RCS PARIS B 123456789",
-      "fiscal_number": "12 34 567 890 123",
-      "cgv": "Pur Beurre.com, numéro de société 1234567, est une société immatriculée en France. Lorsque vous visitez notre site, ces conditions s'appliquent. Celles-ci sont importantes à la fois pour vous et pour nous car elles déterminent ce que nous attendons les uns des autres, et apportent aussi des informations utiles. Si vous avez besoin d'autres choses, vous pouvez contacter notre Service Client, cela nous fait toujours plaisir de recevoir vos messages!",
-    },
-    "cookies": "Bientôt, notre site utilisera le système de cookie afin d'améliorer votre expérience durant votre visite au sein de notre site. Bien entendu, vous aurez la possibilité de refuser leur utilisation avant de débuter votre navigation. Toutefois, nous vous informons qu'un refus de votre part pourrait affecter le bon comportement de notre site.",
-  },
-  "home":
-  {
-    "story": "Nous sommes amoureux de la gastronomie française. Travaillant quotidiennement avec les meilleurs produits du terroir, nous affectionnons particulièrement la bonne chaire et aimons partager notre passion.",
-    "contact": "Notre restaurant, situé à Montmartre - Paris. Pour plus d'information sur nos service, merci de nous contacter : "
+      "story": "Nous sommes amoureux de la gastronomie francaise. Travaillant quotidiennement avec les meilleurs produits du terroir, nous affectionnons particulierement la bonne chaire et aimons partager notre passion.",
+      "contact": "Notre restaurant, situe a Montmartre - Paris. Pour plus d'information sur nos service, merci de nous contacter : ",
+      "button_mail": "https://www.linkedin.com/in/stephen-a-ogolo-410ab7b0/"
+    }
   }
 }
