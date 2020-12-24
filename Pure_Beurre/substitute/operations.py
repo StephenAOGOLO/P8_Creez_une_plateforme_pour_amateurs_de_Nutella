@@ -1,10 +1,7 @@
 """
-Welcome to the API Operations module, 'api_operations.py'.
-This module is composed of 'Data' class.
-three methods are defined to retrieve and store data
-coming from OpFoFa - OpenFoodFacts server.
-ten functions are defined to slice and sort the data
-needed for each packages module.
+Welcome to the Operations module, 'operations.py'.
+This module is composed of four classes and fifteen functions functions.
+All of them are defined to create, catch, slice, sort and provide incoming and outgoing data.
 """
 # -*- coding: utf-8 -*-
 import logging as lg
@@ -54,6 +51,8 @@ class Data:
         return data
 
     def get_target(self, all_data):
+        """ This method  formats product's category into a dict.
+        This dict will be needed for the internal big data."""
         return all_data["sent"]["urls"]["target"]
 
     def request_urls(self):
@@ -99,13 +98,19 @@ class Data:
 
 
 class DataSearch:
+    """ This class is called for search direct and indirect product from a user entry.
+     It provides dict big data as result."""
     def __init__(self, raw_data):
+        """ The instance is created from the user entry 'raw_data'.
+        Then get_direct_aliment() and get_indirect_aliment() methods are called to provide their result. """
         self.raw_data = raw_data
         self.direct_aliment = self.get_direct_aliment()
         self.indirect_aliment = self.get_indirect_aliment()
         self.big_data = self.build_big_data()
 
     def get_direct_aliment(self):
+        """ This method is called to search into the website database
+         all products which contain the user entry into the product name. """
         direct_aliment = {}
         aliments = Aliment.objects.filter(name__icontains=self.raw_data)
         for e in aliments:
@@ -113,6 +118,8 @@ class DataSearch:
         return direct_aliment
 
     def get_indirect_aliment(self):
+        """ This method is called to search into the website database
+         all products which contain the user entry into the category name from every product. """
         indirect_aliment = {}
         aliments = []
         categories = Category.objects.filter(name__icontains=self.raw_data)
@@ -125,6 +132,7 @@ class DataSearch:
         return indirect_aliment
 
     def build_big_data(self):
+        """ This method joins the both method results and provides it into a dict.  """
         big_data = {}
         big_data = self.direct_aliment
         big_data.update(self.indirect_aliment)
@@ -133,26 +141,32 @@ class DataSearch:
 
 
 class DataSave:
+    """ This class is called to create a historic's record. """
     def __init__(self, aliment, substitute, customer):
+        """ The instance needs the product, the substitute and the customer
+         to record the swap into the website database. """
         self.aliment = aliment
         self.substitute = substitute
         self.customer = customer
 
     def store_data(self):
+        """ This method create a historic swap and save it into the website database. """
         the_historic = HistoricValue(self.aliment, self.substitute, self.customer)
         the_historic.store_items()
 
 
 class DataAliment:
+    """ This class is called to search and provide a product from the website database. """
     def __init__(self, pk):
+        """ The instance needs the primary key to search and provide the product. """
         self.aliment_id = pk
         self.aliment = self.get_aliment()
 
     def get_aliment(self):
+        """ This method searches into the website database and provides the Aliment model instance.  """
         aliment = Aliment.objects.get(id=self.aliment_id)
         print(aliment)
         return aliment
-
 
 
 def open_js_file(js_file):
@@ -186,6 +200,7 @@ def secure_text(text, js_file="/static/substitute/json/xss.json"):
 
 
 def get_historic(customer):
+    """ This function returns all the records concerning a customer. """
     the_historic = Historic.objects.filter(user_id=customer.id)
     for e in the_historic:
         e.aliment.nutriscore = set_nutriscore_tag(e.aliment.nutriscore)
@@ -194,6 +209,7 @@ def get_historic(customer):
 
 
 def sort_big_data(big_data):
+    """ This function sorts a dict by the nutriscore criteria. """
     new_data = sorted(big_data.items(), key=lambda t: t[1].nutriscore)
     big_data = {}
     for e in new_data:
@@ -202,6 +218,7 @@ def sort_big_data(big_data):
 
 
 def formatting_data(data):
+    """ This function deleting all incomplete data coming from openfoodfacts servers. """
     print("\nMise en forme des données collectées..\n")
     data = formatting_aliments(data)
     data = formatting_categories(data)
@@ -211,6 +228,7 @@ def formatting_data(data):
 
 
 def cleaning_categories(data):
+    """ This function deleting all incomplete categories'data coming from openfoodfacts servers. """
     cleaner = data["rcvd"]["essentials"]["aliments"]
     cleaned = data["rcvd"]["essentials"]["categories"]
     list_big = []
@@ -232,8 +250,8 @@ def cleaning_categories(data):
     return data
 
 
-
 def formatting_categories(data):
+    """ This function formatting all categories'data coming from openfoodfacts servers. """
     for i, e in enumerate(data["rcvd"]["categories"]):
         categories = {}
         check_data = "known"
@@ -246,6 +264,7 @@ def formatting_categories(data):
 
 
 def formatting_aliments(data):
+    """ This function formatting all aliments'data coming from openfoodfacts servers. """
     aliments = {}
     for k, v in data["rcvd"]["aliments"].items():
         data["rcvd"]["essentials"]["aliments"][k] = {}
@@ -274,6 +293,7 @@ def formatting_aliments(data):
 
 
 def get_data(data):
+    """ This function prepares the internal big data. """
     data["rcvd"]["essentials"] = {}
     data["rcvd"]["essentials"]["aliments"] = {}
     data["rcvd"]["essentials"]["categories"] = {}
@@ -281,11 +301,13 @@ def get_data(data):
 
 
 def set_nutriscore_tag(tag):
+    """ This function returns a nutriscore picture from his tag value. """
     new_tag = '/static/substitute/png/{}_nutriscore_good.png'.format(tag)
     return new_tag
 
 
 def fill_category(data,):
+    """ This function is called to fill the website database. The target table is Category model. """
     for k, v in data["cleaned_categories"].items():
         id_name = v["id"]
         name = v["name"]
@@ -299,6 +321,7 @@ def fill_category(data,):
 
 
 def fill_aliment(data):
+    """ This function is called to fill the website database. The target table is Aliment model. """
     for k, v in data["rcvd"]["essentials"]["aliments"].items():
         for k_1, v_1 in v.items():
             try:
@@ -334,7 +357,9 @@ def fill_aliment(data):
             except Exception as e:
                 print(e)
 
+
 def fill_text():
+    """ This function is called to fill the website database. The target table is Text model. """
     basedir = os.path.abspath(os.path.dirname(__file__))
     js_file = "/static/substitute/json/text.json"
     js_file = basedir + js_file
@@ -362,5 +387,7 @@ def fill_text():
 
 
 def get_text(lang="fr"):
+    """ This function is called to return text content website.
+     WARNING !!! ONLY THE FRENCH LANGUAGE IS AVAILABLE ON Pur Beurre 1.1."""
     text = Text.objects.get(language=lang)
     return text

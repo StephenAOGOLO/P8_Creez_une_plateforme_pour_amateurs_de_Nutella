@@ -9,14 +9,12 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
 from pathlib import Path
 import Pure_Beurre.the_secrets as tst
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 
 # Quick-start development settings - unsuitable for production
@@ -127,8 +125,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [("substitute/static"),]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-
-
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 20000

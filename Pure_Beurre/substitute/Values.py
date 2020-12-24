@@ -1,4 +1,4 @@
-""""""
+""" This module handles and provides the needed values for each model's instance. """
 # -*- coding: utf-8 -*-
 import logging as lg
 from .models import Aliment as AlimentDB, Category as CategoryDB, Historic as HistoricDB, Text as TextDB
@@ -6,11 +6,15 @@ lg.basicConfig(level=lg.INFO)
 
 
 class TextValue:
+    """ This class is called to set up the Text model values. """
     def __init__(self, data):
+        """ The instance catches strings to store in Text model instance.
+        Pur Beurre 1.1 = Only home.html and mentions.html are concerned by these texts."""
         self.values = data
         self.set_text()
 
     def set_text(self):
+        """ This method catch strings values to store into the Text model instance. """
         the_text = TextDB()
         the_text.language = self.values["language"]
         the_text.mentions_title = self.values["m_t"]
@@ -31,8 +35,9 @@ class TextValue:
 
 
 class AlimentValue:
-    """"""
+    """ This class is called to set up the Aliment model values. """
     def __init__(self, brand, product_name, category, nutriscore, purchase_place, store, url, url_image, energy_img, energy_kj, energy_kcal, energy_kj_unit, energy_kcal_unit):
+        """ The instance catches openfoodfacts' data. """
         self.brand = brand
         self.product_name = product_name
         self.category = category
@@ -48,7 +53,8 @@ class AlimentValue:
         self.energy_kcal_unit = energy_kcal_unit
 
     def store_items(self):
-
+        """ This method associates the current instance to the Model's one.
+         Then, it stores its values into it."""
         an_aliment = AlimentDB()
         an_aliment.brand = self.brand
         an_aliment.name = self.product_name
@@ -78,14 +84,15 @@ class AlimentValue:
 
 
 class CategoryValue:
-    """"""
-
+    """ This class is called to set up the Category model values. """
     def __init__(self, id_name, name, url):
         self.id_name = id_name
         self.name = name
         self.url = url
 
     def store_items(self):
+        """ This method associates the current instance to the Model's one.
+         Then, it stores its values into it."""
         a_category = CategoryDB(
             id_name=self.id_name,
             name=self.name,
@@ -96,12 +103,15 @@ class CategoryValue:
 
 
 class HistoricValue:
+    """ This class is called to set up the Historic model values. """
     def __init__(self, aliment, substitute, customer):
         self.aliment = aliment
         self.substitute = substitute
         self.customer = customer
 
     def store_items(self):
+        """ This method associates the current instance to the Model's one.
+         Then, it stores its values into it."""
         a_historic = HistoricDB(
             user=self.customer,
             aliment=self.aliment,

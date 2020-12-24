@@ -1,3 +1,5 @@
+""" This module handle the urls of the application.
+ It precise the format to use, the views function to call and a name.  """
 from django.urls import path
 
 
