@@ -8,9 +8,19 @@
         background-size: cover;
         height: 100%;
     }
+    @media (min-width: 950px) 
+    {
+        .home-back
+            {
+                background: url('{% static "substitute/jpg/remy_welcome.jpg" %}');
+                background-size: cover;
+                filter: blur(0);
+                height: 100%;
+            }
+    }
 </style>
-<div class="container-fluid border home-container search-area" >
-    <div class="row container-fluid">
+<div class="container-fluid border home-container home-back" >
+    <div class="row container-fluid search-area">
         <div class="col-12">
             <div class="col-12"> <br/></div>
             <div class="col-sm-12 col-12 h1 d-flex justify-content-center font-weight-bold butter-text font-4">Du gras, oui, mais de qualité !</div>
