@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls import handler404, handler500
 
-handler404 = "substitute.views.handler404"
-handler500 = "substitute.views.handler500"
+HANDLER404 = "substitute.views.handler404"
+HANDLER500 = "substitute.views.handler500"
 urlpatterns = [
     path('substitute/', include('substitute.urls')),
     path('admin/', admin.site.urls),

@@ -102,7 +102,8 @@ class DataSearch:
      It provides dict big data as result."""
     def __init__(self, raw_data):
         """ The instance is created from the user entry 'raw_data'.
-        Then get_direct_aliment() and get_indirect_aliment() methods are called to provide their result. """
+        Then get_direct_aliment() and get_indirect_aliment() methods
+        are called to provide their result. """
         self.raw_data = raw_data
         self.direct_aliment = self.get_direct_aliment()
         self.indirect_aliment = self.get_indirect_aliment()

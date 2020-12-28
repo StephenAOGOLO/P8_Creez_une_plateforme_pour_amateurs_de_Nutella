@@ -5,7 +5,7 @@ from django.urls import path
 
 from . import views
 
-app_name = "substitute"
+APP_NAME = "substitute"
 urlpatterns = [
     path('', views.index, name='index'),
     path('home/', views.homepage, name='home'),

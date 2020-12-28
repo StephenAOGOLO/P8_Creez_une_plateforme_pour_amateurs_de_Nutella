@@ -1,4 +1,5 @@
-""" This module is listing all the models which are needed for the application Web Site 'substitute'. """
+""" This module is listing all the models
+ which are needed for the application Web Site 'substitute'. """
 from django.db import models
 from django.contrib.auth.models import User
 # -*- coding: utf-8 -*-
@@ -31,7 +32,7 @@ class Customer(models.Model):
 
     def __str__(self):
         """ This method displaying the user's name when a customer model instance is called. """
-        return self.user.username
+        return str(self.user)
 
 
 class Category(models.Model):
@@ -43,7 +44,7 @@ class Category(models.Model):
 
     def __str__(self):
         """ This method displaying the category's name when the model instance is called. """
-        return self.name
+        return str(self.name)
 
 
 class Aliment(models.Model):
@@ -66,16 +67,24 @@ class Aliment(models.Model):
 
     def __str__(self):
         """ This method displaying the product's name when the model instance is called. """
-        return self.name
+        return str(self.name)
 
 
 class Historic(models.Model):
     """ This model's describing a historic record.
     A record is composed of its owner, a product and its substitute."""
-    user = models.ForeignKey(Customer, null=True, on_delete=models.CASCADE)
-    aliment = models.ForeignKey(Aliment, related_name="aliment", null=True, on_delete=models.CASCADE)
-    substitute = models.ForeignKey(Aliment,related_name="substitute", null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(Customer,
+                             null=True,
+                             on_delete=models.CASCADE)
+    aliment = models.ForeignKey(Aliment,
+                                related_name="aliment",
+                                null=True,
+                                on_delete=models.CASCADE)
+    substitute = models.ForeignKey(Aliment,
+                                   related_name="substitute",
+                                   null=True,
+                                   on_delete=models.CASCADE)
 
     def __str__(self):
         """ This method displaying the record's id when the model instance is called. """
-        return str(self.id)
+        return str(self.user)

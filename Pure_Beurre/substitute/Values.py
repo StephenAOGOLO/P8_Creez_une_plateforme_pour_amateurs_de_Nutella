@@ -1,7 +1,10 @@
 """ This module handles and provides the needed values for each model's instance. """
 # -*- coding: utf-8 -*-
 import logging as lg
-from .models import Aliment as AlimentDB, Category as CategoryDB, Historic as HistoricDB, Text as TextDB
+from .models import Aliment as AlimentDB,\
+    Category as CategoryDB,\
+    Historic as HistoricDB,\
+    Text as TextDB
 lg.basicConfig(level=lg.INFO)
 
 
@@ -36,7 +39,19 @@ class TextValue:
 
 class AlimentValue:
     """ This class is called to set up the Aliment model values. """
-    def __init__(self, brand, product_name, category, nutriscore, purchase_place, store, url, url_image, energy_img, energy_kj, energy_kcal, energy_kj_unit, energy_kcal_unit):
+    def __init__(self, brand,
+                 product_name,
+                 category,
+                 nutriscore,
+                 purchase_place,
+                 store,
+                 url,
+                 url_image,
+                 energy_img,
+                 energy_kj,
+                 energy_kcal,
+                 energy_kj_unit,
+                 energy_kcal_unit):
         """ The instance catches openfoodfacts' data. """
         self.brand = brand
         self.product_name = product_name
@@ -69,18 +84,18 @@ class AlimentValue:
         an_aliment.energy_kj = self.energy_kj
         an_aliment.energy_kj_unit = self.energy_kj_unit
         str_cat = ""
-        for e in self.category:
-            str_cat = str_cat+" "+e
+        for element in self.category:
+            str_cat = str_cat+" "+element
         an_aliment.category = str_cat
         an_aliment.save()
         print("Enregistrement de l'aliment :\n{}\n".format(an_aliment))
-        for i, e in enumerate(self.category):
+        for element in self.category:
             try:
-                if CategoryDB.objects.get(id_name=e):
-                    his_category = CategoryDB.objects.get(id_name=e)
+                if CategoryDB.objects.get(id_name=element):
+                    his_category = CategoryDB.objects.get(id_name=element)
                     an_aliment.tag.add(his_category)
-            except Exception as e:
-                lg.debug(e)
+            except Exception as error:
+                lg.debug(error)
 
 
 class CategoryValue:

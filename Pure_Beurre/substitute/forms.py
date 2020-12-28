@@ -8,5 +8,7 @@ class CreateUserForm(UserCreationForm):
       However, its behaviour is based on models.User.
       So, the authentification is handled by Django."""
     class Meta:
+        """ This class provides User model and edits username,
+         email passwords."""
         model = User
         fields = ["username", "email", "password1", "password2"]
