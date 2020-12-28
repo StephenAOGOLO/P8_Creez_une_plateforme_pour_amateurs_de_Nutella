@@ -2,20 +2,21 @@
 {% block heart %}
 {% load static %}
 <style type="text/css">
-    #search-area
+    .search-area
     {
         background: url('{% static "substitute/jpg/remy_welcome.jpg" %}');
         background-size: cover;
+        height: 100%;
     }
 </style>
-<div class="container-fluid border home-container" id="search-area">
-    <div class="row">
+<div class="container-fluid border home-container search-area" >
+    <div class="row container-fluid">
         <div class="col-12">
             <div class="col-12"> <br/></div>
-            <div class="col-12 h1 d-flex justify-content-center font-weight-bold butter-text font-4">Du gras, oui, mais de qualité !</div>
+            <div class="col-sm-12 col-12 h1 d-flex justify-content-center font-weight-bold butter-text font-4">Du gras, oui, mais de qualité !</div>
             <div class="col-12"> <br/></div>
             <div class="home-container">
-            <div class="col-4 h2 d-flex justify-content-center white-butter-text butter-text">
+            <div class="col-4 h2 d-flex justify-content-center butter-text bold-text">
                 <p>
                     {{ goal }}
                 </p>
