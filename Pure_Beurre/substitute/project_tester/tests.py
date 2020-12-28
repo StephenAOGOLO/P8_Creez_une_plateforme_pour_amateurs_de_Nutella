@@ -12,6 +12,7 @@ from django.test import TestCase, SimpleTestCase, Client
 class TestViewsUnlogged(TestCase):
     def setUp(self):
         self.c = Client()
+        self.a_text = Text.objects.create(language="fr", mentions_title="test title", mentions_cookies="test content")
         self.an_aliment = Aliment.objects.create(name="an_aliment")
         self.another_aliment = Aliment.objects.create(name="another_aliment")
         self.a_user = User.objects.create_user(username="a_user", email="a_user@purebeurre.com", password="user.1234")
@@ -26,6 +27,7 @@ class TestViewsUnlogged(TestCase):
         self.account_url = reverse("substitute:account")
         self.login_url = reverse("substitute:login")
         self.logout_url = reverse("substitute:logout")
+        self.mentions_url = reverse("substitute:mentions")
         self.search_url = reverse("substitute:search", args=["an_aliment"])
         self.aliment_url = reverse("substitute:aliment", args=[self.an_aliment.id, self.another_aliment.id, self.a_user.id])
         self.save_url = reverse("substitute:save", args=[self.an_aliment.id, self.another_aliment.id, self.a_user.id])
@@ -58,6 +60,18 @@ class TestViewsUnlogged(TestCase):
         print(result)
         self.assertEqual(result, 200)
 
+    def test_mentions_view_1(self):
+        print("\n\ntest_aliment_view_1")
+        response = self.c.get(self.mentions_url)
+        result = response.status_code
+        print(result)
+        self.assertEqual(result, 200)
+
+    def test_mentions_POST(self):
+        print("\n\ntest_search_POST")
+        response = self.c.post(self.mentions_url)
+        print(response)
+        self.assertEqual(response.status_code, 200)
 
     def test_aliment_view_1(self):
         print("\n\ntest_aliment_view_1")
@@ -197,6 +211,7 @@ class TestViewsUnlogged(TestCase):
 class TestViewsLogged(TestCase):
     def setUp(self):
         self.c = Client()
+        self.a_text = Text.objects.create(language="fr", mentions_title="test title", mentions_cookies="test content")
         self.an_aliment = Aliment.objects.create(name="an_aliment")
         self.another_aliment = Aliment.objects.create(name="another_aliment")
         self.a_user = User.objects.create_user(username="a_user", email="a_user@purebeurre.com", password="user.1234")
@@ -213,6 +228,7 @@ class TestViewsLogged(TestCase):
         self.register_url = reverse("substitute:register")
         self.account_url = reverse("substitute:account")
         self.login_url = reverse("substitute:login")
+        self.mentions_url = reverse("substitute:mentions")
         self.search_url = reverse("substitute:search", args=["an_aliment"])
         self.aliment_url = reverse("substitute:aliment", args=[self.an_aliment.id, self.another_aliment.id, self.a_user.id])
         self.save_url = reverse("substitute:save", args=[self.an_aliment.id, self.another_aliment.id, self.a_user.id])
@@ -268,6 +284,18 @@ class TestViewsLogged(TestCase):
         print(result)
         self.assertEqual(result, 200)
 
+    def test_mentions_view_1(self):
+        print("\n\ntest_aliment_view_1")
+        response = self.c.get(self.mentions_url)
+        result = response.status_code
+        print(result)
+        self.assertEqual(result, 200)
+
+    def test_mentions_POST(self):
+        print("\n\ntest_search_POST")
+        response = self.c.post(self.mentions_url)
+        print(response)
+        self.assertEqual(response.status_code, 200)
 
     def test_aliment_view_1(self):
         print("\n\ntest_aliment_view_1")
@@ -427,7 +455,7 @@ class TestViewsLogged(TestCase):
 
     def test_register_POST_browser_product(self):
         print("\n\ntest_register_POST_browser_product")
-        response = self.c.post(self.register_url)
+        response = self.c.post(self.register_url, self.browser_product)
         print(response)
         self.assertEqual(response.status_code, 302)
 
@@ -503,6 +531,7 @@ class TestUrls(SimpleTestCase):
 class TestModels(TestCase):
     def setUp(self):
         self.c = Client()
+        self.a_text = Text.objects.create(language="fr", mentions_title="test title", mentions_cookies="test content")
         self.a_category = Category.objects.create(name="a_category")
         self.another_category = Category.objects.create(name="another_category")
         self.an_aliment = Aliment.objects.create(name="an_aliment")
@@ -555,6 +584,7 @@ class TestModels(TestCase):
 class TestOperations(TestCase):
     def setUp(self):
         self.c = Client()
+        self.a_text = Text.objects.create(language="fr", mentions_title="test title", mentions_cookies="test content")
         self.a_user = User.objects.create_user(username="a_user", email="a_user@purebeurre.com", password="user.1234")
         self.a_customer = Customer(user=self.a_user)
         self.a_customer.save()
@@ -623,3 +653,9 @@ class TestOperations(TestCase):
         record.store_data()
         the_historic = get_historic(self.a_customer)
         self.assertEqual(len(the_historic), 1)
+
+    def test_fill_text(self):
+        size_before = len(Text.objects.all())
+        fill_text()
+        size_after = len(Text.objects.all())
+        self.assertEqual(size_after, size_before + 1)

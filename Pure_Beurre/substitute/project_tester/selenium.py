@@ -10,6 +10,7 @@ class SeleniumTestsChrome(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.a_text = Text.objects.create(language="fr", mentions_title="test title", mentions_cookies="test content")
         cls.a_user_clear_password = "selenium.1234"
         cls.a_user_chrome = User.objects.create_user(username="chrome_user", email="chrome_user@purebeurre.com", password=cls.a_user_clear_password)
         cls.a_user_chrome.save()
@@ -62,6 +63,7 @@ class SeleniumTestsOpera(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.a_text = Text.objects.create(language="fr", mentions_title="test title", mentions_cookies="test content")
         cls.a_user_clear_password = "user.1234"
         cls.a_user_opera = User.objects.create_user(username="opera_user", email="opera_user@purebeurre.com", password=cls.a_user_clear_password)
         cls.a_user_opera.save()
@@ -135,6 +137,7 @@ class SeleniumTestsError500(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.a_text = Text.objects.create(language="fr", mentions_title="test title", mentions_cookies="test content")
         cls.a_user_clear_password = "error.1234"
         cls.a_user_opera = User.objects.create_user(username="user_error_500", email="user_error_500@purebeurre.com", password=cls.a_user_clear_password)
         cls.a_user_opera.save()
